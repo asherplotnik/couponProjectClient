@@ -31,8 +31,8 @@ public class Coupon {
 	private int category_id;
 	private String title; 
 	private String description;
-	private LocalDate start_date;
-	private LocalDate end_date;
+	private LocalDate startDate;
+	private LocalDate endDate;
 	private int amount;
 	private double price;
 	private String image;
@@ -48,8 +48,8 @@ public class Coupon {
 		this.category_id = category_id;
 		this.title = title;
 		this.description = description;
-		this.start_date = start_date;
-		this.end_date = end_date;
+		this.startDate = start_date;
+		this.endDate = end_date;
 		this.amount = amount;
 		this.price = price;
 		this.image = image;
@@ -103,19 +103,19 @@ public class Coupon {
 	}
 
 	public LocalDate getStart_date() {
-		return start_date;
+		return startDate;
 	}
 
 	public void setStart_date(LocalDate start_date) {
-		this.start_date = start_date;
+		this.startDate = start_date;
 	}
 
 	public LocalDate getEnd_date() {
-		return end_date;
+		return endDate;
 	}
 
 	public void setEnd_date(LocalDate end_date) {
-		this.end_date = end_date;
+		this.endDate = end_date;
 	}
 
 	public int getAmount() {
@@ -170,13 +170,13 @@ public class Coupon {
 		result = prime * result + amount;
 		result = prime * result + category_id;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((end_date == null) ? 0 : end_date.hashCode());
+		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((image == null) ? 0 : image.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((start_date == null) ? 0 : start_date.hashCode());
+		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -198,7 +198,7 @@ public class Coupon {
 	@Override
 	public String toString() {
 		return "ID: " + id + " , COMPANY ID: " + company.getId() + ", CATEGORY ID: " + category_id + " , TITLE: " + title
-				+ " , DESCRIPTION: " + description + " , START DATE: " + start_date + " , END DATE: " + end_date + " , AMOUNT: "
+				+ " , DESCRIPTION: " + description + " , START DATE: " + startDate + " , END DATE: " + endDate + " , AMOUNT: "
 				+ amount + " , PRICE: " + price + " , IMAGE: " + image;
 	}
 	

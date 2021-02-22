@@ -16,11 +16,11 @@ import app.core.services.AdminService;
 
 @SpringBootApplication
 @EnableTransactionManagement
-public class AdminServiceTest {
+public class TestAdminService {
 
 	public static void main(String[] args) {
 		try {
-			ConfigurableApplicationContext ctx = SpringApplication.run(AdminServiceTest.class, args);
+			ConfigurableApplicationContext ctx = SpringApplication.run(TestAdminService.class, args);
 			LoginManager loginManager = ctx.getBean(LoginManager.class);
    		    AdminService adminService = (AdminService) loginManager.login("admin@admin.com", "admin", 0);
 

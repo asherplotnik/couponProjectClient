@@ -3,8 +3,9 @@ package app.core.services;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+
 import app.core.couponProjectExceptions.DaoException;
 import app.core.entities.Company;
 import app.core.entities.Customer;
@@ -13,14 +14,14 @@ import app.core.entities.Customer;
 @Transactional
 public class AdminService extends ClientService {
 	private boolean loggedIn = false;
-
+	
 //	public AdminService(String email, String password) throws DaoException {
 //		if (!login(email,password)) {
 //			throw new DaoException("Login admin failed!!!");
 //		}
 //	}
-	@Autowired
-	public AdminService() {
+
+	public AdminService( ) {
 	}
 	
 	public boolean login(String email, String password) {
@@ -34,7 +35,6 @@ public class AdminService extends ClientService {
 
 	public void addCompany(Company company) {
 		try {
-			assureLogged();
 			if (company.getName().length() == 0 || company.getEmail().length() == 0) {
 			}
 			String check = checkDuplicateCompany(company);
@@ -66,7 +66,6 @@ public class AdminService extends ClientService {
 
 	public void updateCompany(Company company) {
 		try {
-			assureLogged();
 			Optional<Company> opt = companyRepository.findById(company.getId());
 			if (opt.isEmpty()) {
 				throw new DaoException("Update Failed - company not found");
@@ -93,7 +92,6 @@ public class AdminService extends ClientService {
 		// database foreign key restrictions on delete cascade will automatically delete
 		// all coupons and all purchases
 		// with permission from Eldar
-		assureLogged();
 		Optional<Company> temp = companyRepository.findById(id);
 		if (temp.isEmpty()) {
 			throw new DaoException("Delete Failed - company not found");
@@ -103,33 +101,20 @@ public class AdminService extends ClientService {
 	}
 
 	public List<Company> getAllCompanies() {
-		try {
-			assureLogged();
-			return companyRepository.findAll();
-		} catch (DaoException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return companyRepository.findAll();
 	}
 
 	public Company getOneCompany(int id) {
-		try {
-			assureLogged();
-			Optional<Company> opt = companyRepository.findById(id);
-			if (opt.isPresent()) {
-				return opt.get();
-			} else {
-				return null;
-			}
-		} catch (DaoException e) {
-			e.printStackTrace();
-		}
-		return null;
+		Optional<Company> opt = companyRepository.findById(id);
+		if (opt.isPresent()) {
+			return opt.get();
+		} else {
+			return null;
+		}		
 	}
 
 	public void addCustomer(Customer customer) {
 		try {
-			assureLogged();
 			if (customerRepository.getByEmail(customer.getEmail()) != null) {
 				throw new DaoException("Customer's email exists already!!!");
 			}
@@ -142,7 +127,6 @@ public class AdminService extends ClientService {
 
 	public void updateCustomer(Customer customer) {
 		try {
-			assureLogged();
 			Optional<Customer> opt = customerRepository.findById(customer.getId());
 			if (opt.isEmpty()) {
 				throw new DaoException("Update Failed - customer not found");
@@ -167,7 +151,6 @@ public class AdminService extends ClientService {
 		// database foreign key restrictions on delete cascade will automatically delete
 		// all purchases
 		// with permission of Eldar
-		assureLogged();
 		Optional<Customer> temp = customerRepository.findById(id);
 		if (temp.isEmpty()) {
 			throw new DaoException("Delete Failed - Customer not found");
@@ -177,48 +160,23 @@ public class AdminService extends ClientService {
 	}
 
 	public List<Customer> getAllCustomers() {
-		try {
-			assureLogged();
-			return customerRepository.findAll();
-		} catch (DaoException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return customerRepository.findAll();
 	}
 
 	public Customer getOneCustomer(int id) {
-		try {
-			assureLogged();
-			Optional<Customer> opt = customerRepository.findById(id);
-			if (opt.isPresent()) {
-				return opt.get();
-			} else {
-				return null;
-			}
-		} catch (DaoException e) {
-			e.printStackTrace();
+		Optional<Customer> opt = customerRepository.findById(id);
+		if (opt.isPresent()) {
+			return opt.get();
+		} else {
+			return null;
 		}
-		return null;
 	}
 
-	
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
 
-	private void assureLogged() throws DaoException {
-		if (!loggedIn) {
-			throw new DaoException("ADMIN NOT LOGGED IN!!!");
-		}
-	}
-
 	public String getAdminDetails() {
-		try {
-			assureLogged();
 			return ("ADMIN");
-		} catch (DaoException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 }

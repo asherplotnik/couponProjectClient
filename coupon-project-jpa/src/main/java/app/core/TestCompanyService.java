@@ -15,11 +15,11 @@ import app.core.services.CompanyService;
 
 @SpringBootApplication
 @EnableTransactionManagement
-public class CompanyServiceTest {
+public class TestCompanyService {
 
 	public static void main(String[] args) {
 		try {
-			ConfigurableApplicationContext ctx = SpringApplication.run(CompanyServiceTest.class, args);
+			ConfigurableApplicationContext ctx = SpringApplication.run(TestCompanyService.class, args);
 			LoginManager loginManager = ctx.getBean(LoginManager.class);
 			CompanyService cService = (CompanyService)loginManager.login("comp1@email1", "111",1);
 			Coupon coupon = new Coupon(1, 3, "new8", "new8", LocalDate.of(2020, 1, 1), LocalDate.of(2020, 1, 2), 25, 25.58, "age8");

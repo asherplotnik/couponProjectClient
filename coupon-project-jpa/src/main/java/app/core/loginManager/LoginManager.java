@@ -3,6 +3,7 @@ package app.core.loginManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+
 import app.core.couponProjectExceptions.DaoException;
 import app.core.services.AdminService;
 import app.core.services.ClientService;
@@ -13,7 +14,6 @@ import app.core.services.CustomerService;
 public class LoginManager {	
 	@Autowired
 	ApplicationContext ctx;
-	
 	public ClientService login(String email, String password, int userType) throws DaoException {
 		switch (userType) {
 		case 0:
