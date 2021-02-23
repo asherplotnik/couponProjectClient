@@ -21,14 +21,20 @@ public class TestCompanyService {
 		try {
 			ConfigurableApplicationContext ctx = SpringApplication.run(TestCompanyService.class, args);
 			LoginManager loginManager = ctx.getBean(LoginManager.class);
-			CompanyService cService = (CompanyService)loginManager.login("comp1@email1", "111",1);
-			Coupon coupon = new Coupon(3, "yoyoyo", "blblbl", LocalDate.of(2020, 1, 1), LocalDate.of(2020, 1, 2), 25, 25.58, "age8");
-			cService.addCoupon(coupon);
+			CompanyService cService = (CompanyService)loginManager.login("comp1@email3", "333",1);
+//			Coupon coupon = new Coupon(3, "yoyoyo", "blblbl", LocalDate.of(2020, 1, 1), LocalDate.of(2020, 1, 2), 25, 25.58, "age8");
+//			cService.addCoupon(coupon);
+			System.out.println(cService.getCompanyDetails());
+			
 			System.out.println(cService.getCompanyCoupons());
-			Coupon updatedCoupon = new Coupon(2 , 3, "updsate", "updsate", LocalDate.of(2020, 1, 1), LocalDate.of(2020, 1, 2), 25, 25.58, "age8");
-			cService.updateCoupon(updatedCoupon);
-			cService.deleteCoupon(1);
-			cService.deleteCoupon(4);
+			System.out.println(cService.getCompanyCouponsByCategory(1));
+			System.out.println(cService.getCompanyCouponsByMaxPrice(12));
+						
+			
+//			Coupon updatedCoupon = new Coupon(2 , 3, "updsate", "updsate", LocalDate.of(2020, 1, 1), LocalDate.of(2020, 1, 2), 25, 25.58, "age8");
+//			cService.updateCoupon(updatedCoupon);
+//			cService.deleteCoupon(1);
+//			cService.deleteCoupon(4);
 			
 		} catch (DaoException e) {
 			e.getLocalizedMessage();

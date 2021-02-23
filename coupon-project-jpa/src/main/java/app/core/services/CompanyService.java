@@ -114,11 +114,11 @@ public class CompanyService extends ClientService{
 		return couponRepository.getCouponsByCompanyId(companyId);		
 	}
 	
-	public List<Coupon> getCompanyCouponsByCategory(CategoryEnum category){
+	public List<Coupon> getCompanyCouponsByCategory(int id){
 		List<Coupon> categoryCoupons = new ArrayList<>();
 		List<Coupon> coupons = getCompanyCoupons(); 
 		for (Coupon coupon : coupons ) {
-			if( coupon.getCategory_id() == category.ordinal()+1) {
+			if( coupon.getCategory_id() == id) {
 				categoryCoupons.add(coupon);
 			}
 		}

@@ -70,6 +70,19 @@ public class TestAdminService {
 				adminService.updateCompany(new Company(2, "comp2", "comp@email", "123"));
 				adminService.updateCustomer(new Customer(2, "updatedName", "updatedLast", "updated@email", "qwerty") );
 			}
+			
+			{
+				adminService.getAllCompanies();
+				System.out.println("==============");
+				adminService.getAllCustomers();
+				System.out.println("==============");
+				adminService.getOneCompany(2);
+				System.out.println("==============");
+				adminService.getOneCustomer(3);
+				System.out.println("==============");
+				
+				
+			}
 
 		} catch (DaoException e) {
 			e.printStackTrace();
