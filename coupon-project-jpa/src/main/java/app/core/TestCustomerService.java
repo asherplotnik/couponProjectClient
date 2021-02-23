@@ -1,12 +1,17 @@
 package app.core;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import app.core.couponProjectExceptions.DaoException;
 import app.core.entities.Coupon;
 import app.core.loginManager.LoginManager;
 import app.core.services.CustomerService;
 
+@SpringBootApplication
+@EnableTransactionManagement
 public class TestCustomerService {
 	public static void main(String[] args) {
 		try {

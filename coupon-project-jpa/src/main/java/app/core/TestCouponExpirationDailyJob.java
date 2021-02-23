@@ -1,14 +1,18 @@
 package app.core;
 import java.time.LocalDate;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import app.core.couponProjectExceptions.DaoException;
 import app.core.dailyJob.CouponExpirationDailyJob;
 import app.core.entities.Coupon;
 import app.core.loginManager.LoginManager;
 import app.core.services.CompanyService;
 
-
+@SpringBootApplication
+@EnableTransactionManagement
 public class TestCouponExpirationDailyJob {
 
 	public static void main(String[] args) {
