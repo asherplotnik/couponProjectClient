@@ -49,6 +49,12 @@ public class Customer {
 		this.coupons = new ArrayList<>();
 	}
 	
+	public void addCoupon(Coupon coupon) {
+		if (coupons == null) {
+			coupons = new ArrayList<>();
+		}
+		coupons.add(coupon);
+	}
 	public Customer() {
 		this.coupons = new ArrayList<>();
 	}
@@ -97,14 +103,7 @@ public class Customer {
 	public List<Coupon> getCoupons() throws DaoException{
 		return coupons;
 	}
-	
-	public void addCoupon(Coupon coupon) {
-		if (this.coupons == null) {
-			this.coupons = new ArrayList<>();
-		}
-		coupons.add(coupon);
-	}
-	
+		
 	public void setCoupons(List<Coupon> coupons) {
 		this.coupons = coupons;
 	}

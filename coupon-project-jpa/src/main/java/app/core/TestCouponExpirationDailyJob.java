@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import app.core.couponProjectExceptions.DaoException;
 import app.core.dailyJob.CouponExpirationDailyJob;
-import app.core.entities.Company;
 import app.core.entities.Coupon;
 import app.core.loginManager.LoginManager;
 import app.core.services.CompanyService;
@@ -20,16 +19,17 @@ public class TestCouponExpirationDailyJob {
 			System.out.println("==========  main program  =========");
 			LoginManager loginManager = ctx.getBean(LoginManager.class); 
 			CompanyService companyService = (CompanyService)loginManager.login("comp1@email1", "111", 1);
-			if  (companyService == null)
-				throw new DaoException("Login Failed");
-			Company company = companyService.getCompanyDetails();
-			companyService.addCoupon(new Coupon(0, 8, "expiredCoupon1", "coupon1 description", LocalDate.of(2020,10,15), LocalDate.of(2020,12,15), 15, 5.5, "image"));
+
+			Coupon coupon = new Coupon(3, "yoyoyo", "blblbl", LocalDate.of(2020, 1, 1), LocalDate.of(2022, 1, 2), 25, 25.58, "age8");
+			companyService.addCoupon(coupon);
+			
+			
 			System.out.println(companyService.getCompanyDetails());
-			System.out.println(companyService.getCompanyCoupons(company));
+			System.out.println(companyService.getCompanyCoupons());
 			clearJob.start();
 			Thread.sleep(5000);
-			System.out.println("============after strt job=========");
-			System.out.println(companyService.getCompanyCoupons(company));
+			System.out.println("============after start job=========");
+			System.out.println(companyService.getCompanyCoupons());
 			System.out.println("Bye Bye...");
 			clearJob.interrupt();
 			clearJob.join();

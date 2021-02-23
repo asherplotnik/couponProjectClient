@@ -40,9 +40,7 @@ public class CompanyService extends ClientService{
 	
 	public void addCoupon(Coupon coupon) {
 		try {
-			Company company = companyRepository.getOne(companyId);
-			List<Coupon> coupons = getCompanyCoupons(company);
-			for (Coupon current : coupons) {
+			for (Coupon current : getCompanyCoupons()) {
 				if(current.getTitle().equals(coupon.getTitle())) {
 					throw new DaoException("Add coupon failed. Duplicate title for same company!!!");
 				}
@@ -53,9 +51,8 @@ public class CompanyService extends ClientService{
 			if(coupon.getStart_date().isAfter(coupon.getEnd_date())) {
 				throw new DaoException("Add coupon failed. Coupon end date before coupon start date!!!");				
 			}
-			coupon.setCompany(company);
+			Company company =  getCompanyDetails();
 			company.addCoupon(coupon);
-			couponRepository.save(coupon);
 		} catch (DaoException e) {
 			System.out.println(e.getMessage());
 		}
@@ -66,11 +63,11 @@ public class CompanyService extends ClientService{
 			//database foreign key restrictions on delete cascade will automatically delete all purchases
 			//with permission of Eldar
 			Optional<Coupon> chkCoupon = couponRepository.findById(id);
-			
 			if (chkCoupon.isPresent() && chkCoupon.get().getCompany().getId() == companyId) {
 				couponRepository.deleteById(id);
+				System.out.println("Coupon deleted successfuly!");
 			} else {
-				throw new DaoException("Delete Failed - Coupon not found for this company");
+				throw new DaoException("Delete coupon Failed - Coupon not found for this company");
 			}
 		} catch (DaoException e) {
 			System.out.println(e.getMessage());
@@ -89,9 +86,7 @@ public class CompanyService extends ClientService{
 					throw new DaoException("failed to update - Coupon belong to different company");
 				}
 			}
-			Company company = companyRepository.getOne(companyId);
-			List<Coupon> coupons = getCompanyCoupons(company);
-			for (Coupon current : coupons) {
+			for (Coupon current : getCompanyCoupons()) {
 				if(current.getTitle() == coupon.getTitle() && current.getId() != coupon.getId()) {
 					throw new DaoException("Update coupon failed. Duplicate title for same company!!!");
 				}
@@ -115,15 +110,13 @@ public class CompanyService extends ClientService{
 		}
 	}
 	
-	public List<Coupon> getCompanyCoupons(Company company){
-		company.setCoupons(couponRepository.getCouponsByCompanyId(company.getId()));
-		return company.getCoupons();
+	public List<Coupon> getCompanyCoupons(){
+		return couponRepository.getCouponsByCompanyId(companyId);		
 	}
 	
 	public List<Coupon> getCompanyCouponsByCategory(CategoryEnum category){
 		List<Coupon> categoryCoupons = new ArrayList<>();
-		Company company = companyRepository.getOne(companyId);
-		List<Coupon> coupons = getCompanyCoupons(company); 
+		List<Coupon> coupons = getCompanyCoupons(); 
 		for (Coupon coupon : coupons ) {
 			if( coupon.getCategory_id() == category.ordinal()+1) {
 				categoryCoupons.add(coupon);
@@ -134,8 +127,7 @@ public class CompanyService extends ClientService{
 	
 	public List<Coupon> getCompanyCouponsByMaxPrice(double maxPrice){
 		List<Coupon> maxCoupons = new ArrayList<>();
-		Company company = companyRepository.getOne(companyId);
-		List<Coupon> companyCoupons = getCompanyCoupons(company); 
+		List<Coupon> companyCoupons = getCompanyCoupons(); 
 		for (Coupon coupon : companyCoupons ) {
 			if( coupon.getPrice() <= maxPrice) {
 				maxCoupons.add(coupon);
@@ -145,7 +137,11 @@ public class CompanyService extends ClientService{
 	}
 	
 	public Company getCompanyDetails() {
-		return companyRepository.getOne(companyId);
+		Optional<Company> opt =  companyRepository.findById(companyId);
+		if (opt.isPresent()) {
+			return opt.get();
+		}
+		return null;
 	}
 	
 	

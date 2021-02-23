@@ -14,20 +14,7 @@ import app.core.entities.CategoryEnum;
 @Service
 @Transactional
 public class CustomerService extends ClientService{
-	private Customer customer;
-	/**
-	 * constructor
-	 * 
-	 * @param username
-	 * @param password
-	 * @throws DaoException
-	 */
-	
-//	public CustomerService(String email, String password) throws DaoException {
-//		if (!login(email,password)) {
-//			throw new DaoException("Login customer failed!!!");
-//		}
-//	}
+	private int customerId;
 	
 	public CustomerService() {
 	}
@@ -35,31 +22,23 @@ public class CustomerService extends ClientService{
 	public boolean login(String email, String password) {
 		Customer cust = customerRepository.getByEmail(email);
 		if (cust != null && cust.getPassword().equals(password)) {
-			this.customer = cust;
+			this.customerId = cust.getId();
 			return true;
 		} 
 		return false;
 	}
 
 	public int getCustomerId() {
-		try {
-			assureLogged();
-			return customer.getId();
-		} catch (DaoException e) {
-			e.printStackTrace();
-		}
-		return -1;
+		return customerId;
 	}
 	
 	public void purchaseCoupon(Coupon coupon) {
 		try {
-			assureLogged();
 			Coupon temp=null;
 			Optional<Coupon> opt = couponRepository.findById(coupon.getId());
 			if (opt.isPresent()) {
 				temp = opt.get();
-			}
-					if (!coupon.equals(temp)) {
+			} else {				
 				throw new DaoException("Cant puchase this coupon  - Coupon don't exists!!!");
 			}
 			if (temp.getAmount() == 0) {
@@ -72,31 +51,33 @@ public class CustomerService extends ClientService{
 			if (getCustomerCoupons().contains(temp)) {
 				throw new DaoException("Cant puchase this coupon more than once - Coupon already purchased.");
 			}
-			customer.addCoupon(coupon);
-			//customerRepository.addCoupon(customer.getId(),coupon.getId());
+			Customer customer = getCustomerDetails(); 
+			temp.setAmount(temp.getAmount()-1);
+			customer.addCoupon(temp);
 			System.out.println("Purchased coupon successfully !");
 			
 		} catch (DaoException e) {
 			System.out.println(e.getMessage());
-			//e.printStackTrace();
 		}
 	}
 	
-	public List<Coupon> getCustomerCoupons(){
-		try {
-			assureLogged();
-			return couponRepository.getCouponsByCustomersId(customer.getId());
-		} catch (DaoException e) {
-			e.printStackTrace();
+	public Coupon getCouponById(int id){
+		Optional<Coupon> opt = couponRepository.findById(id);
+		if (opt.isPresent()) {
+			return opt.get();
 		}
 		return null;
 	}
 	
-	public List<Coupon> getCustomerCouponsByCategory(CategoryEnum category){
+	public List<Coupon> getCustomerCoupons(){
+		return couponRepository.getCouponsByCustomersId(customerId);
+	}
+	
+	public List<Coupon> getCustomerCouponsByCategory(int i){
 		List<Coupon> list = getCustomerCoupons();
 		List<Coupon> cList = new ArrayList<>();
 		for (Coupon curr : list) {
-			if (curr.getCategory_id() == category.ordinal()+1) {
+			if (curr.getCategory_id() == i) {
 				cList.add(curr);
 			}
 		}
@@ -114,17 +95,10 @@ public class CustomerService extends ClientService{
 		return cList;
 	}
 	
-	private void assureLogged() throws DaoException {
-		if (this.customer == null)
-			throw new DaoException("CUSTOMER NOT LOGGED IN!!!");
-	}
-	
 	public Customer getCustomerDetails() {
-		try {
-			assureLogged();
-			return this.customer;
-		} catch (DaoException e) {
-			e.printStackTrace();
+		Optional<Customer> opt =  customerRepository.findById(customerId);
+		if (opt.isPresent()) {
+			return opt.get();
 		}
 		return null;
 	}
