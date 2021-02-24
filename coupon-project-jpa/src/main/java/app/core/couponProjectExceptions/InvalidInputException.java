@@ -2,6 +2,8 @@ package app.core.couponProjectExceptions;
 /**
  * this exception manage connection to storage errors.
  * @author ASHER
+ * 
+ * 
  */
 public class InvalidInputException extends CouponProjectException {
 	private static final long serialVersionUID = 1L;
