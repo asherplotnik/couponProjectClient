@@ -8,10 +8,17 @@ import app.core.entities.Coupon;
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 
 	List<Coupon> getCouponsByCustomersId(Integer customerId);
+	
+	List<Coupon> getCouponsByCustomersIdAndCategoryId(Integer customerId, int categoryId);
 
-	List<Coupon> getCouponsByCompanyId(int id);
+	List<Coupon> getCouponsByCustomersIdAndPriceLessThan(Integer customerId, double maxPrice);
+	
+	List<Coupon> getCouponsByCompanyId(Integer companyId);
+	
+	List<Coupon> getCouponsByCompanyIdAndCategoryId(Integer companyId, int categoryId);
+	
+	List<Coupon> getCouponsByCompanyIdAndPriceLessThan(Integer customerId, double maxPrice);
 	
 	List<Coupon> getCouponsByEndDateBefore(LocalDate date);
-	
 	
 }

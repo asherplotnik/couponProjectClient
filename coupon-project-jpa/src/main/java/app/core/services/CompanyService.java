@@ -1,9 +1,10 @@
 package app.core.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
+
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import app.core.entities.CategoryEnum;
 import app.core.entities.Company;
@@ -12,6 +13,7 @@ import app.core.couponProjectExceptions.DaoException;
 
 @Service
 @Transactional
+@Scope("prototype")
 public class CompanyService extends ClientService{
 	private int companyId;
 	
@@ -115,25 +117,11 @@ public class CompanyService extends ClientService{
 	}
 	
 	public List<Coupon> getCompanyCouponsByCategory(int id){
-		List<Coupon> categoryCoupons = new ArrayList<>();
-		List<Coupon> coupons = getCompanyCoupons(); 
-		for (Coupon coupon : coupons ) {
-			if( coupon.getCategory_id() == id) {
-				categoryCoupons.add(coupon);
-			}
-		}
-		return categoryCoupons;
+		return couponRepository.getCouponsByCompanyIdAndCategoryId(companyId, id);		
 	}
 	
 	public List<Coupon> getCompanyCouponsByMaxPrice(double maxPrice){
-		List<Coupon> maxCoupons = new ArrayList<>();
-		List<Coupon> companyCoupons = getCompanyCoupons(); 
-		for (Coupon coupon : companyCoupons ) {
-			if( coupon.getPrice() <= maxPrice) {
-				maxCoupons.add(coupon);
-			}
-		}
-		return maxCoupons;
+		return couponRepository.getCouponsByCompanyIdAndPriceLessThan(companyId, maxPrice);	
 	}
 	
 	public Company getCompanyDetails() {

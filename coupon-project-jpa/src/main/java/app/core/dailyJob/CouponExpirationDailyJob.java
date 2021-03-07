@@ -2,6 +2,7 @@ package app.core.dailyJob;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import app.core.services.DailyJobService;
@@ -31,9 +32,10 @@ public class CouponExpirationDailyJob implements Runnable {
 					System.out.println();
 					Thread.sleep(86400000);
 			}
+		} catch(DataAccessException e) {
+			e.printStackTrace();
 		} catch (InterruptedException ex) {
 			System.out.println("clear job stopped");
-			//ex.printStackTrace();
 		}
 	}
 }

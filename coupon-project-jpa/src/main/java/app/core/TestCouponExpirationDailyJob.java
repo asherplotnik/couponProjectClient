@@ -22,9 +22,9 @@ public class TestCouponExpirationDailyJob {
 			Thread clearJob = new Thread(job, "cedj1");
 			System.out.println("==========  main program  =========");
 			LoginManager loginManager = ctx.getBean(LoginManager.class); 
-			CompanyService companyService = (CompanyService)loginManager.login("comp1@email1", "111", 1);
+			CompanyService companyService = (CompanyService)loginManager.login("comp@email", "123", 1);
 
-			Coupon coupon = new Coupon(3, "yoyoyo", "blblbl", LocalDate.of(2020, 1, 1), LocalDate.of(2022, 1, 2), 25, 25.58, "age8");
+			Coupon coupon = new Coupon(3, "yoyoyo", "blblbl", LocalDate.of(2020, 1, 1), LocalDate.of(2022, 1, 4), 25, 25.58, "age8");
 			companyService.addCoupon(coupon);
 			
 			
@@ -40,7 +40,7 @@ public class TestCouponExpirationDailyJob {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (DaoException e) {
-			e.printStackTrace();
+			System.out.println(e.getLocalizedMessage());
 		}
 
 	}

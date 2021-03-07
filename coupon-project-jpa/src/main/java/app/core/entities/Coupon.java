@@ -28,7 +28,7 @@ public class Coupon {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private int category_id;
+	private int categoryId;
 	private String title; 
 	private String description;
 	private LocalDate startDate;
@@ -45,7 +45,7 @@ public class Coupon {
 	public Coupon(int id, int category_id, String title, String description, LocalDate start_date,
 			LocalDate end_date, int amount, double price, String image) {
 		this.id = id;
-		this.category_id = category_id;
+		this.categoryId = category_id;
 		this.title = title;
 		this.description = description;
 		this.startDate = start_date;
@@ -56,7 +56,7 @@ public class Coupon {
 	}
 	public Coupon(int category_id, String title, String description, LocalDate start_date,
 			LocalDate end_date, int amount, double price, String image) {
-		this.category_id = category_id;
+		this.categoryId = category_id;
 		this.title = title;
 		this.description = description;
 		this.startDate = start_date;
@@ -90,11 +90,11 @@ public class Coupon {
 	}
 
 	public int getCategory_id() {
-		return category_id;
+		return categoryId;
 	}
 
 	public void setCategory_id(int category_id) {
-		this.category_id = category_id;
+		this.categoryId = category_id;
 	}
 
 	public String getTitle() {
@@ -179,7 +179,7 @@ public class Coupon {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + amount;
-		result = prime * result + category_id;
+		result = prime * result + categoryId;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + id;
@@ -208,7 +208,7 @@ public class Coupon {
 
 	@Override
 	public String toString() {
-		return "ID: " + id + " , COMPANY ID: " + company.getId() + ", CATEGORY ID: " + category_id + " , TITLE: " + title
+		return "ID: " + id + " , COMPANY ID: " + company.getId() + ", CATEGORY ID: " + categoryId + " , TITLE: " + title
 				+ " , DESCRIPTION: " + description + " , START DATE: " + startDate + " , END DATE: " + endDate + " , AMOUNT: "
 				+ amount + " , PRICE: " + price + " , IMAGE: " + image;
 	}

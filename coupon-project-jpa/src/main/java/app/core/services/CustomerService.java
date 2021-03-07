@@ -1,18 +1,19 @@
 package app.core.services;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
+
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import app.core.couponProjectExceptions.DaoException;
 import app.core.entities.Coupon;
 import app.core.entities.Customer;
-import app.core.entities.CategoryEnum;
 
 @Service
 @Transactional
+@Scope("prototype")
 public class CustomerService extends ClientService{
 	private int customerId;
 	
@@ -73,26 +74,13 @@ public class CustomerService extends ClientService{
 		return couponRepository.getCouponsByCustomersId(customerId);
 	}
 	
-	public List<Coupon> getCustomerCouponsByCategory(int i){
-		List<Coupon> list = getCustomerCoupons();
-		List<Coupon> cList = new ArrayList<>();
-		for (Coupon curr : list) {
-			if (curr.getCategory_id() == i) {
-				cList.add(curr);
-			}
-		}
-		return cList;
+	public List<Coupon> getCustomerCouponsByCategory(int categoryId){
+		return couponRepository.getCouponsByCustomersIdAndCategoryId(customerId, categoryId);
+	
 	}
 	
 	public List<Coupon> getCustomerCouponsByMaxPrice(double maxPrice ){
-		List<Coupon> list = getCustomerCoupons();
-		List<Coupon> cList = new ArrayList<>();
-		for (Coupon curr : list) {
-			if (curr.getPrice() <= maxPrice) {
-				cList.add(curr);
-			}
-		}
-		return cList;
+		return couponRepository.getCouponsByCustomersIdAndPriceLessThan(customerId, maxPrice);
 	}
 	
 	public Customer getCustomerDetails() {
