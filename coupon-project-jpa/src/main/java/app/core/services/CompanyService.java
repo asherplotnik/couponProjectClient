@@ -42,10 +42,8 @@ public class CompanyService extends ClientService{
 	
 	public void addCoupon(Coupon coupon) {
 		try {
-			for (Coupon current : getCompanyCoupons()) {
-				if(current.getTitle().equals(coupon.getTitle())) {
-					throw new DaoException("Add coupon failed. Duplicate title for same company!!!");
-				}
+			if(couponRepository.getFirstByTitleAndCompanyId(coupon.getTitle(),companyId).isPresent()) {
+				throw new DaoException("Add coupon failed. Duplicate title for same company!!!");
 			}
 			if (coupon.getCategory_id() <= 0 || coupon.getCategory_id() > CategoryEnum.values().length) {
 				throw new DaoException("Add coupon failed. Category id out of range!!!");
@@ -88,11 +86,11 @@ public class CompanyService extends ClientService{
 					throw new DaoException("failed to update - Coupon belong to different company");
 				}
 			}
-			for (Coupon current : getCompanyCoupons()) {
-				if(current.getTitle() == coupon.getTitle() && current.getId() != coupon.getId()) {
-					throw new DaoException("Update coupon failed. Duplicate title for same company!!!");
-				}
+			Optional<Coupon> duplicate = couponRepository.getFirstByTitleAndCompanyId(coupon.getTitle(),companyId);
+			if(duplicate.isPresent() && duplicate.get().getId()> coupon.getId()) {
+				throw new DaoException("Update coupon failed. Duplicate title for same company!!!");
 			}
+			
 			if (coupon.getCategory_id() <= 0 || coupon.getCategory_id() > CategoryEnum.values().length) {
 				throw new DaoException("Update coupon failed - Category id out of range!!!");
 			}

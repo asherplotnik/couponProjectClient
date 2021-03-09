@@ -9,11 +9,11 @@ function UpdateCompanyForm(props) {
     const updateCompanyHandler = (e) =>{
         e.preventDefault();
         const formData = new FormData(document.querySelector("#updateCompanyForm"));
-        const userid = parseInt(formData.get("userid"));
+        const companyId = parseInt(fetchedCompany.id);
         const email = formData.get("email");
         const password = formData.get("password");
-        const name = document.querySelector("#username").value;
-        axios.post('http://localhost:8080//api/admin/updateCompany',{'id':userid,'password':password,'email':email,'name':name},{'headers':{'token':token}})
+        const name = document.querySelector("#companyName").value;
+        axios.post('http://localhost:8080//api/admin/updateCompany',{'id':companyId,'password':password,'email':email,'name':name},{'headers':{'token':token}})
         .then(function (response) {
             setFetchedData(JSON.stringify(response.data));
         })
@@ -24,7 +24,7 @@ function UpdateCompanyForm(props) {
 
     const fetchCompanyByIdHandler = (e) =>{
         e.preventDefault();
-        const companyId = parseInt(document.querySelector("#userid").value);
+        const companyId = parseInt(document.querySelector("#companyId").value);
         axios.get('http://localhost:8080//api/admin/getCompany/'+companyId,{'headers':{'token':token}})
         .then(function (response) {
             setFetchedCompany(response.data);
@@ -39,9 +39,9 @@ function UpdateCompanyForm(props) {
     return (
         <div>
         <form id = "updateCompanyForm" onSubmit={updateCompanyHandler}>
-            <label> ID: </label><input id="userid" name="userid"/> 
+            <label> ID: </label><input id="companyId" name="companyId"/> 
             <button id="fetch" onClick={fetchCompanyByIdHandler}> FETCH </button>
-            <label> name: </label><input disabled = {true} id="username" name="username" defaultValue={fetchedCompany.name}/> 
+            <label> name: </label><input disabled = {true} id="companyName" name="companyName" defaultValue={fetchedCompany.name}/> 
             <label> Email: </label><input name="email" defaultValue={fetchedCompany.email}/> 
             <label> password: </label><input name = "password" defaultValue={fetchedCompany.password}/> 
             <button type="submit">SUBMIT</button>

@@ -1,13 +1,13 @@
 
 import axios from 'axios';
 import {localUrl} from '../helper';
-import { useEffect, useRef, useState  } from 'react';
-  const GetAllCompanies = (props) => {
+import { useEffect, useState  } from 'react';
+  const GetAllCustomers = (props) => {
 
   const token = props.token;
     const [st,setSt] = useState("");
     useEffect(()=> {
-    axios.get(localUrl+':8080//api/admin/getAllCompanies',{'headers': {'token':token}})
+    axios.get(localUrl+':8080//api/admin/getAllCustomers',{'headers': {'token':token}})
       .then(function (response) {
         setSt(<div>{response.data.map((company,index) => <p key={index}>{JSON.stringify(company)}</p>)}</div>);
       })
@@ -21,4 +21,4 @@ import { useEffect, useRef, useState  } from 'react';
     </div>
   );
 };
-export default GetAllCompanies;
+export default GetAllCustomers;
