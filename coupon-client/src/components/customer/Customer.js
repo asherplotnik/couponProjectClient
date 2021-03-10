@@ -2,11 +2,16 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../redux/actions";
 import PurchaseCoupon from "./PurchaseCoupon";
-import App from "../../App";
+import GetCustomerCoupons from "./GetCustomerCoupons";
+import GetCustomerCouponsByCategoryId from "./GetCustomerCouponsByCategoty";
+import GetCustomerCouponsByMaxPrice from "./GetCompanyCouponsByMaxPrice";
+import { useHistory } from "react-router-dom";
+import GetCustomerDetails from "./GetCustomerDetails";
 
 function Customer() {
   const [subFormState, setSubFormState] = useState(0);
   const dispatch = useDispatch();
+  const history = useHistory();
   let subForm = "";
   let token = useSelector((state) => state.token);
 
@@ -20,9 +25,21 @@ function Customer() {
     case 1:
       subForm = <PurchaseCoupon token={token} />;
       break;
-    case 8:
+    case 2:
+      subForm = <GetCustomerCoupons token={token} />;
+      break;
+    case 3:
+      subForm = <GetCustomerCouponsByCategoryId token={token} />;
+      break;
+    case 4:
+      subForm = <GetCustomerCouponsByMaxPrice token={token} />;
+      break;
+    case 5:
+      subForm = <GetCustomerDetails token={token} />;
+      break;
+    case 6:
       dispatch(actions.setSession("", -1));
-      return <App />;
+      history.push("/login");
     default:
       subForm = <div></div>;
   }

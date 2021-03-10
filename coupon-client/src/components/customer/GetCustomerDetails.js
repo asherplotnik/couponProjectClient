@@ -1,22 +1,16 @@
 import axios from "axios";
 import { localUrl } from "../helper";
 import { useEffect, useState } from "react";
-const GetCustomerCoupons = (props) => {
+const GetCustomerDetails = (props) => {
   const token = props.token;
   const [st, setSt] = useState("");
   useEffect(() => {
     axios
-      .get(localUrl + ":8080//api/customer/getCustomerCoupons", {
+      .get(localUrl + ":8080//api/customer/getCustomerDetails", {
         headers: { token: token },
       })
       .then(function (response) {
-        setSt(
-          <div>
-            {response.data.map((coupon, index) => (
-              <p key={index}>{JSON.stringify(coupon)}</p>
-            ))}
-          </div>
-        );
+        setSt(JSON.stringify(response.data));
       })
       .catch(function (error) {
         console.log(error);
@@ -26,4 +20,4 @@ const GetCustomerCoupons = (props) => {
   return <div>{st}</div>;
 };
 
-export default GetCustomerCoupons;
+export default GetCustomerDetails;

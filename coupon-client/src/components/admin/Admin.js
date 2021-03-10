@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../redux/actions";
 import AddCompanyForm from "./AddCompanyForm";
@@ -11,10 +12,10 @@ import GetAllCompanies from "./GetAllCompanies";
 import GetAllCustomers from "./GetAllCustomers";
 import GetCompany from "./GetCompanyForm";
 import GetCustomer from "./GetCustomerForm";
-import App from "../../App";
 function Admin() {
   const [subFormState, setSubFormState] = useState(0);
   const dispatch = useDispatch();
+  const history = useHistory();
   let subForm = "";
   let token = useSelector((state) => state.token);
 
@@ -57,7 +58,7 @@ function Admin() {
       break;
     case 11:
       dispatch(actions.setSession("", -1));
-      return <App />;
+      history.push("/login");
     default:
       subForm = <div></div>;
   }
