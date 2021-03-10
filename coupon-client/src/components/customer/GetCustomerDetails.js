@@ -15,7 +15,7 @@ const GetCustomerDetails = (props) => {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [token]);
 
   return <div>{st}</div>;
 };

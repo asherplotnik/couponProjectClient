@@ -21,7 +21,7 @@ const GetCustomerCoupons = (props) => {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [token]);
 
   return <div>{st}</div>;
 };

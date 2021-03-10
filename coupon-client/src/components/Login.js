@@ -3,7 +3,7 @@ import { localUrl } from "./helper";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as actions from "../redux/actions";
-
+import classes from "./Login.module.css";
 function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -27,18 +27,44 @@ function Login() {
 
   let userT = useSelector((state) => state.userType);
   let loginView = (
-    <div>
-      <h1>MY COUPON API</h1>
-      <div>
-        <form id="loginForm" onSubmit={fetchLogin}>
-          <label>Email :</label> <input id="email" name="email" />{" "}
-          <label>Password:</label>
-          <input id="password" name="password" /> <label>User type:</label>{" "}
-          <input id="userType" name="userType" />
-          <button id="submitButtorm" type="submit">
-            SUBMIT
-          </button>
-        </form>
+    <div className={classes.windowDiv}>
+      <div className={classes.wrraperDiv}>
+        <h1 className={classes.h1}>COUPONS API</h1>
+        <div>
+          <form id="loginForm" onSubmit={fetchLogin} className={classes.form}>
+            <div className={classes.ulForm}>
+              <div className={classes.ulFormList}>
+                <label htmlFor="email">Email :</label>
+                <input id="email" name="email" required />
+              </div>
+              <div className={classes.ulFormList}>
+                <label htmlFor="password">Password:</label>
+                <input
+                  id="password"
+                  name="password"
+                  required
+                  type="password"
+                />{" "}
+              </div>
+              <div className={classes.ulFormList}>
+                <label htmlFor="userType">User type:</label>{" "}
+                <select
+                  id="userType"
+                  name="userType"
+                  required
+                  className={classes.select}
+                >
+                  ><option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                </select>
+              </div>
+            </div>
+            <button id="submitButtorm" type="submit">
+              SUBMIT
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

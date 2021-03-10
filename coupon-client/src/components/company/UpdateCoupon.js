@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { localUrl } from "../helper";
 
 const UpdateCoupon = (props) => {
   const token = props.token;
@@ -31,7 +32,7 @@ const UpdateCoupon = (props) => {
 
     axios
       .post(
-        "http://localhost:8080//api/company/updateCoupon",
+        localUrl + ":8080//api/company/updateCoupon",
         {
           id: couponId,
           categoryId: categoryId,
@@ -56,7 +57,7 @@ const UpdateCoupon = (props) => {
     e.preventDefault();
     const cId = parseInt(document.querySelector("#couponId").value);
     axios
-      .get("http://localhost:8080//api/company/getCompanyCouponById/" + cId, {
+      .get(localUrl + ":8080//api/company/getCompanyCouponById/" + cId, {
         headers: { token: token },
       })
       .then(function (response) {

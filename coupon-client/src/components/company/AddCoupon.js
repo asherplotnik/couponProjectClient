@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { localUrl } from "../helper";
 
 const AddCoupon = (props) => {
   const token = props.token;
@@ -20,7 +21,7 @@ const AddCoupon = (props) => {
 
     axios
       .post(
-        "http://localhost:8080//api/company/addCoupon",
+        localUrl + ":8080//api/company/addCoupon",
         {
           id: 0,
           categoryId: categoryId,

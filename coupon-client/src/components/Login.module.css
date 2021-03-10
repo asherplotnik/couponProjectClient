@@ -1,0 +1,49 @@
+.windowDiv {
+  height: 100vh;
+  vertical-align: middle;
+  display: flex;
+}
+
+.wrraperDiv {
+  border-radius: 5px;
+  width: 35%;
+  background-color: rgb(212, 211, 224);
+  margin: auto;
+  text-align: center;
+  top: 30%;
+  left: 30%;
+}
+
+.h1 {
+  text-align: center;
+  color: rgb(76, 75, 80);
+}
+
+.ulForm {
+  width: 70%;
+  margin: auto;
+}
+
+.ulFormList {
+  color: rgb(76, 75, 80);
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.form {
+  margin: 5%;
+}
+.select {
+  width: 50px;
+}
+
+@media screen and (max-width: 1120px) {
+  .ulForm {
+    width: 100%;
+  }
+
+  .wrraperDiv {
+    width: 90%;
+  }
+}

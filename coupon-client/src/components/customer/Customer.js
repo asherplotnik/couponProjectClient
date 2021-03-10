@@ -40,6 +40,7 @@ function Customer() {
     case 6:
       dispatch(actions.setSession("", -1));
       history.push("/login");
+      break;
     default:
       subForm = <div></div>;
   }

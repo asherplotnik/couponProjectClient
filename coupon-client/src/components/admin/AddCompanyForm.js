@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { localUrl } from "../helper";
 
 function AddCompanyForm(props) {
   const token = props.token;
@@ -14,7 +15,7 @@ function AddCompanyForm(props) {
 
     axios
       .post(
-        "http://localhost:8080//api/admin/addCompany",
+        localUrl + ":8080//api/admin/addCompany",
         { id: 0, password: password, email: email, name: username },
         { headers: { token: token } }
       )

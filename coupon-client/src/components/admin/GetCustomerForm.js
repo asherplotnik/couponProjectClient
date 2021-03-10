@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { localUrl } from "../helper";
 const GetCustomer = (props) => {
   const token = props.token;
   let [fetchedCustomer, setFetchedCustomer] = useState("");
@@ -10,7 +11,7 @@ const GetCustomer = (props) => {
     const formData = new FormData(document.querySelector("#getCustomerForm"));
     const customerId = parseInt(formData.get("customerId"));
     axios
-      .get("http://localhost:8080//api/admin/getCustomer/" + customerId, {
+      .get(localUrl + ":8080//api/admin/getCustomer/" + customerId, {
         headers: { token: token },
       })
       .then(function (response) {
@@ -20,10 +21,9 @@ const GetCustomer = (props) => {
         console.log(error);
       });
     axios
-      .get(
-        "http://localhost:8080//api/admin/getCustomerCoupons/" + customerId,
-        { headers: { token: token } }
-      )
+      .get(localUrl + ":8080//api/admin/getCustomerCoupons/" + customerId, {
+        headers: { token: token },
+      })
       .then(function (response) {
         setFetchedCoupons(JSON.stringify(response.data));
       })

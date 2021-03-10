@@ -12,6 +12,7 @@ import GetAllCompanies from "./GetAllCompanies";
 import GetAllCustomers from "./GetAllCustomers";
 import GetCompany from "./GetCompanyForm";
 import GetCustomer from "./GetCustomerForm";
+import classes from "./Admin.module.css";
 function Admin() {
   const [subFormState, setSubFormState] = useState(0);
   const dispatch = useDispatch();
@@ -59,13 +60,14 @@ function Admin() {
     case 11:
       dispatch(actions.setSession("", -1));
       history.push("/login");
+      break;
     default:
       subForm = <div></div>;
   }
 
   return (
     <div>
-      <h2>Admin Menu</h2>
+      <h2 className={classes.h2}>Admin Menu</h2>
       <form id="actionForm" onSubmit={actionSelector}>
         <label>Choose Action: </label>
         <input name="action" />

@@ -42,7 +42,7 @@ const PurchaseCoupon = (props) => {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [token]);
   return (
     <div>
       <p>Coupon List</p>

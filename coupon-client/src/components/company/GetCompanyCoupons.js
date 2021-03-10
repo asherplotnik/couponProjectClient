@@ -21,7 +21,7 @@ const GetCompanyCoupons = (props) => {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [token]);
 
   return <div>{st}</div>;
 };

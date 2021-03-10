@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 const App = () => {
   let user = useSelector((state) => state.userType);
-  const guard = (childComponent) => {
-    if (user > -1) {
+  const guard = (childComponent, usrtType) => {
+    if (user === usrtType) {
       return childComponent;
     } else {
       return Login;
@@ -18,9 +18,9 @@ const App = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/login" component={Login} />;
-        <Route path="/admin" component={guard(Admin)} />;
-        <Route path="/company" component={guard(Company)} />;
-        <Route path="/customer" component={guard(Customer)} />;
+        <Route path="/admin" component={guard(Admin, 0)} />;
+        <Route path="/company" component={guard(Company, 1)} />;
+        <Route path="/customer" component={guard(Customer, 2)} />;
         <Route path="/" component={Login} />;
       </Switch>
     </BrowserRouter>

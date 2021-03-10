@@ -47,6 +47,7 @@ function Company() {
     case 8:
       dispatch(actions.setSession("", -1));
       history.push("/login");
+      break;
     default:
       subForm = <div></div>;
   }
