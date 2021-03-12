@@ -2,7 +2,10 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
-
+import classes from "./AddCoupon.module.css";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import CouponTable from "../UI/CouponTable";
 const UpdateCoupon = (props) => {
   const token = props.token;
   let [fetchedCoupon, setFetchedCoupon] = useState({
@@ -47,10 +50,10 @@ const UpdateCoupon = (props) => {
         { headers: { token: token } }
       )
       .then(function (response) {
-        setFetchedData(JSON.stringify(response.data));
+        setFetchedData(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        setFetchedData(error);
       });
   };
   const fetchCouponByIdHandler = (e) => {
@@ -61,49 +64,80 @@ const UpdateCoupon = (props) => {
         headers: { token: token },
       })
       .then(function (response) {
+        document.getElementById("updateCouponForm").reset();
         setFetchedCoupon(response.data);
-        console.log(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        document.getElementById("updateCouponForm").reset();
       });
   };
   return (
-    <div>
-      <form id="updateCouponForm" onSubmit={updateCouponHandler}>
-        <label>ID: </label>
-        <input id="couponId" name="couponId" />
-        <button id="fetch" onClick={fetchCouponByIdHandler}>
+    <div className={classes.formDiv}>
+      <Form id="updateCouponForm" onSubmit={updateCouponHandler}>
+        <Form.Group>
+          <Form.Label>ID: </Form.Label>
+          <Form.Control
+            id="couponId"
+            name="couponId"
+            defaultValue={fetchedCoupon.id}
+          />
+        </Form.Group>
+        <Button id="fetch" onClick={fetchCouponByIdHandler}>
           FETCH
-        </button>
-        <label>Category ID: </label>
-        <input name="categoryId" defaultValue={fetchedCoupon.categoryId} />
-        <label>Title: </label>
-        <input name="title" defaultValue={fetchedCoupon.title} />
-        <label>Description: </label>
-        <input name="description" defaultValue={fetchedCoupon.description} />
-        <label>Start date: </label>
-        <input
-          type="date"
-          name="startDate"
-          defaultValue={fetchedCoupon.startDate}
-        />
-        <label>End date: </label>
-        <input
-          type="date"
-          name="endDate"
-          defaultValue={fetchedCoupon.endDate}
-        />
-        <label>Amount: </label>
-        <input name="amount" defaultValue={fetchedCoupon.amount} />
-        <label>Price: </label>
-        <input name="price" defaultValue={fetchedCoupon.price} />
-        <label>Image: </label>
-        <input name="image" defaultValue={fetchedCoupon.image} />
-        <button type="submit">SUBMIT</button>
-      </form>
+        </Button>
+        <Form.Group>
+          <Form.Label>Category ID: </Form.Label>
+          <Form.Control
+            name="categoryId"
+            type="number"
+            min="1"
+            max="5"
+            defaultValue={fetchedCoupon.id}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Title: </Form.Label>
+          <Form.Control name="title" defaultValue={fetchedCoupon.title} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Description: </Form.Label>
+          <Form.Control
+            name="description"
+            defaultValue={fetchedCoupon.description}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Start date: </Form.Label>
+          <Form.Control
+            type="date"
+            name="startDate"
+            defaultValue={fetchedCoupon.startDate}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>End date: </Form.Label>
+          <Form.Control
+            type="date"
+            name="endDate"
+            defaultValue={fetchedCoupon.endDate}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Amount: </Form.Label>
+          <Form.Control name="amount" defaultValue={fetchedCoupon.amount} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Price: </Form.Label>
+          <Form.Control name="price" defaultValue={fetchedCoupon.price} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Image: </Form.Label>
+          <Form.Control name="image" defaultValue={fetchedCoupon.image} />
+        </Form.Group>
+        <Button type="submit">SUBMIT</Button>
+      </Form>
       <div>
-        <p>{fetchedData}</p>
+        <CouponTable data={fetchedData} title="COUPON UPDATED SUCCESSFULY" />
       </div>
     </div>
   );

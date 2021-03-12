@@ -1,13 +1,26 @@
-.h2 {
+.divClass {
   text-align: center;
-  color: rgb(76, 75, 80);
 }
 
-.formDiv {
-  margin: 5% 30%;
+.tableDiv {
+  width: 100%;
   border: solid 1px lightgray;
   border-radius: 5px;
   padding: 5px;
   box-shadow: 0 4px 8px 0 rgba(189, 187, 187, 0.2),
     0 3px 10px 0 rgba(83, 83, 83, 0.19);
+}
+
+.h3Div {
+  text-align: center;
+}
+
+.tableRow {
+  font-size: small;
+}
+
+@media (max-width: 800px) {
+  .tableRow {
+    font-size: xx-small;
+  }
 }

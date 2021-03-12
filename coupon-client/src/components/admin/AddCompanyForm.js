@@ -2,10 +2,13 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
-
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import classes from "./AddCompanyForm.module.css";
+import CompanyTable from "../UI/CompanyTable";
 function AddCompanyForm(props) {
   const token = props.token;
-  let [fetchedData, setFetchedData] = useState("");
+  let [fetchedCompany, setfetchedCompany] = useState("");
   const addCompanyHandler = (e) => {
     e.preventDefault();
     const formData = new FormData(document.querySelector("#addCompanyForm"));
@@ -20,24 +23,32 @@ function AddCompanyForm(props) {
         { headers: { token: token } }
       )
       .then(function (response) {
-        setFetchedData(JSON.stringify(response.data));
+        setfetchedCompany(response.data);
       })
       .catch(function (error) {
+        setfetchedCompany(error);
         console.log(error);
       });
   };
 
   return (
-    <div>
-      <form id="addCompanyForm" onSubmit={addCompanyHandler}>
-        <label>Name: </label>
-        <input name="username" /> <label>Email: </label>
-        <input name="email" /> <label>password: </label>
-        <input name="password" /> <button type="submit">SUBMIT</button>
-      </form>
-      <div>
-        <p>{fetchedData}</p>
-      </div>
+    <div className={classes.formDiv}>
+      <Form id="addCompanyForm" onSubmit={addCompanyHandler}>
+        <Form.Group>
+          <Form.Label>Name: </Form.Label>
+          <Form.Control name="username" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Email: </Form.Label>
+          <Form.Control name="email" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>password: </Form.Label>
+          <Form.Control name="password" />
+        </Form.Group>
+        <Button type="submit">SUBMIT</Button>
+      </Form>
+      <CompanyTable data={fetchedCompany} title="COMPANY ADDED SUCCESSFULY" />
     </div>
   );
 }

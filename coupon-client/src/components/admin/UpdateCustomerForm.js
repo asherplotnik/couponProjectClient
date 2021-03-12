@@ -2,10 +2,13 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
-
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import CustomerTable from "../UI/CustomerTable";
+import classes from "./UpdateCustomerForm.module.css";
 function UpdateCustomerForm(props) {
   const token = props.token;
-  let [fetchedCustomer, setFetchedCompany] = useState({
+  let [fetchedCustomer, setFetchedCustomer] = useState({
     id: "",
     password: "",
     email: "",
@@ -23,7 +26,6 @@ function UpdateCustomerForm(props) {
     const password = formData.get("password");
     const firstName = formData.get("firstName");
     const lastName = formData.get("lastName");
-
     axios
       .post(
         localUrl + ":8080//api/admin/updateCustomer",
@@ -37,14 +39,14 @@ function UpdateCustomerForm(props) {
         { headers: { token: token } }
       )
       .then(function (response) {
-        setFetchedData(JSON.stringify(response.data));
+        setFetchedData(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        setFetchedData(error);
       });
   };
 
-  const fetchCompanyByIdHandler = (e) => {
+  const fetchCustomerByIdHandler = (e) => {
     e.preventDefault();
     const customerId = parseInt(document.querySelector("#customerId").value);
     axios
@@ -52,43 +54,62 @@ function UpdateCustomerForm(props) {
         headers: { token: token },
       })
       .then(function (response) {
-        setFetchedCompany(response.data);
+        document.getElementById("updateCustomerForm").reset();
+        setFetchedCustomer(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        document.getElementById("updateCustomerForm").reset();
       });
   };
 
   return (
-    <div>
-      <form id="updateCustomerForm" onSubmit={updateCustomerHandler}>
-        <label> ID: </label>
-        <input id="customerId" name="customerId" />
-        <button id="fetch" onClick={fetchCompanyByIdHandler}>
-          {" "}
-          FETCH{" "}
-        </button>
-        <label> First name: </label>
-        <input
-          id="firstName"
-          name="firstName"
-          defaultValue={fetchedCustomer.first_name}
-        />
-        <label> Last name: </label>
-        <input
-          id="lastName"
-          name="lastName"
-          defaultValue={fetchedCustomer.last_name}
-        />
-        <label> Email: </label>
-        <input name="email" defaultValue={fetchedCustomer.email} />
-        <label> password: </label>
-        <input name="password" defaultValue={fetchedCustomer.password} />
-        <button type="submit">SUBMIT</button>
-      </form>
-      <div>
-        <p>{fetchedData}</p>
-      </div>
+    <div className={classes.formDiv}>
+      <Form id="updateCustomerForm" onSubmit={updateCustomerHandler}>
+        <Form.Group>
+          <Form.Label>ID: </Form.Label>
+          <Form.Control
+            id="customerId"
+            name="customerId"
+            defaultValue={fetchedCustomer.id}
+          />
+        </Form.Group>
+        <Button
+          variant="secondary"
+          id="fetch"
+          onClick={fetchCustomerByIdHandler}
+        >
+          FETCH
+        </Button>
+        <Form.Group>
+          <Form.Label>First Name: </Form.Label>
+          <Form.Control
+            name="firstName"
+            id="firstName"
+            defaultValue={fetchedCustomer.first_name}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Last Name: </Form.Label>
+          <Form.Control
+            name="lastName"
+            id="lastName"
+            defaultValue={fetchedCustomer.last_name}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Email: </Form.Label>
+          <Form.Control name="email" defaultValue={fetchedCustomer.email} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>password: </Form.Label>
+          <Form.Control
+            name="password"
+            defaultValue={fetchedCustomer.password}
+          />
+        </Form.Group>
+        <Button type="submit">SUBMIT</Button>
+      </Form>
+      <CustomerTable data={fetchedData} title="CUSTOMER UPDATED SUCCESSFULY" />
     </div>
   );
 }

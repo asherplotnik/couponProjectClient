@@ -2,6 +2,11 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
+import CompanyTable from "../UI/CompanyTable";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import classes from "./GetCompanyForm.module.css";
+import CouponsTable from "../UI/CouponsTable";
 const GetCompany = (props) => {
   const token = props.token;
   let [fetchedCompany, setFetchedCompany] = useState("");
@@ -15,7 +20,7 @@ const GetCompany = (props) => {
         headers: { token: token },
       })
       .then(function (response) {
-        setFetchedCompany(JSON.stringify(response.data));
+        setFetchedCompany(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -25,7 +30,7 @@ const GetCompany = (props) => {
         headers: { token: token },
       })
       .then(function (response) {
-        setFetchedCoupons(JSON.stringify(response.data));
+        setFetchedCoupons(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -33,16 +38,17 @@ const GetCompany = (props) => {
   };
 
   return (
-    <div>
-      <form id="getCompanyForm" onSubmit={fetchCompanyByIdHandler}>
-        <label> ID: </label>
-        <input id="companyId" name="companyId" />
-        <button type="submit">FETCH</button>
-      </form>
+    <div className={classes.subformDiv}>
+      <Form id="getCompanyForm" onSubmit={fetchCompanyByIdHandler}>
+        <Form.Group>
+          <Form.Label>ID: </Form.Label>
+          <Form.Control id="companyId" name="companyId" type="number" />
+        </Form.Group>
+        <Button type="submit">FETCH</Button>
+      </Form>
       <div>
-        <p>{fetchedCompany}</p>
-        <p>Company coupons: </p>
-        <p>{fetchedCoupons}</p>
+        <CompanyTable data={fetchedCompany} title={fetchedCompany.name} />
+        <CouponsTable data={fetchedCoupons} title="Company's Coupons" />
       </div>
     </div>
   );

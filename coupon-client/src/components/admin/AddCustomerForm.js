@@ -2,7 +2,10 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
-
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import classes from "./AddCustomerForm.module.css";
+import CustomerTable from "../UI/CustomerTable";
 function AddCustomerForm(props) {
   const token = props.token;
   let [fetchedData, setFetchedData] = useState("");
@@ -27,25 +30,36 @@ function AddCustomerForm(props) {
         { headers: { token: token } }
       )
       .then(function (response) {
-        setFetchedData(JSON.stringify(response.data));
+        setFetchedData(response.data);
       })
       .catch(function (error) {
+        setFetchedData(error);
         console.log(error);
       });
   };
 
   return (
-    <div>
-      <form id="addCustomerForm" onSubmit={addCustomerHandler}>
-        <label>First Name: </label>
-        <input name="firstname" /> <label>Last Name: </label>
-        <input name="lastname" /> <label>Email: </label>
-        <input name="email" /> <label>password: </label>
-        <input name="password" /> <button type="submit">SUBMIT</button>
-      </form>
-      <div>
-        <p>{fetchedData}</p>
-      </div>
+    <div className={classes.formDiv}>
+      <Form id="addCustomerForm" onSubmit={addCustomerHandler}>
+        <Form.Group>
+          <Form.Label>First Name: </Form.Label>
+          <Form.Control name="firstname" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Name: </Form.Label>
+          <Form.Control name="lastname" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Email: </Form.Label>
+          <Form.Control name="email" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>password: </Form.Label>
+          <Form.Control name="password" />
+        </Form.Group>
+        <Button type="submit">SUBMIT</Button>
+      </Form>
+      <CustomerTable data={fetchedData} title="CUSTOMER ADDED SUCCESSFULY" />
     </div>
   );
 }

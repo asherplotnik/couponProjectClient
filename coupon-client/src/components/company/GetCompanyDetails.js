@@ -1,6 +1,8 @@
 import axios from "axios";
 import { localUrl } from "../helper";
 import { useEffect, useState } from "react";
+import CompanyTable from "../UI/CompanyTable";
+
 const GetCompanyDetails = (props) => {
   const token = props.token;
   const [st, setSt] = useState("");
@@ -10,14 +12,13 @@ const GetCompanyDetails = (props) => {
         headers: { token: token },
       })
       .then(function (response) {
-        setSt(JSON.stringify(response.data));
+        setSt(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
   }, [token]);
-
-  return <div>{st}</div>;
+  return <CompanyTable data={st} title={st.name} />;
 };
 
 export default GetCompanyDetails;

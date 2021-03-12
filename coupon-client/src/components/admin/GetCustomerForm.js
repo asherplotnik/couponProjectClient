@@ -2,6 +2,11 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import classes from "./GetCustomerForm.module.css";
+import CouponsTable from "../UI/CouponsTable";
+import CustomerTable from "../UI/CustomerTable";
 const GetCustomer = (props) => {
   const token = props.token;
   let [fetchedCustomer, setFetchedCustomer] = useState("");
@@ -15,7 +20,7 @@ const GetCustomer = (props) => {
         headers: { token: token },
       })
       .then(function (response) {
-        setFetchedCustomer(JSON.stringify(response.data));
+        setFetchedCustomer(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -25,7 +30,7 @@ const GetCustomer = (props) => {
         headers: { token: token },
       })
       .then(function (response) {
-        setFetchedCoupons(JSON.stringify(response.data));
+        setFetchedCoupons(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -33,16 +38,20 @@ const GetCustomer = (props) => {
   };
 
   return (
-    <div>
-      <form id="getCustomerForm" onSubmit={fetchCustomerByIdHandler}>
-        <label> ID: </label>
-        <input id="customerId" name="customerId" />
-        <button type="submit">FETCH</button>
-      </form>
+    <div className={classes.subformDiv}>
+      <Form id="getCustomerForm" onSubmit={fetchCustomerByIdHandler}>
+        <Form.Group>
+          <Form.Label>ID: </Form.Label>
+          <Form.Control id="customerId" name="customerId" type="number" />
+        </Form.Group>
+        <Button type="submit">FETCH</Button>
+      </Form>
       <div>
-        <p>{fetchedCustomer}</p>
-        <p>Customer coupons: </p>
-        <p>{fetchedCoupons}</p>
+        <CustomerTable
+          data={fetchedCustomer}
+          title={fetchedCustomer.first_name + " " + fetchedCustomer.last_name}
+        />
+        <CouponsTable data={fetchedCoupons} title="Customer's Coupons" />
       </div>
     </div>
   );

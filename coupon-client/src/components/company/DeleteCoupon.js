@@ -2,6 +2,10 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import classes from "./DeleteCoupon.module.css";
+import CouponTable from "../UI/CouponTable";
 const DeleteCoupon = (props) => {
   const token = props.token;
   let [fetchedData, setFetchedData] = useState("");
@@ -14,21 +18,22 @@ const DeleteCoupon = (props) => {
         headers: { token: token },
       })
       .then(function (response) {
-        setFetchedData(JSON.stringify(response.data));
+        setFetchedData(response.data);
       })
       .catch(function (error) {
+        setFetchedData(error);
         console.log(error);
       });
   };
   return (
-    <div>
-      <form id="deleteCouponForm" onSubmit={deleteCouponHandler}>
-        <label>ID to delete: </label>
-        <input name="id" /> <button type="submit">SUBMIT</button>
-      </form>
-      <div>
-        <p>{fetchedData}</p>
-      </div>
+    <div className={classes.formDiv}>
+      <Form id="deleteCouponForm" onSubmit={deleteCouponHandler}>
+        <Form.Group>
+          <Form.Label>ID to delete: </Form.Label>
+          <Form.Control name="id" /> <Button type="submit">SUBMIT</Button>
+        </Form.Group>
+      </Form>
+      <CouponTable data={fetchedData} title="COUPON DELETED SUCCESSFULY" />
     </div>
   );
 };

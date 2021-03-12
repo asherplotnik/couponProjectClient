@@ -1,4 +1,6 @@
 import axios from "axios";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import { localUrl } from "./helper";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -30,43 +32,46 @@ function Login() {
     <div className={classes.windowDiv}>
       <div className={classes.wrraperDiv}>
         <h1 className={classes.h1}>COUPONS API</h1>
-        <div>
-          <form id="loginForm" onSubmit={fetchLogin} className={classes.form}>
-            <div className={classes.ulForm}>
-              <div className={classes.ulFormList}>
-                <label htmlFor="email">Email :</label>
-                <input id="email" name="email" required />
-              </div>
-              <div className={classes.ulFormList}>
-                <label htmlFor="password">Password:</label>
-                <input
-                  id="password"
-                  name="password"
-                  required
-                  type="password"
-                />{" "}
-              </div>
-              <div className={classes.ulFormList}>
-                <label htmlFor="userType">User type:</label>{" "}
-                <select
-                  id="userType"
-                  name="userType"
-                  required
-                  className={classes.select}
-                >
-                  ><option>0</option>
-                  <option>1</option>
-                  <option>2</option>
-                </select>
-              </div>
-            </div>
-            <button id="submitButtorm" type="submit">
-              SUBMIT
-            </button>
-          </form>
-        </div>
+        <Form className={classes.ulForm} id="loginForm" onSubmit={fetchLogin}>
+          <Form.Group>
+            <Form.Label>Email :</Form.Label>
+            <Form.Control
+              // type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="Enter email"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Password:</Form.Label>
+            <Form.Control
+              id="password"
+              name="password"
+              required
+              // type="password"
+              placeholder="Password"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>User type:</Form.Label>
+            <Form.Control as="select" id="userType" name="userType" required>
+              <option value="0">ADMIN</option>
+              <option value="1">COMPANY</option>
+              <option value="2">CUSTOMER</option>
+            </Form.Control>
+          </Form.Group>
+          <Button
+            className={classes.submitButton}
+            id="submitButtorm"
+            type="submit"
+          >
+            SUBMIT
+          </Button>
+        </Form>
       </div>
     </div>
+    // </div>
   );
   switch (userT) {
     case 0:

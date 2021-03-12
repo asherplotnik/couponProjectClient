@@ -2,6 +2,10 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { localUrl } from "../helper";
+import CouponsTable from "../UI/CouponsTable";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import classes from "./PurchaseCoupon.module.css";
 const PurchaseCoupon = (props) => {
   const token = props.token;
   const [st, setSt] = useState("");
@@ -31,27 +35,22 @@ const PurchaseCoupon = (props) => {
         headers: { token: token },
       })
       .then(function (response) {
-        setSt(
-          <div>
-            {response.data.map((coupon, index) => (
-              <p key={index}>{JSON.stringify(coupon)}</p>
-            ))}
-          </div>
-        );
+        setSt(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        setSt(error);
       });
   }, [token]);
   return (
     <div>
-      <p>Coupon List</p>
-      <div>{st}</div>
-      <form id="purchaseCoupon" onSubmit={purchaseCouponHandler}>
-        <label>ID: </label>
-        <input id="couponId" name="couponId" />
-        <button type="submit">SUBMIT</button>
-      </form>
+      <CouponsTable data={st} title="AVAILABLE COUPONS" />
+      <div className={classes.formDiv}>
+        <Form id="purchaseCoupon" onSubmit={purchaseCouponHandler}>
+          <Form.Label>ID: </Form.Label>
+          <Form.Control id="couponId" name="couponId" />
+          <Button type="submit">SUBMIT</Button>
+        </Form>
+      </div>
     </div>
   );
 };

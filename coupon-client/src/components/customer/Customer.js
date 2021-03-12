@@ -7,7 +7,8 @@ import GetCustomerCouponsByCategoryId from "./GetCustomerCouponsByCategoty";
 import GetCustomerCouponsByMaxPrice from "./GetCompanyCouponsByMaxPrice";
 import { useHistory } from "react-router-dom";
 import GetCustomerDetails from "./GetCustomerDetails";
-
+import classes from "./Customer.module.css";
+import Form from "react-bootstrap/Form";
 function Customer() {
   const [subFormState, setSubFormState] = useState(0);
   const dispatch = useDispatch();
@@ -17,8 +18,7 @@ function Customer() {
 
   const actionSelector = (e) => {
     e.preventDefault();
-    const formData = new FormData(document.querySelector("#actionForm"));
-    setSubFormState(parseInt(formData.get("action")));
+    setSubFormState(parseInt(e.target.value));
   };
 
   switch (subFormState) {
@@ -39,7 +39,7 @@ function Customer() {
       break;
     case 6:
       dispatch(actions.setSession("", -1));
-      history.push("/login");
+      history.replace("/login");
       break;
     default:
       subForm = <div></div>;
@@ -47,18 +47,29 @@ function Customer() {
 
   return (
     <div>
-      <h2>customer Menu</h2>
-      <form id="actionForm" onSubmit={actionSelector}>
-        <label>Choose Action: </label>
-        <input name="action" />
-        <button type="submit"> SUBMIT </button>
-        <p>1) purchase coupon</p>
-        <p>2) get customer coupons</p>
-        <p>3) get customer coupons by category</p>
-        <p>4) get customer coupons by max price</p>
-        <p>5) get customer details</p>
-        <p>6) exit</p>
-      </form>
+      <h2 className={classes.h2}>customer Menu</h2>
+      <div className={classes.formDiv}>
+        <Form id="actionForm" onSubmit={actionSelector}>
+          <Form.Group>
+            <Form.Label>Choose Action: </Form.Label>
+            <Form.Control
+              onChange={actionSelector}
+              name="action"
+              as="select"
+              id="actionSelect"
+            >
+              <option value="">-- choose one --</option>
+              <option value="1"> purchase coupon</option>
+              <option value="2"> get customer coupons</option>
+              <option value="3"> get customer coupons by category</option>
+              <option value="4"> get customer coupons by max price</option>
+              <option value="5"> get customer details</option>
+              <option value="6"> exit</option>
+            </Form.Control>
+          </Form.Group>
+          {/* <button type="submit"> SUBMIT </button> */}
+        </Form>
+      </div>
       <div>{subForm}</div>
     </div>
   );

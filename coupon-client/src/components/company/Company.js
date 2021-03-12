@@ -9,6 +9,8 @@ import GetCompanyCoupons from "./GetCompanyCoupons";
 import GetCompanyCouponsByCategory from "./GetCompanyCouponsByCategory";
 import GetCompanyCouponsByMaxPrice from "./GetCompanyCouponsByMaxPrice";
 import GetCompanyDetails from "./GetCompanyDetails";
+import classes from "./Company.module.css";
+import Form from "react-bootstrap/Form";
 function Company() {
   const [subFormState, setSubFormState] = useState(0);
   const dispatch = useDispatch();
@@ -18,8 +20,7 @@ function Company() {
 
   const actionSelector = (e) => {
     e.preventDefault();
-    const formData = new FormData(document.querySelector("#actionForm"));
-    setSubFormState(parseInt(formData.get("action")));
+    setSubFormState(parseInt(e.target.value));
   };
 
   switch (subFormState) {
@@ -46,7 +47,7 @@ function Company() {
       break;
     case 8:
       dispatch(actions.setSession("", -1));
-      history.push("/login");
+      history.replace("/login");
       break;
     default:
       subForm = <div></div>;
@@ -54,20 +55,30 @@ function Company() {
 
   return (
     <div>
-      <h2>company Menu</h2>
-      <form id="actionForm" onSubmit={actionSelector}>
-        <label>Choose Action: </label>
-        <input name="action" />
-        <button type="submit"> SUBMIT </button>
-        <p>1) add new coupon</p>
-        <p>2) delete coupon</p>
-        <p>3) update coupon details</p>
-        <p>4) get company coupons</p>
-        <p>5) get company coupons by category</p>
-        <p>6) get company coupons by max price</p>
-        <p>7) get company details</p>
-        <p>8) exit</p>
-      </form>
+      <h2 className={classes.h2}>Company Menu</h2>
+      <div className={classes.formDiv}>
+        <Form id="actionForm">
+          <Form.Group>
+            <Form.Label>Choose Action: </Form.Label>
+            <Form.Control
+              onChange={actionSelector}
+              name="action"
+              as="select"
+              id="actionSelect"
+            >
+              <option value="">-- choose one --</option>
+              <option value="1"> add new coupon</option>
+              <option value="2"> delete coupon</option>
+              <option value="3"> update coupon details</option>
+              <option value="4"> get company coupons</option>
+              <option value="5"> get company coupons by category</option>
+              <option value="6"> get company coupons by max price</option>
+              <option value="7"> get company details</option>
+              <option value="8"> exit</option>
+            </Form.Control>
+          </Form.Group>
+        </Form>
+      </div>
       <div>{subForm}</div>
     </div>
   );

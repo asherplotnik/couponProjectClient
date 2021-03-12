@@ -2,7 +2,10 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
-
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import CompanyTable from "../UI/CompanyTable";
+import classes from "./UpdateCompanyForm.module.css";
 function UpdateCompanyForm(props) {
   const token = props.token;
   let [fetchedCompany, setFetchedCompany] = useState({
@@ -11,11 +14,11 @@ function UpdateCompanyForm(props) {
     email: "",
     name: "",
   });
-  let [fetchedData, setFetchedData] = useState("");
+  let [fetchedUpdate, setFetchedUpdate] = useState("");
   const updateCompanyHandler = (e) => {
     e.preventDefault();
     const formData = new FormData(document.querySelector("#updateCompanyForm"));
-    const companyId = parseInt(fetchedCompany.id);
+    const companyId = parseInt(fetchedUpdate.id);
     const email = formData.get("email");
     const password = formData.get("password");
     const name = document.querySelector("#companyName").value;
@@ -26,10 +29,10 @@ function UpdateCompanyForm(props) {
         { headers: { token: token } }
       )
       .then(function (response) {
-        setFetchedData(JSON.stringify(response.data));
+        setFetchedCompany(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        setFetchedCompany(error);
       });
   };
 
@@ -41,38 +44,51 @@ function UpdateCompanyForm(props) {
         headers: { token: token },
       })
       .then(function (response) {
-        setFetchedCompany(response.data);
+        document.getElementById("updateCompanyForm").reset();
+        setFetchedUpdate(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        document.getElementById("updateCompanyForm").reset();
       });
   };
-
   return (
-    <div>
-      <form id="updateCompanyForm" onSubmit={updateCompanyHandler}>
-        <label> ID: </label>
-        <input id="companyId" name="companyId" />
-        <button id="fetch" onClick={fetchCompanyByIdHandler}>
-          {" "}
-          FETCH{" "}
-        </button>
-        <label> name: </label>
-        <input
-          disabled={true}
-          id="companyName"
-          name="companyName"
-          defaultValue={fetchedCompany.name}
-        />
-        <label> Email: </label>
-        <input name="email" defaultValue={fetchedCompany.email} />
-        <label> password: </label>
-        <input name="password" defaultValue={fetchedCompany.password} />
-        <button type="submit">SUBMIT</button>
-      </form>
-      <div>
-        <p>{fetchedData}</p>
-      </div>
+    <div className={classes.formDiv}>
+      <Form id="updateCompanyForm" onSubmit={updateCompanyHandler}>
+        <Form.Group>
+          <Form.Label>ID: </Form.Label>
+          <Form.Control
+            id="companyId"
+            name="companyId"
+            defaultValue={fetchedUpdate.id}
+          />
+        </Form.Group>
+        <Button
+          variant="secondary"
+          id="fetch"
+          onClick={fetchCompanyByIdHandler}
+        >
+          FETCH
+        </Button>
+        <Form.Group>
+          <Form.Label>Name: </Form.Label>
+          <Form.Control
+            name="companyName"
+            id="companyName"
+            defaultValue={fetchedUpdate.name}
+            disabled={true}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Email: </Form.Label>
+          <Form.Control name="email" defaultValue={fetchedUpdate.email} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>password: </Form.Label>
+          <Form.Control name="password" defaultValue={fetchedUpdate.password} />
+        </Form.Group>
+        <Button type="submit">SUBMIT</Button>
+      </Form>
+      <CompanyTable data={fetchedCompany} title="COMPANY UPDATED SUCCESSFULY" />
     </div>
   );
 }

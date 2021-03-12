@@ -2,11 +2,14 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
+import classes from "./AddCoupon.module.css";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import CouponTable from "../UI/CouponTable";
 
 const AddCoupon = (props) => {
   const token = props.token;
   let [fetchedData, setFetchedData] = useState("");
-
   const addCouponHandler = (e) => {
     e.preventDefault();
     const formData = new FormData(document.querySelector("#addCouponForm"));
@@ -36,7 +39,7 @@ const AddCoupon = (props) => {
         { headers: { token: token } }
       )
       .then(function (response) {
-        setFetchedData(JSON.stringify(response.data));
+        setFetchedData(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -44,28 +47,44 @@ const AddCoupon = (props) => {
   };
 
   return (
-    <div>
-      <form id="addCouponForm" onSubmit={addCouponHandler}>
-        <label>Category ID: </label>
-        <input name="categoryId" />
-        <label>Title: </label>
-        <input name="title" />
-        <label>Description: </label>
-        <input name="description" />
-        <label>Start date: </label>
-        <input type="date" name="startDate" />
-        <label>End date: </label>
-        <input type="date" name="endDate" />
-        <label>Amount: </label>
-        <input name="amount" />
-        <label>Price: </label>
-        <input name="price" />
-        <label>Image: </label>
-        <input name="image" />
-        <button type="submit">SUBMIT</button>
-      </form>
+    <div className={classes.formDiv}>
+      <Form id="addCouponForm" onSubmit={addCouponHandler}>
+        <Form.Group>
+          <Form.Label>Category ID: </Form.Label>
+          <Form.Control name="categoryId" type="number" min="1" max="5" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Title: </Form.Label>
+          <Form.Control name="title" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Description: </Form.Label>
+          <Form.Control name="description" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Start date: </Form.Label>
+          <Form.Control type="date" name="startDate" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>End date: </Form.Label>
+          <Form.Control type="date" name="endDate" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Amount: </Form.Label>
+          <Form.Control name="amount" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Price: </Form.Label>
+          <Form.Control name="price" />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Image: </Form.Label>
+          <Form.Control name="image" />
+        </Form.Group>
+        <Button type="submit">SUBMIT</Button>
+      </Form>
       <div>
-        <p>{fetchedData}</p>
+        <CouponTable data={fetchedData} title="COUPON ADDED SUCCESSFULY" />
       </div>
     </div>
   );

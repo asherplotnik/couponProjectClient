@@ -1,13 +1,17 @@
 import axios from "axios";
 import { localUrl } from "../helper";
 import { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import classes from "./GetCompanyCoupons.module.css";
+import CouponsTable from "../UI/CouponsTable";
 const GetCompanyCouponsByMaxPrice = (props) => {
   const token = props.token;
   const [st, setSt] = useState("");
   const fetchCouponsHandler = (e) => {
     e.preventDefault();
     const formData = new FormData(
-      document.querySelector("#fetchCouponsByIdForm")
+      document.querySelector("#fetchCouponsByPriceForm")
     );
     const mPrice = parseFloat(formData.get("mPrice"));
     axios
@@ -18,27 +22,23 @@ const GetCompanyCouponsByMaxPrice = (props) => {
         }
       )
       .then(function (response) {
-        setSt(
-          <div>
-            {response.data.map((coupon, index) => (
-              <p key={index}>{JSON.stringify(coupon)}</p>
-            ))}
-          </div>
-        );
+        setSt(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        setSt(error);
       });
   };
 
   return (
-    <div>
-      <form id="fetchCouponsByIdForm" onSubmit={fetchCouponsHandler}>
-        <label>Max Price: </label>
-        <input id="mPrice" name="mPrice" />
-        <button type="submit">FETCH</button>
-      </form>
-      <div>{st}</div>
+    <div className={classes.formDiv}>
+      <Form id="fetchCouponsByPriceForm" onSubmit={fetchCouponsHandler}>
+        <Form.Group>
+          <Form.Label>CATEGORY ID: </Form.Label>
+          <Form.Control id="mPrice" name="mPrice" />
+        </Form.Group>
+        <Button type="submit">FETCH</Button>
+      </Form>
+      <CouponsTable data={st} title={st.title} />
     </div>
   );
 };

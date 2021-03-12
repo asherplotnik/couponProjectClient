@@ -1,7 +1,9 @@
 import axios from "axios";
 import { localUrl } from "../helper";
 import { useEffect, useState } from "react";
-const GetCompanyCoupons = (props) => {
+import CouponsTable from "../UI/CouponsTable";
+import classes from "./GetCompanyCoupons.module.css";
+const GetcouponCoupons = (props) => {
   const token = props.token;
   const [st, setSt] = useState("");
   useEffect(() => {
@@ -10,20 +12,18 @@ const GetCompanyCoupons = (props) => {
         headers: { token: token },
       })
       .then(function (response) {
-        setSt(
-          <div>
-            {response.data.map((coupon, index) => (
-              <p key={index}>{JSON.stringify(coupon)}</p>
-            ))}
-          </div>
-        );
+        setSt(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        setSt(error);
       });
   }, [token]);
 
-  return <div>{st}</div>;
+  return (
+    <div className={classes.divClass}>
+      <CouponsTable data={st} title={st.title} />
+    </div>
+  );
 };
 
-export default GetCompanyCoupons;
+export default GetcouponCoupons;
