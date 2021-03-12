@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import MyButton from "../UI/MyButton";
 import classes from "./GetCustomerForm.module.css";
 import CouponsTable from "../UI/CouponsTable";
 import CustomerTable from "../UI/CustomerTable";
@@ -44,7 +44,7 @@ const GetCustomer = (props) => {
           <Form.Label>ID: </Form.Label>
           <Form.Control id="customerId" name="customerId" type="number" />
         </Form.Group>
-        <Button type="submit">FETCH</Button>
+        <MyButton type="submit">FETCH</MyButton>
       </Form>
       <div>
         <CustomerTable

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import MyButton from "../UI/MyButton";
 import classes from "./DeleteCustomerForm.module.css";
 import CustomerTable from "../UI/CustomerTable";
 function DeleteCustomerForm(props) {
@@ -33,7 +33,7 @@ function DeleteCustomerForm(props) {
       <Form id="deleteCustomerForm" onSubmit={deleteCustomerHandler}>
         <Form.Group>
           <Form.Label>ID to delete: </Form.Label>
-          <Form.Control name="id" /> <Button type="submit">SUBMIT</Button>
+          <Form.Control name="id" /> <MyButton type="submit">SUBMIT</MyButton>
         </Form.Group>
       </Form>
       <CustomerTable

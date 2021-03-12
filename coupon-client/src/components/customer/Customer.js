@@ -4,7 +4,7 @@ import * as actions from "../../redux/actions";
 import PurchaseCoupon from "./PurchaseCoupon";
 import GetCustomerCoupons from "./GetCustomerCoupons";
 import GetCustomerCouponsByCategoryId from "./GetCustomerCouponsByCategoty";
-import GetCustomerCouponsByMaxPrice from "./GetCompanyCouponsByMaxPrice";
+import GetCustomerCouponsByMaxPrice from "./GetCustomerCouponsByMaxPrice";
 import { useHistory } from "react-router-dom";
 import GetCustomerDetails from "./GetCustomerDetails";
 import classes from "./Customer.module.css";
@@ -67,7 +67,7 @@ function Customer() {
               <option value="6"> exit</option>
             </Form.Control>
           </Form.Group>
-          {/* <button type="submit"> SUBMIT </button> */}
+          {/* <MyButton type="submit"> SUBMIT </MyButton> */}
         </Form>
       </div>
       <div>{subForm}</div>

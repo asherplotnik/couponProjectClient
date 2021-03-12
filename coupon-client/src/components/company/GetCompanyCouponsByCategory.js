@@ -2,7 +2,7 @@ import axios from "axios";
 import { localUrl } from "../helper";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import MyButton from "../UI/MyButton";
 import classes from "./GetCompanyCoupons.module.css";
 import CouponsTable from "../UI/CouponsTable";
 const GetCompanyCouponsByCategoryId = (props) => {
@@ -39,7 +39,7 @@ const GetCompanyCouponsByCategoryId = (props) => {
           <Form.Label>CATEGORY ID: </Form.Label>
           <Form.Control id="categoryId" name="categoryId" />
         </Form.Group>
-        <Button type="submit">FETCH</Button>
+        <MyButton type="submit">FETCH</MyButton>
       </Form>
       <CouponsTable data={st} title={st.title} />
     </div>

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import MyButton from "../UI/MyButton";
 import classes from "./AddCompanyForm.module.css";
 import CompanyTable from "../UI/CompanyTable";
 function AddCompanyForm(props) {
@@ -46,7 +46,7 @@ function AddCompanyForm(props) {
           <Form.Label>password: </Form.Label>
           <Form.Control name="password" />
         </Form.Group>
-        <Button type="submit">SUBMIT</Button>
+        <MyButton type="submit">SUBMIT</MyButton>
       </Form>
       <CompanyTable data={fetchedCompany} title="COMPANY ADDED SUCCESSFULY" />
     </div>

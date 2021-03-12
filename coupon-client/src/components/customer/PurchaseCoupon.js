@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { localUrl } from "../helper";
 import CouponsTable from "../UI/CouponsTable";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import MyButton from "../UI/MyButton";
 import classes from "./PurchaseCoupon.module.css";
 const PurchaseCoupon = (props) => {
   const token = props.token;
@@ -48,7 +48,7 @@ const PurchaseCoupon = (props) => {
         <Form id="purchaseCoupon" onSubmit={purchaseCouponHandler}>
           <Form.Label>ID: </Form.Label>
           <Form.Control id="couponId" name="couponId" />
-          <Button type="submit">SUBMIT</Button>
+          <MyButton type="submit">SUBMIT</MyButton>
         </Form>
       </div>
     </div>

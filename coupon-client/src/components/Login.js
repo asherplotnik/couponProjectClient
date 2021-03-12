@@ -1,5 +1,5 @@
 import axios from "axios";
-import Button from "react-bootstrap/Button";
+import MyButton from "./UI/MyButton";
 import Form from "react-bootstrap/Form";
 import { localUrl } from "./helper";
 import { useSelector, useDispatch } from "react-redux";
@@ -61,13 +61,13 @@ function Login() {
               <option value="2">CUSTOMER</option>
             </Form.Control>
           </Form.Group>
-          <Button
+          <MyButton
             className={classes.submitButton}
             id="submitButtorm"
             type="submit"
           >
             SUBMIT
-          </Button>
+          </MyButton>
         </Form>
       </div>
     </div>

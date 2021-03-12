@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import MyButton from "../UI/MyButton";
 import CompanyTable from "../UI/CompanyTable";
 import classes from "./UpdateCompanyForm.module.css";
 function UpdateCompanyForm(props) {
@@ -62,13 +62,13 @@ function UpdateCompanyForm(props) {
             defaultValue={fetchedUpdate.id}
           />
         </Form.Group>
-        <Button
+        <MyButton
           variant="secondary"
           id="fetch"
           onClick={fetchCompanyByIdHandler}
         >
           FETCH
-        </Button>
+        </MyButton>
         <Form.Group>
           <Form.Label>Name: </Form.Label>
           <Form.Control
@@ -86,7 +86,7 @@ function UpdateCompanyForm(props) {
           <Form.Label>password: </Form.Label>
           <Form.Control name="password" defaultValue={fetchedUpdate.password} />
         </Form.Group>
-        <Button type="submit">SUBMIT</Button>
+        <MyButton type="submit">SUBMIT</MyButton>
       </Form>
       <CompanyTable data={fetchedCompany} title="COMPANY UPDATED SUCCESSFULY" />
     </div>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { localUrl } from "../helper";
 import classes from "./AddCoupon.module.css";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import MyButton from "../UI/MyButton";
 import CouponTable from "../UI/CouponTable";
 
 const AddCoupon = (props) => {
@@ -81,7 +81,7 @@ const AddCoupon = (props) => {
           <Form.Label>Image: </Form.Label>
           <Form.Control name="image" />
         </Form.Group>
-        <Button type="submit">SUBMIT</Button>
+        <MyButton type="submit">SUBMIT</MyButton>
       </Form>
       <div>
         <CouponTable data={fetchedData} title="COUPON ADDED SUCCESSFULY" />

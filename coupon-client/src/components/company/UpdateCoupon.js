@@ -4,7 +4,7 @@ import { useState } from "react";
 import { localUrl } from "../helper";
 import classes from "./AddCoupon.module.css";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import MyButton from "../UI/MyButton";
 import CouponTable from "../UI/CouponTable";
 const UpdateCoupon = (props) => {
   const token = props.token;
@@ -82,9 +82,9 @@ const UpdateCoupon = (props) => {
             defaultValue={fetchedCoupon.id}
           />
         </Form.Group>
-        <Button id="fetch" onClick={fetchCouponByIdHandler}>
+        <MyButton id="fetch" onClick={fetchCouponByIdHandler}>
           FETCH
-        </Button>
+        </MyButton>
         <Form.Group>
           <Form.Label>Category ID: </Form.Label>
           <Form.Control
@@ -134,7 +134,7 @@ const UpdateCoupon = (props) => {
           <Form.Label>Image: </Form.Label>
           <Form.Control name="image" defaultValue={fetchedCoupon.image} />
         </Form.Group>
-        <Button type="submit">SUBMIT</Button>
+        <MyButton type="submit">SUBMIT</MyButton>
       </Form>
       <div>
         <CouponTable data={fetchedData} title="COUPON UPDATED SUCCESSFULY" />

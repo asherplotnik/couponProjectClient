@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { localUrl } from "../helper";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import MyButton from "../UI/MyButton";
 import CustomerTable from "../UI/CustomerTable";
 import classes from "./UpdateCustomerForm.module.css";
 function UpdateCustomerForm(props) {
@@ -73,13 +73,13 @@ function UpdateCustomerForm(props) {
             defaultValue={fetchedCustomer.id}
           />
         </Form.Group>
-        <Button
+        <MyButton
           variant="secondary"
           id="fetch"
           onClick={fetchCustomerByIdHandler}
         >
           FETCH
-        </Button>
+        </MyButton>
         <Form.Group>
           <Form.Label>First Name: </Form.Label>
           <Form.Control
@@ -107,7 +107,7 @@ function UpdateCustomerForm(props) {
             defaultValue={fetchedCustomer.password}
           />
         </Form.Group>
-        <Button type="submit">SUBMIT</Button>
+        <MyButton type="submit">SUBMIT</MyButton>
       </Form>
       <CustomerTable data={fetchedData} title="CUSTOMER UPDATED SUCCESSFULY" />
     </div>

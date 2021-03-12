@@ -4,7 +4,7 @@ import { useState } from "react";
 import { localUrl } from "../helper";
 import CompanyTable from "../UI/CompanyTable";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import MyButton from "../UI/MyButton";
 import classes from "./GetCompanyForm.module.css";
 import CouponsTable from "../UI/CouponsTable";
 const GetCompany = (props) => {
@@ -44,7 +44,7 @@ const GetCompany = (props) => {
           <Form.Label>ID: </Form.Label>
           <Form.Control id="companyId" name="companyId" type="number" />
         </Form.Group>
-        <Button type="submit">FETCH</Button>
+        <MyButton type="submit">FETCH</MyButton>
       </Form>
       <div>
         <CompanyTable data={fetchedCompany} title={fetchedCompany.name} />

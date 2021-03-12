@@ -1,6 +1,10 @@
 import axios from "axios";
 import { localUrl } from "../helper";
 import { useState } from "react";
+import CouponsTable from "../UI/CouponsTable";
+import classes from "./GetCustomerCoupons.module.css";
+import Form from "react-bootstrap/Form";
+import MyButton from "../UI/MyButton";
 const GetCustomerCouponsByCategoryId = (props) => {
   const token = props.token;
   const [st, setSt] = useState("");
@@ -20,13 +24,7 @@ const GetCustomerCouponsByCategoryId = (props) => {
         }
       )
       .then(function (response) {
-        setSt(
-          <div>
-            {response.data.map((coupon, index) => (
-              <p key={index}>{JSON.stringify(coupon)}</p>
-            ))}
-          </div>
-        );
+        setSt(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -35,12 +33,17 @@ const GetCustomerCouponsByCategoryId = (props) => {
 
   return (
     <div>
-      <form id="fetchCouponsByIdForm" onSubmit={fetchCouponsHandler}>
-        <label>CATEGORY ID: </label>
-        <input id="categoryId" name="categoryId" />
-        <button type="submit">FETCH</button>
-      </form>
-      <div>{st}</div>
+      <div className={classes.formDiv}>
+        <Form id="fetchCouponsByIdForm" onSubmit={fetchCouponsHandler}>
+          <Form.Group>
+            <Form.Label>CATEGORY ID: </Form.Label>
+            <Form.Control id="categoryId" name="categoryId" />
+          </Form.Group>
+          <MyButton type="submit">FETCH</MyButton>
+        </Form>
+      </div>
+      <br />
+      <CouponsTable data={st} title={st.title} />
     </div>
   );
 };
