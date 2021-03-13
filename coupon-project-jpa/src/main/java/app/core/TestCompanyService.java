@@ -39,7 +39,9 @@ public class TestCompanyService {
 			cService.deleteCoupon(4);
 			
 		} catch (DaoException e) {
-			e.getLocalizedMessage();
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

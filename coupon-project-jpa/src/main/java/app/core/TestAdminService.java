@@ -83,7 +83,9 @@ public class TestAdminService {
 				
 				
 			}
-
+					
+		} catch (DaoException e) {
+			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -21,10 +21,6 @@ public class CouponProjectJbaApplication {
 		try {
 			aService = (AdminService)loginManager.login("admin@admin.com", "admin", 0);
 			System.out.println(aService.getAdminDetails());
-//			CompanyService cService = (CompanyService)loginManager.login("comp1@email1", "111",1);
-//			System.out.println(cService.getCompanyDetails());
-//			CustomerService ctService = (CustomerService)loginManager.login("cust1@email", "111",2);
-//			System.out.println(ctService.getCustomerDetails());
 		} catch (DaoException e) {
 			e.printStackTrace();
 		}

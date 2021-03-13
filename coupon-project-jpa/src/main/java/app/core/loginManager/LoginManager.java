@@ -32,9 +32,9 @@ public class LoginManager {
 				return customerService;
 			break;
 		default:
-			return null;
+			throw new DaoException("Login failed - email password or user type invalid");
 		}
-		return null;
+		throw new DaoException("Login failed - email password or user type invalid");
 	}
 
 }

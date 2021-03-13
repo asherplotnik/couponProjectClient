@@ -18,8 +18,9 @@ public class TestCustomerService {
 			ConfigurableApplicationContext ctx = SpringApplication.run(TestCompanyService.class, args);
 			LoginManager loginManager = ctx.getBean(LoginManager.class);
 			CustomerService cService = (CustomerService) loginManager.login("cust3@email", "333", 2);
-			Coupon coupon = new Coupon(3);
-			cService.purchaseCoupon(coupon); 
+			cService.purchaseCoupon(new Coupon(3)); 
+			cService.purchaseCoupon(new Coupon(4)); 
+			
 			System.out.println("customer id: ["+ cService.getCustomerId() + "] coupons=====");
 			System.out.println(cService.getCustomerCoupons());
 			System.out.println("customer id: ["+ cService.getCustomerId() + "] coupons by category=====");
@@ -29,6 +30,8 @@ public class TestCustomerService {
 			System.out.println();
 			
 		} catch (DaoException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
