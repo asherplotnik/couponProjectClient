@@ -21,7 +21,7 @@ const GetcouponCoupons = (props) => {
 
   return (
     <div className={classes.divClass}>
-      <CouponsTable data={st} title={st.title} />
+      <CouponsTable data={st} title="Coupons List" />
     </div>
   );
 };

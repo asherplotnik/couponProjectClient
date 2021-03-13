@@ -48,6 +48,7 @@ const AddCoupon = (props) => {
 
   return (
     <div className={classes.formDiv}>
+      <h3 className={classes.h3Div}>Add Coupon</h3>
       <Form id="addCouponForm" onSubmit={addCouponHandler}>
         <Form.Group>
           <Form.Label>Category ID: </Form.Label>

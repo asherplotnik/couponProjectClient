@@ -14,6 +14,7 @@ const GetAllCompanies = (props) => {
       .then(function (response) {
         setSt(
           <div>
+            <h3 className={classes.h3Div}>Companies List</h3>
             <Table>
               <thead>
                 <tr key="-1">

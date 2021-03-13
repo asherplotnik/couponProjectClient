@@ -27,13 +27,14 @@ const GetCustomerCouponsByCategoryId = (props) => {
         setSt(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        setSt(error);
       });
   };
 
   return (
     <div>
       <div className={classes.formDiv}>
+        <h3 className={classes.h3Div}>Customer's Copouns by Category ID</h3>
         <Form id="fetchCouponsByIdForm" onSubmit={fetchCouponsHandler}>
           <Form.Group>
             <Form.Label>CATEGORY ID: </Form.Label>
@@ -43,7 +44,7 @@ const GetCustomerCouponsByCategoryId = (props) => {
         </Form>
       </div>
       <br />
-      <CouponsTable data={st} title={st.title} />
+      <CouponsTable data={st} title="Coupons List" />
     </div>
   );
 };

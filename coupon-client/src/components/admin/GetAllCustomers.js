@@ -2,6 +2,7 @@ import axios from "axios";
 import { localUrl } from "../helper";
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
+import classes from "./GetAllCustomers.module.css";
 const GetAllCustomers = (props) => {
   const token = props.token;
   const [st, setSt] = useState("");
@@ -13,6 +14,7 @@ const GetAllCustomers = (props) => {
       .then(function (response) {
         setSt(
           <div>
+            <h3 className={classes.h3Div}>Customers List</h3>
             <Table>
               <thead>
                 <tr key="-1">

@@ -64,6 +64,7 @@ function UpdateCustomerForm(props) {
 
   return (
     <div className={classes.formDiv}>
+      <h3 className={classes.h3Div}>Update Customer</h3>
       <Form id="updateCustomerForm" onSubmit={updateCustomerHandler}>
         <Form.Group>
           <Form.Label>ID: </Form.Label>

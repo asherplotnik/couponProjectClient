@@ -40,6 +40,7 @@ function AddCustomerForm(props) {
 
   return (
     <div className={classes.formDiv}>
+      <h3 className={classes.h3Div}>Add Customer</h3>
       <Form id="addCustomerForm" onSubmit={addCustomerHandler}>
         <Form.Group>
           <Form.Label>First Name: </Form.Label>

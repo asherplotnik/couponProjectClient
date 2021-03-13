@@ -31,12 +31,15 @@ const GetCompanyCouponsByMaxPrice = (props) => {
 
   return (
     <div className={classes.formDiv}>
+      <h3 className={classes.h3Div}>Get Company coupons by Max Price</h3>
       <Form id="fetchCouponsByPriceForm" onSubmit={fetchCouponsHandler}>
-        <Form.Group>
-          <Form.Label>CATEGORY ID: </Form.Label>
-          <Form.Control id="mPrice" name="mPrice" />
-        </Form.Group>
-        <MyButton type="submit">FETCH</MyButton>
+        <div className={classes.innerFormDiv}>
+          <Form.Group>
+            <Form.Label>CATEGORY ID: </Form.Label>
+            <Form.Control id="mPrice" name="mPrice" />
+          </Form.Group>
+          <MyButton type="submit">FETCH</MyButton>
+        </div>
       </Form>
       <CouponsTable data={st} title={st.title} />
     </div>

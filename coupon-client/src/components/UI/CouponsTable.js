@@ -51,7 +51,11 @@ const CouponsTable = (props) => {
         </div>
       );
     } else {
-      return null;
+      if (props.showTitleWhenEmpty === true) {
+        return <h3 className={classes.h3Div}>{props.title}</h3>;
+      } else {
+        return null;
+      }
     }
   }
 };

@@ -73,6 +73,7 @@ const UpdateCoupon = (props) => {
   };
   return (
     <div className={classes.formDiv}>
+      <h3 className={classes.h3Div}>Update Coupon</h3>
       <Form id="updateCouponForm" onSubmit={updateCouponHandler}>
         <Form.Group>
           <Form.Label>ID: </Form.Label>

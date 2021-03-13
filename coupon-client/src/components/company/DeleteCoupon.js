@@ -27,6 +27,7 @@ const DeleteCoupon = (props) => {
   };
   return (
     <div className={classes.formDiv}>
+      <h3 className={classes.h3Div}>Delete Coupon</h3>
       <Form id="deleteCouponForm" onSubmit={deleteCouponHandler}>
         <Form.Group>
           <Form.Label>ID to delete: </Form.Label>

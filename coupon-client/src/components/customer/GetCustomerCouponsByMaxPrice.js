@@ -25,13 +25,14 @@ const GetCustomerCouponsByMaxPrice = (props) => {
         setSt(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        setSt(error);
       });
   };
 
   return (
     <div>
       <div className={classes.formDiv}>
+        <h3 className={classes.h3Div}>Customer's Copouns by Max Price</h3>
         <Form id="fetchCouponsByPriceForm" onSubmit={fetchCouponsHandler}>
           <Form.Group>
             <Form.Label>MAX PRICE: </Form.Label>
@@ -41,7 +42,7 @@ const GetCustomerCouponsByMaxPrice = (props) => {
         </Form>
       </div>
       <br />
-      <CouponsTable data={st} title={st.title} />
+      <CouponsTable data={st} title="Coupons List" />
     </div>
   );
 };

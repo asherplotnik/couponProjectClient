@@ -9,6 +9,7 @@ import classes from "./PurchaseCoupon.module.css";
 const PurchaseCoupon = (props) => {
   const token = props.token;
   const [st, setSt] = useState("");
+  const [cp, setCp] = useState("");
 
   const purchaseCouponHandler = (e) => {
     e.preventDefault();
@@ -23,7 +24,8 @@ const PurchaseCoupon = (props) => {
         }
       )
       .then(function (response) {
-        setSt(JSON.stringify(response.data));
+        setCp(response.data);
+        alert("Coupon Purchased Successefuly !!!");
       })
       .catch(function (error) {
         console.log(error);
@@ -36,21 +38,31 @@ const PurchaseCoupon = (props) => {
       })
       .then(function (response) {
         setSt(response.data);
+        console.log(Object.keys(response.data).length);
       })
       .catch(function (error) {
         setSt(error);
       });
-  }, [token]);
+  }, [token, cp]);
   return (
     <div>
-      <CouponsTable data={st} title="AVAILABLE COUPONS" />
       <div className={classes.formDiv}>
+        <h3 className={classes.h3Div}>Purchase Coupon</h3>
         <Form id="purchaseCoupon" onSubmit={purchaseCouponHandler}>
           <Form.Label>ID: </Form.Label>
           <Form.Control id="couponId" name="couponId" />
           <MyButton type="submit">SUBMIT</MyButton>
         </Form>
       </div>
+      <CouponsTable
+        showTitleWhenEmpty
+        data={st}
+        title={
+          Object.keys(st).length > 0
+            ? "AVAILABLE COUPONS"
+            : "NO COUPONS AVAILABLE"
+        }
+      />
     </div>
   );
 };

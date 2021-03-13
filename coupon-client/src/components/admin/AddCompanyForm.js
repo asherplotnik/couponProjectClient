@@ -33,6 +33,7 @@ function AddCompanyForm(props) {
 
   return (
     <div className={classes.formDiv}>
+      <h3 className={classes.h3Div}>Add Company</h3>
       <Form id="addCompanyForm" onSubmit={addCompanyHandler}>
         <Form.Group>
           <Form.Label>Name: </Form.Label>

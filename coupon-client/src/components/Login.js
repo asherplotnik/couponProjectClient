@@ -23,7 +23,7 @@ function Login() {
         dispatch(actions.setSession(response.data, userType));
       })
       .catch(function (error) {
-        console.log(error);
+        alert(error.response.data.message);
       });
   };
 

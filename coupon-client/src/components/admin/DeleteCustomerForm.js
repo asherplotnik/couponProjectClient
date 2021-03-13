@@ -30,6 +30,7 @@ function DeleteCustomerForm(props) {
 
   return (
     <div className={classes.formDiv}>
+      <h3 className={classes.h3Div}>Delete customer</h3>
       <Form id="deleteCustomerForm" onSubmit={deleteCustomerHandler}>
         <Form.Group>
           <Form.Label>ID to delete: </Form.Label>

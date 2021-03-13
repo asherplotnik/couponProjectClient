@@ -20,7 +20,7 @@ const GetCustomerCoupons = (props) => {
   }, [token]);
   return (
     <div className={classes.divClass}>
-      <CouponsTable data={st} title={st.title} />
+      <CouponsTable data={st} title="Customer's Copouns" />
     </div>
   );
 };

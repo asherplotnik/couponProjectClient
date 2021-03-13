@@ -28,6 +28,7 @@ function DeleteCompanyForm(props) {
 
   return (
     <div className={classes.formDiv}>
+      <h3 className={classes.h3Div}>Delete Company</h3>
       <Form id="deleteCompanyForm" onSubmit={deleteCompanyHandler}>
         <Form.Group>
           <Form.Label>ID to delete: </Form.Label>

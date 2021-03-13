@@ -39,6 +39,7 @@ const GetCompany = (props) => {
 
   return (
     <div className={classes.subformDiv}>
+      <h3 className={classes.h3Div}>Get Company details</h3>
       <Form id="getCompanyForm" onSubmit={fetchCompanyByIdHandler}>
         <Form.Group>
           <Form.Label>ID: </Form.Label>
