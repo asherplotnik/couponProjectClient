@@ -32,7 +32,7 @@ public class TestCompanyService {
 			System.out.println(cService.getCompanyCouponsByMaxPrice(12));
 						
 			
-			Coupon updatedCoupon = new Coupon(2 , 3, "updsate", "updsate", LocalDate.of(2020, 1, 1), LocalDate.of(2020, 1, 2), 25, 25.58, "age8");
+			Coupon updatedCoupon = new Coupon(7 , 3, "updsate", "updsate", LocalDate.of(2020, 1, 1), LocalDate.of(2020, 1, 2), 25, 25.58, "age8");
 			cService.updateCoupon(updatedCoupon);
 
 			cService.deleteCoupon(100);
