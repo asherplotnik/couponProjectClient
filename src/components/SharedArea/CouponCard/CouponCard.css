@@ -1,0 +1,27 @@
+.CouponCard {
+  width: 70%;
+  margin: auto;
+}
+
+.CouponCard .Box {
+  display: flex;
+  text-align: left;
+  padding: 0 10px;
+  margin: 10px;
+  justify-content: space-around;
+}
+
+.CouponCard .BorderBox {
+  font-weight: bold;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px;
+}
+
+.CouponCard .BoxImage {
+  margin: auto;
+  display: block;
+}
+.CouponCard .BoxImage > img {
+  max-width: 300px;
+}

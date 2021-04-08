@@ -36,10 +36,12 @@ const DeleteCoupon = (props: DcProps) => {
     <div className="DeleteCoupon">
       <h3 className="h3Div">Delete Coupon</h3>
       <Form id="deleteCouponForm" onSubmit={deleteCouponHandler}>
-        <Form.Group>
-          <Form.Label>ID to delete: </Form.Label>
-          <Form.Control name="id" /> <Button type="submit">SUBMIT</Button>
-        </Form.Group>
+        <div className="FormColl">
+          <Form.Group>
+            <Form.Label>ID to delete: </Form.Label>
+            <Form.Control name="id" /> <Button type="submit">SUBMIT</Button>
+          </Form.Group>
+        </div>
       </Form>
       <CouponTable
         err={err}

@@ -18,24 +18,12 @@ const AddCoupon = (props: AcProps) => {
   const addCouponHandler = (e: SyntheticEvent) => {
     e.preventDefault();
     const formData = new FormData(document.querySelector("#addCouponForm"));
-    let sentCoupon: CouponModel = new CouponModel();
-    sentCoupon.categoryId = parseInt(formData.get("categoryId") as string);
-    sentCoupon.title = formData.get("title") as string;
-    sentCoupon.description = formData.get("description") as string;
-    sentCoupon.startDate = new Date(formData.get("startDate") as string);
-    sentCoupon.endDate = new Date(formData.get("endDate") as string);
-    sentCoupon.amount = parseInt(formData.get("amount") as string);
-    sentCoupon.price = parseFloat(formData.get("price") as string);
-    sentCoupon.image = formData.get("image") as string;
-
+    formData.append("id", "0");
+    formData.append("image", (formData.get("imageFile") as File).name);
     axios
-      .post(
-        globals.urls.localUrl + ":8080//api/company/addCoupon",
-        sentCoupon,
-        {
-          headers: { token: token },
-        }
-      )
+      .post(globals.urls.localUrl + ":8080//api/company/addCoupon", formData, {
+        headers: { token: token, "Content-Type": "multipart/form-data" },
+      })
       .then(function (response) {
         setFetchedData(response.data);
       })
@@ -89,7 +77,7 @@ const AddCoupon = (props: AcProps) => {
             </Form.Group>
             <Form.Group>
               <Form.Label>Image: </Form.Label>
-              <Form.Control name="image" />
+              <Form.Control name="imageFile" type="file" />
             </Form.Group>
           </div>
         </div>

@@ -1,5 +1,5 @@
-.DeleteCoupon {
-  margin: 0% 20%;
+.GetCompanyCoupon {
+  margin: 0% 10%;
   border: solid 1px lightgray;
   border-radius: 5px;
   padding: 5px;
@@ -7,11 +7,11 @@
     0 3px 10px 0 rgba(83, 83, 83, 0.19);
 }
 
-.DeleteCoupon .h3Div {
+.GetCompanyCoupon .h3Div {
   text-align: center;
 }
 
-.DeleteCoupon .FormColl {
-  width: 40%;
+.GetCompanyCoupon .FormColl {
+  width: 25%;
   margin: auto;
 }

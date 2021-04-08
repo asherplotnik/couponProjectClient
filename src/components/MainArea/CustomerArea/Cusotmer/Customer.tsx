@@ -8,8 +8,8 @@ import GetCustomerCouponsByCategoryId from "../GetCustomerCouponsByCategory/GetC
 import GetCustomerCouponsByMaxPrice from "../GetCustomerCouponsByMaxPrice/GetCustomerCouponsByMaxPrice";
 import { useHistory } from "react-router-dom";
 import GetCustomerDetails from "../GetCustomerDetails/GetCustomerDetails";
-import "./Customer.css";
 import Form from "react-bootstrap/Form";
+import GetCustomerCoupon from "../GetCustomerCoupon/GetCustomerCoupon";
 
 function Customer() {
   const [subFormState, setSubFormState] = useState(0);
@@ -28,18 +28,21 @@ function Customer() {
       subForm = <PurchaseCoupon token={token} />;
       break;
     case 2:
-      subForm = <GetCustomerCoupons token={token} />;
+      subForm = <GetCustomerCoupon token={token} />;
       break;
     case 3:
-      subForm = <GetCustomerCouponsByCategoryId token={token} />;
+      subForm = <GetCustomerCoupons token={token} />;
       break;
     case 4:
-      subForm = <GetCustomerCouponsByMaxPrice token={token} />;
+      subForm = <GetCustomerCouponsByCategoryId token={token} />;
       break;
     case 5:
-      subForm = <GetCustomerDetails token={token} />;
+      subForm = <GetCustomerCouponsByMaxPrice token={token} />;
       break;
     case 6:
+      subForm = <GetCustomerDetails token={token} />;
+      break;
+    case 7:
       dispatch(actions.setSession({ token: "", userType: -1 }));
       history.replace("/login");
       break;
@@ -63,11 +66,12 @@ function Customer() {
               >
                 <option value="">-- choose one --</option>
                 <option value="1"> purchase coupon</option>
-                <option value="2"> get customer coupons</option>
-                <option value="3"> get customer coupons by category</option>
-                <option value="4"> get customer coupons by max price</option>
-                <option value="5"> get customer details</option>
-                <option value="6"> exit</option>
+                <option value="2"> get customer coupon by ID</option>
+                <option value="3"> get customer coupons</option>
+                <option value="5"> get customer coupons by category</option>
+                <option value="5"> get customer coupons by max price</option>
+                <option value="6"> get customer details</option>
+                <option value="7"> exit</option>
               </Form.Control>
             </Form.Group>
           </div>

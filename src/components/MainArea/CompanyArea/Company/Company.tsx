@@ -11,6 +11,7 @@ import GetCompanyCouponsByCategoryId from "../GetCompanyCouponsByCategoryId/GetC
 import GetCompanyCoupons from "../GetCompanyCoupons/GetCompanyCoupons";
 import GetCompanyCouponsByMaxPrice from "../GetCompanyCouponsByMaxPrice/GetCompanyCouponsByMaxPrice";
 import GetCompanyDetails from "../GetCompanyDetails/GetCompanyDetails";
+import GetCompanyCoupon from "../GetCompanyCoupon/GetCompanyCoupon";
 
 const Company = (): JSX.Element => {
   const actionSelector = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -34,18 +35,21 @@ const Company = (): JSX.Element => {
       subForm = <UpdateCoupon token={token} />;
       break;
     case 4:
-      subForm = <GetCompanyCoupons token={token} />;
+      subForm = <GetCompanyCoupon token={token} />;
       break;
     case 5:
-      subForm = <GetCompanyCouponsByCategoryId token={token} />;
+      subForm = <GetCompanyCoupons token={token} />;
       break;
     case 6:
-      subForm = <GetCompanyCouponsByMaxPrice token={token} />;
+      subForm = <GetCompanyCouponsByCategoryId token={token} />;
       break;
     case 7:
-      subForm = <GetCompanyDetails token={token} />;
+      subForm = <GetCompanyCouponsByMaxPrice token={token} />;
       break;
     case 8:
+      subForm = <GetCompanyDetails token={token} />;
+      break;
+    case 9:
       dispatch(actions.setSession({ token: "", userType: -1 }));
       history.replace("/login");
       break;
@@ -72,11 +76,12 @@ const Company = (): JSX.Element => {
                 <option value="1"> add new coupon</option>
                 <option value="2"> delete coupon</option>
                 <option value="3"> update coupon details</option>
-                <option value="4"> get company coupons</option>
-                <option value="5"> get company coupons by category</option>
-                <option value="6"> get company coupons by max price</option>
-                <option value="7"> get company details</option>
-                <option value="8"> exit</option>
+                <option value="4"> get company coupon by ID</option>
+                <option value="5"> get company coupons</option>
+                <option value="6"> get company coupons by category</option>
+                <option value="7"> get company coupons by max price</option>
+                <option value="8"> get company details</option>
+                <option value="9"> exit</option>
               </Form.Control>
             </Form.Group>
           </div>

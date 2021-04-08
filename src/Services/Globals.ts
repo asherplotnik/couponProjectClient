@@ -6,7 +6,7 @@ class Globals {
 class DevelopmentGlobals extends Globals {
     public urls = {
         products: "http://localhost:8080/api/products/",
-        productImages: "http://localhost:8080/api/products/images/",
+        couponImages: "http://localhost:8080/images/",
         localUrl : "http://localhost"
     };
 }
@@ -15,7 +15,7 @@ class DevelopmentGlobals extends Globals {
 class ProductionGlobals extends Globals {
     public urls = {
         products: "http://localhost:3030/api/products/", // In real life there will be the production address
-        productImages: "http://localhost:3030/api/products/images/", // In real life there will be the production address
+        couponImages:"http://localhost:8080/images/",
         localUrl : "http://localhost"
     };
 }
