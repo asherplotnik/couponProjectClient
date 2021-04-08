@@ -1,0 +1,46 @@
+.Login {
+  height: 80vh;
+  vertical-align: middle;
+  display: flex;
+}
+
+.Login .FormC {
+  margin: 5px !important;
+  min-width: 250px !important;
+}
+
+.Login > .wrapperDiv {
+  border-radius: 5px;
+  width: 35%;
+  margin: auto;
+  box-shadow: 0 4px 8px 0 rgba(189, 187, 187, 0.2),
+    0 3px 10px 0 rgba(83, 83, 83, 0.19);
+}
+
+.Login .h1 {
+  text-align: center;
+  color: rgb(76, 75, 80);
+}
+
+.Login .ulForm {
+  width: 70%;
+  margin: auto;
+}
+
+.Login .form {
+  margin: 5%;
+}
+
+.Login .submitButton {
+  margin: 10px 35%;
+}
+
+@media screen and (max-width: 800px) {
+  .Login .wrapperDiv {
+    width: 90%;
+  }
+
+  .Login .submitButton {
+    margin: 10px 10px;
+  }
+}

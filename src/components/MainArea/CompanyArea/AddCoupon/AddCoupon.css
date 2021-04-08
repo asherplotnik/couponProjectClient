@@ -1,0 +1,23 @@
+.AddCoupon {
+  display: block;
+  margin: 5% 20%;
+  border: solid 1px lightgray;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 4px 8px 0 rgba(189, 187, 187, 0.2),
+    0 3px 10px 0 rgba(83, 83, 83, 0.19);
+}
+
+.AddCouponFormDiv {
+  display: flex;
+  justify-content: center;
+}
+.AddCouponFormDivColl {
+  text-align: left;
+  width: 40%;
+  margin-left: 5px;
+}
+
+.AddCoupon .h3Div {
+  text-align: center;
+}

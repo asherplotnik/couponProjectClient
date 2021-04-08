@@ -1,0 +1,36 @@
+.Company .h2 {
+  text-align: center;
+  color: rgb(76, 75, 80);
+}
+
+.Company {
+  height: 100%;
+}
+.Company #ActionForm {
+  width: 70%;
+}
+.Company .FormDiv {
+  margin: auto;
+  width: 50%;
+  border: solid 1px lightgray;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 4px 8px 0 rgba(189, 187, 187, 0.2),
+    0 3px 10px 0 rgba(83, 83, 83, 0.19);
+}
+.Company .FormDiv .Field {
+  width: 50%;
+  margin: auto;
+}
+
+.SubFormCompany {
+  margin: auto;
+  width: 70%;
+  height: 65vh;
+  overflow-y: auto;
+}
+
+.Company .FormC {
+  margin: 5px !important;
+  min-width: 250px !important;
+}

@@ -1,0 +1,25 @@
+.CustomerH2 {
+  text-align: center;
+  color: rgb(76, 75, 80);
+}
+
+.Customer {
+  margin: 1% 30%;
+  border: solid 1px lightgray;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 4px 8px 0 rgba(189, 187, 187, 0.2),
+    0 3px 10px 0 rgba(83, 83, 83, 0.19);
+}
+
+.Customer .FormColl {
+  width: 50%;
+  margin: auto;
+}
+
+.SubFormCustomer {
+  margin: auto;
+  width: 90%;
+  height: 65vh;
+  overflow-y: auto;
+}
