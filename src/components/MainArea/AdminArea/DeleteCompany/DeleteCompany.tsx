@@ -15,7 +15,6 @@ function DeleteCompany(props: DcProps) {
   const token = props.token;
   let [fetchedCompany, setFetchedCompany] = useState(null);
   let [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);
-
   let [err, setErr] = useState(null);
   const deleteCompanyHandler = (e: SyntheticEvent) => {
     e.preventDefault();

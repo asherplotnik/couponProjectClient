@@ -71,7 +71,13 @@ function Login(): JSX.Element {
             </Form.Group>
             <Form.Group>
               <Form.Label>User type:</Form.Label>
-              <Form.Control as="select" id="userType" name="userType" required>
+              <Form.Control
+                as="select"
+                id="userType"
+                name="userType"
+                required
+                size="lg"
+              >
                 <option value="0">ADMIN</option>
                 <option value="1">COMPANY</option>
                 <option value="2">CUSTOMER</option>

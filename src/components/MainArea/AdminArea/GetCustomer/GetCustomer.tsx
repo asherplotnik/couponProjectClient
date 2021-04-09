@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import globals from "../../../../Services/Globals";
 import { Form, Button } from "react-bootstrap";
 import "./GetCustomer.css";
@@ -17,6 +17,7 @@ const GetCustomer = (props: GcProps) => {
   const token = props.token;
   let [fetchedCustomer, setFetchedCustomer] = useState<CustomerModel>(null);
   let [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[]>(null);
+  let [fetchedData, setFetchedData] = useState<CustomerModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
   const fetchCustomerByIdHandler = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -24,20 +25,15 @@ const GetCustomer = (props: GcProps) => {
     const customerId = parseInt(formData.get("customerId") as string);
     setFetchedCustomer(null);
     setFetchedCoupons(null);
-    axios
-      .get(
-        globals.urls.localUrl + ":8080//api/admin/getCustomer/" + customerId,
-        {
-          headers: { token: token },
-        }
-      )
-      .then(function (response) {
-        setFetchedCustomer(response.data);
-      })
-      .catch(function (error) {
-        setErr(error);
-        console.log(error);
-      });
+    let found = false;
+    for (const customer of fetchedData) {
+      if (customer.id === customerId) {
+        setFetchedCustomer(customer);
+        found = true;
+        break;
+      }
+    }
+    if (!found) setErr(new ErrorModel());
     axios
       .get(
         globals.urls.localUrl +
@@ -55,14 +51,41 @@ const GetCustomer = (props: GcProps) => {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    axios
+      .get(globals.urls.localUrl + ":8080//api/admin/getAllCustomers/", {
+        headers: { token: token },
+      })
+      .then(function (response) {
+        setFetchedData(response.data);
+      })
+      .catch(function (error) {
+        setErr(error);
+        console.log(error);
+      });
+  }, [token]);
+
   return (
     <div className="GetCustomer">
       <Form id="getCustomerForm" onSubmit={fetchCustomerByIdHandler}>
         <div className="FormColl">
-          <Form.Group>
-            <Form.Label>ID: </Form.Label>
-            <Form.Control id="customerId" name="customerId" type="number" />
-          </Form.Group>
+          <Form.Control id="customerId" name="customerId" as="select" size="lg">
+            <option value="">-- choose one --</option>
+            {fetchedData && (
+              <>
+                {fetchedData.map((opt: CustomerModel) => {
+                  return (
+                    <option key={opt.id} value={opt.id}>
+                      ID) {opt.id}
+                      {"\u00A0"} {"\u00A0"}
+                      {"\u00A0"} Name: {opt.first_name} {opt.last_name}
+                    </option>
+                  );
+                })}
+              </>
+            )}
+          </Form.Control>
         </div>
         <Button type="submit">FETCH</Button>
       </Form>

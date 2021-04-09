@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import globals from "../../../../Services/Globals";
@@ -14,8 +14,9 @@ interface UcProps {
 
 function UpdateCustomer(props: UcProps) {
   const token = props.token;
+  let [fetchedUpdate, setFetchedUpdate] = useState<CustomerModel>(null);
   let [fetchedCustomer, setFetchedCustomer] = useState<CustomerModel>(null);
-  let [fetchedData, setFetchedData] = useState<CustomerModel>(null);
+  const [fetchedData, setFetchedData] = useState<CustomerModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);
   const updateCustomerHandler = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ function UpdateCustomer(props: UcProps) {
       document.querySelector("#updateCustomerForm")
     );
     let customer: CustomerModel = new CustomerModel();
-    customer.id = fetchedCustomer.id;
+    customer.id = fetchedUpdate.id;
     customer.email = formData.get("email") as string;
     customer.password = formData.get("password") as string;
     customer.first_name = formData.get("firstName") as string;
@@ -35,7 +36,8 @@ function UpdateCustomer(props: UcProps) {
         { headers: { token: token } }
       )
       .then(function (response) {
-        setFetchedData(response.data);
+        fetchCustomers();
+        setFetchedCustomer(response.data);
       })
       .catch(function (error) {
         setErr(error);
@@ -43,48 +45,73 @@ function UpdateCustomer(props: UcProps) {
   };
   const fetchCustomerByIdHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const customerId = parseInt(
-      (document.querySelector("#customerId") as HTMLInputElement).value
+    const formData = new FormData(
+      document.querySelector("#updateCustomerForm")
     );
-    setFetchedData(null);
-    setFetchedCustomer(null);
-    setErr(null);
+    if ((formData.get("customerId") as string) === "") {
+      return;
+    }
+    const customerId = parseInt(formData.get("customerId") as string);
+
+    for (const customer of fetchedData) {
+      if (customer.id === customerId) {
+        setFetchedUpdate(customer);
+        return;
+      }
+    }
+    setErr(new ErrorModel());
+  };
+
+  const fetchCustomers = () => {
     axios
-      .get(
-        globals.urls.localUrl + ":8080//api/admin/getCustomer/" + customerId,
-        {
-          headers: { token: token },
-        }
-      )
+      .get(globals.urls.localUrl + ":8080//api/admin/getAllCustomers/", {
+        headers: { token: token },
+      })
       .then(function (response) {
-        (document.getElementById(
-          "updateCustomerForm"
-        ) as HTMLFormElement).reset();
-        setFetchedCustomer(response.data);
+        setFetchedData(response.data);
       })
       .catch(function (error) {
         setErr(error);
-        (document.getElementById(
-          "updateCustomerForm"
-        ) as HTMLFormElement).reset();
+        console.log(error);
       });
   };
+  useEffect(() => {
+    axios
+      .get(globals.urls.localUrl + ":8080//api/admin/getAllCustomers/", {
+        headers: { token: token },
+      })
+      .then(function (response) {
+        setFetchedData(response.data);
+      })
+      .catch(function (error) {
+        setErr(error);
+        console.log(error);
+      });
+  }, [token]);
 
   return (
     <div className="UpdateCustomer">
       <h3 className="h3Div">Update Customer</h3>
       <Form id="updateCustomerForm" onSubmit={updateCustomerHandler}>
         <div className="FormColl">
-          <Form.Group>
-            <Form.Label>ID: </Form.Label>
-            <Form.Control
-              required
-              id="customerId"
-              name="customerId"
-              defaultValue={fetchedCustomer && fetchedCustomer.id}
-            />
-          </Form.Group>
+          <Form.Control id="customerId" name="customerId" as="select" size="lg">
+            <option value="">-- choose one --</option>
+            {fetchedData && (
+              <>
+                {fetchedData.map((opt: CustomerModel) => {
+                  return (
+                    <option key={opt.id} value={opt.id}>
+                      ID) {opt.id}
+                      {"\u00A0"} {"\u00A0"}
+                      {"\u00A0"} Name: {opt.first_name} {opt.last_name}
+                    </option>
+                  );
+                })}
+              </>
+            )}
+          </Form.Control>
           <Button
+            type="button"
             variant="secondary"
             id="fetch"
             onClick={fetchCustomerByIdHandler}
@@ -96,7 +123,7 @@ function UpdateCustomer(props: UcProps) {
             <Form.Control
               name="firstName"
               id="firstName"
-              defaultValue={fetchedCustomer && fetchedCustomer.first_name}
+              defaultValue={fetchedUpdate && fetchedUpdate.first_name}
             />
           </Form.Group>
           <Form.Group>
@@ -104,21 +131,21 @@ function UpdateCustomer(props: UcProps) {
             <Form.Control
               name="lastName"
               id="lastName"
-              defaultValue={fetchedCustomer && fetchedCustomer.last_name}
+              defaultValue={fetchedUpdate && fetchedUpdate.last_name}
             />
           </Form.Group>
           <Form.Group>
             <Form.Label>Email: </Form.Label>
             <Form.Control
               name="email"
-              defaultValue={fetchedCustomer && fetchedCustomer.email}
+              defaultValue={fetchedUpdate && fetchedUpdate.email}
             />
           </Form.Group>
           <Form.Group>
             <Form.Label>password: </Form.Label>
             <Form.Control
               name="password"
-              defaultValue={fetchedCustomer && fetchedCustomer.password}
+              defaultValue={fetchedUpdate && fetchedUpdate.password}
             />
           </Form.Group>
         </div>
@@ -126,7 +153,7 @@ function UpdateCustomer(props: UcProps) {
       </Form>
       <CustomerTable
         err={err}
-        data={fetchedData}
+        data={fetchedCustomer}
         title="CUSTOMER UPDATED SUCCESSFULLY"
       />
     </div>

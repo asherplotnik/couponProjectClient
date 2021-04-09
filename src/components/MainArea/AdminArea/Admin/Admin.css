@@ -1,5 +1,5 @@
 .Admin {
-  margin: 1.5% 30%;
+  margin: 1.5% 20%;
   border: solid 1px lightgray;
   border-radius: 5px;
   padding: 5px;
@@ -9,12 +9,12 @@
 
 .Admin #actionForm {
   margin: auto;
-  width: 50%;
+  width: 35%;
 }
 
 .SubFormAdmin {
   margin: auto;
-  width: 70%;
+  width: 100%;
   height: 65vh;
   overflow-y: auto;
 }

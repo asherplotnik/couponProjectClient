@@ -71,6 +71,7 @@ const Company = (): JSX.Element => {
                 name="action"
                 as="select"
                 id="actionSelect"
+                size="lg"
               >
                 <option value="">-- choose one --</option>
                 <option value="1"> add new coupon</option>
@@ -86,8 +87,8 @@ const Company = (): JSX.Element => {
             </Form.Group>
           </div>
         </Form>
+        <div className="SubFormCompany">{subForm}</div>
       </div>
-      <div className="SubFormCompany">{subForm}</div>
     </div>
   );
 };

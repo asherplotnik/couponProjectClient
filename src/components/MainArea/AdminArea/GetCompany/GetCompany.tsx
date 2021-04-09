@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import CompanyTable from "../../../UI/CompanyTable";
 import globals from "../../../../Services/Globals";
 import { Form, Button } from "react-bootstrap";
@@ -17,6 +17,7 @@ const GetCompany = (props: GcProps) => {
   const token = props.token;
   let [fetchedCompany, setFetchedCompany] = useState<CompanyModel>(null);
   let [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[]>(null);
+  let [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
   const fetchCompanyByIdHandler = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -24,17 +25,15 @@ const GetCompany = (props: GcProps) => {
     const companyId = parseInt(formData.get("companyId") as string);
     setFetchedCompany(null);
     setFetchedCoupons(null);
-    axios
-      .get(globals.urls.localUrl + ":8080//api/admin/getCompany/" + companyId, {
-        headers: { token: token },
-      })
-      .then(function (response) {
-        setFetchedCompany(response.data);
-      })
-      .catch(function (error) {
-        setErr(error);
-        console.log(error);
-      });
+    let found = false;
+    for (const company of fetchedData) {
+      if (company.id === companyId) {
+        setFetchedCompany(company);
+        found = true;
+        break;
+      }
+    }
+    if (!found) setErr(new ErrorModel());
     axios
       .get(
         globals.urls.localUrl +
@@ -53,15 +52,40 @@ const GetCompany = (props: GcProps) => {
       });
   };
 
+  useEffect(() => {
+    axios
+      .get(globals.urls.localUrl + ":8080//api/admin/getAllCompanies/", {
+        headers: { token: token },
+      })
+      .then(function (response) {
+        setFetchedData(response.data);
+      })
+      .catch(function (error) {
+        setErr(error);
+        console.log(error);
+      });
+  }, [token]);
+
   return (
     <div className="GetCompany">
       <h3 className="h3Div">Get Company details</h3>
       <Form id="getCompanyForm" onSubmit={fetchCompanyByIdHandler}>
         <div className="FormColl">
-          <Form.Group>
-            <Form.Label>ID: </Form.Label>
-            <Form.Control id="companyId" name="companyId" type="number" />
-          </Form.Group>
+          <Form.Control name="companyId" as="select" id="companyId" size="lg">
+            <option value="">-- choose one --</option>
+            {fetchedData && (
+              <>
+                {fetchedData.map((opt: CompanyModel) => {
+                  return (
+                    <option key={opt.id} value={opt.id}>
+                      ID)
+                      {opt.id} Name: {opt.name}
+                    </option>
+                  );
+                })}
+              </>
+            )}
+          </Form.Control>
         </div>
         <Button type="submit">FETCH</Button>
       </Form>

@@ -63,12 +63,13 @@ function Customer() {
                 name="action"
                 as="select"
                 id="actionSelect"
+                size="lg"
               >
                 <option value="">-- choose one --</option>
                 <option value="1"> purchase coupon</option>
                 <option value="2"> get customer coupon by ID</option>
                 <option value="3"> get customer coupons</option>
-                <option value="5"> get customer coupons by category</option>
+                <option value="4"> get customer coupons by category</option>
                 <option value="5"> get customer coupons by max price</option>
                 <option value="6"> get customer details</option>
                 <option value="7"> exit</option>
@@ -77,8 +78,8 @@ function Customer() {
           </div>
           {/* <MyButton type="submit"> SUBMIT </MyButton> */}
         </Form>
+        <div className="SubFormCustomer">{subForm}</div>
       </div>
-      <div className="SubFormCustomer">{subForm}</div>
     </div>
   );
 }

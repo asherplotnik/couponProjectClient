@@ -77,23 +77,23 @@ function Admin() {
               id="actionSelect"
               size="lg"
             >
-              <option value="">-- choose one --</option>
-              <option value="1"> add new company</option>
-              <option value="2"> delete company</option>
-              <option value="3"> update company details</option>
-              <option value="4"> get company details</option>
-              <option value="5"> get all companies</option>
-              <option value="6"> add customer</option>
-              <option value="7"> delete customer</option>
-              <option value="8"> update customer details</option>
-              <option value="9"> get customer details</option>
-              <option value="10"> get all customers</option>
-              <option value="11"> exit</option>
+              <option value="">-- Choose one --</option>
+              <option value="1"> Add new company</option>
+              <option value="2"> Delete company</option>
+              <option value="3"> Update company details</option>
+              <option value="4"> Get company details</option>
+              <option value="5"> Get all companies</option>
+              <option value="6"> Add customer</option>
+              <option value="7"> Delete customer</option>
+              <option value="8"> Update customer details</option>
+              <option value="9"> Get customer details</option>
+              <option value="10"> Get all customers</option>
+              <option value="11"> Exit</option>
             </Form.Control>
           </Form.Group>
         </Form>
+        <div className="SubFormAdmin">{subForm}</div>
       </div>
-      <div className="SubFormAdmin">{subForm}</div>
     </div>
   );
 }
