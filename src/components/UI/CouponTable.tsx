@@ -1,4 +1,4 @@
-import classes from "./CouponsTable.module.css";
+import "./CouponTable.css";
 import { Table } from "react-bootstrap";
 import CouponModel from "../../Models/CouponModel";
 import ErrorModel from "../../Models/ErrorModel";
@@ -13,13 +13,13 @@ const CouponTable = (props: CtProps) => {
   let coupon = props.data;
   if (coupon) {
     return (
-      <div className={classes.tableDiv}>
-        <div className={classes.h3Div}>
+      <div className="CouponTable">
+        <div className="h3Div">
           <h3>{props.title}</h3>
         </div>
         <Table>
           <thead>
-            <tr className={classes.tableRow}>
+            <tr className="tableRow">
               <th>ID</th>
               <th>Category ID</th>
               <th>Company ID</th>
@@ -33,7 +33,7 @@ const CouponTable = (props: CtProps) => {
             </tr>
           </thead>
           <tbody>
-            <tr className={classes.tableRow}>
+            <tr className="tableRow">
               <td>{coupon.id}</td>
               <td>{coupon.categoryId}</td>
               <td>{coupon.company.id}</td>
@@ -52,7 +52,7 @@ const CouponTable = (props: CtProps) => {
   } else {
     if (props.err) {
       return (
-        <div className={classes.h3Div}>
+        <div className="h3Div">
           <h3>{props.err.response.data.message}</h3>
         </div>
       );

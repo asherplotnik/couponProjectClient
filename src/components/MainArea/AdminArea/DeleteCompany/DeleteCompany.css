@@ -8,10 +8,13 @@
 }
 
 .DeleteCompany .FormColl {
-  width: 50%;
+  width: 70%;
   margin: auto;
 }
 
 .DeleteCompany .h3Div {
+  text-align: center;
+}
+.SelectDiv {
   text-align: center;
 }

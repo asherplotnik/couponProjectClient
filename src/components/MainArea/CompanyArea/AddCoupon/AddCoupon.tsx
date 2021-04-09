@@ -2,10 +2,11 @@ import axios from "axios";
 import { SyntheticEvent, useState } from "react";
 import globals from "../../../../Services/Globals";
 import "./AddCoupon.css";
-import CouponTable from "../../../UI/CouponTable";
+//import CouponTable from "../../../UI/CouponTable";
 import { Button, Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
+import CouponCard from "../../../SharedArea/CouponCard/CouponCard";
 
 interface AcProps {
   token: string;
@@ -84,11 +85,8 @@ const AddCoupon = (props: AcProps) => {
         <Button type="submit">SUBMIT</Button>
       </Form>
       <div>
-        <CouponTable
-          err={err}
-          data={fetchedData}
-          title="COUPON ADDED SUCCESSFULLY"
-        />
+        {fetchedData && <h4>COUPON ADDED SUCCESSFULLY</h4>}
+        {fetchedData && <CouponCard err={err} data={fetchedData} />}
       </div>
     </div>
   );

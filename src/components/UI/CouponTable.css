@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.tableDiv {
+.CouponTable {
   width: 100%;
   border: solid 1px lightgray;
   border-radius: 5px;
@@ -11,16 +11,20 @@
     0 3px 10px 0 rgba(83, 83, 83, 0.19);
 }
 
-.h3Div {
+.CouponTable .h3Div {
   text-align: center;
 }
 
-.tableRow {
+.CouponTable .tableRow {
   font-size: small;
 }
 
+.CouponTable .ImageStyle {
+  max-height: 100px;
+}
+
 @media (max-width: 800px) {
-  .tableRow {
+  .CouponTable .tableRow {
     font-size: xx-small;
   }
 }

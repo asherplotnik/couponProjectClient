@@ -3,10 +3,11 @@ import { SyntheticEvent, useState } from "react";
 //import { localUrl } from "../../../helper";
 import globals from "../../../../Services/Globals";
 import "./UpdateCoupon.css";
-import CouponTable from "../../../UI/CouponTable";
+// CouponTable from "../../../UI/CouponTable";
 import { Button, Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
+import CouponCard from "../../../SharedArea/CouponCard/CouponCard";
 
 interface UcProps {
   token: string;
@@ -16,37 +17,30 @@ const UpdateCoupon = (props: UcProps) => {
   const token = props.token;
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
   let [err, setErr] = useState<ErrorModel>(null);
-
   let [fetchedData, setFetchedData] = useState<CouponModel>(null);
   const updateCouponHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    let sentCoupon: CouponModel = new CouponModel();
     const formData = new FormData(document.querySelector("#updateCouponForm"));
-    sentCoupon.id = fetchedCoupon.id;
-    sentCoupon.categoryId = parseInt(formData.get("categoryId") as string);
-    sentCoupon.title = formData.get("title") as string;
-    sentCoupon.description = formData.get("description") as string;
-    sentCoupon.startDate = new Date(formData.get("startDate") as string);
-    sentCoupon.endDate = new Date(formData.get("endDate") as string);
-    sentCoupon.amount = parseInt(formData.get("amount") as string);
-    sentCoupon.price = parseFloat(formData.get("price") as string);
-    sentCoupon.image = formData.get("image") as string;
-
+    formData.append("id", fetchedCoupon.id.toString());
+    if (formData.get("imageFile") as File)
+      formData.append("image", (formData.get("imageFile") as File).name);
     axios
       .post(
         globals.urls.localUrl + ":8080//api/company/updateCoupon",
-        sentCoupon,
+        formData,
         {
-          headers: { token: token },
+          headers: { token: token, "Content-Type": "multipart/form-data" },
         }
       )
       .then(function (response) {
+        setFetchedCoupon(null);
         setFetchedData(response.data);
       })
       .catch(function (error) {
         setErr(error);
       });
   };
+
   const fetchCouponByIdHandler = (e: SyntheticEvent) => {
     e.preventDefault();
     const cId = parseInt(
@@ -68,6 +62,7 @@ const UpdateCoupon = (props: UcProps) => {
         setFetchedCoupon(response.data);
       })
       .catch(function (error) {
+        setErr(error);
         (document.getElementById(
           "updateCouponForm"
         ) as HTMLFormElement).reset();
@@ -79,11 +74,13 @@ const UpdateCoupon = (props: UcProps) => {
       <Form id="updateCouponForm" onSubmit={updateCouponHandler}>
         <Form.Group>
           <Form.Label>ID: </Form.Label>
-          <Form.Control
-            id="couponId"
-            name="couponId"
-            defaultValue={fetchedCoupon && fetchedCoupon.id}
-          />
+          <div className="UpdateCouponFormColl">
+            <Form.Control
+              id="couponId"
+              name="couponId"
+              defaultValue={fetchedCoupon && fetchedCoupon.id}
+            />
+          </div>
         </Form.Group>
         <Button id="fetch" onClick={fetchCouponByIdHandler}>
           FETCH
@@ -150,21 +147,16 @@ const UpdateCoupon = (props: UcProps) => {
             </Form.Group>
             <Form.Group>
               <Form.Label>Image: </Form.Label>
-              <Form.Control
-                name="image"
-                defaultValue={fetchedCoupon && fetchedCoupon.image}
-              />
+              <Form.Control type="file" name="imageFile" />
             </Form.Group>
           </div>
         </div>
         <Button type="submit">SUBMIT</Button>
       </Form>
       <div>
-        <CouponTable
-          err={err}
-          data={fetchedData}
-          title="COUPON UPDATED SUCCESSFULLY"
-        />
+        {fetchedCoupon && <CouponCard err={err} data={fetchedCoupon} />}
+        {fetchedData && <h4>COUPON ADDED SUCCESSFULLY</h4>}
+        {fetchedData && <CouponCard err={err} data={fetchedData} />}
       </div>
     </div>
   );

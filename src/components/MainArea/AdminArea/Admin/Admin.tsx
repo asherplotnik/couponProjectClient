@@ -75,6 +75,7 @@ function Admin() {
               name="action"
               as="select"
               id="actionSelect"
+              size="lg"
             >
               <option value="">-- choose one --</option>
               <option value="1"> add new company</option>

@@ -21,3 +21,14 @@
 .UpdateCoupon .h3Div {
   text-align: center;
 }
+.UpdateCouponFormColl {
+  width: 50%;
+  margin: auto;
+}
+
+.UpdateCouponFormDivColl .SmallImage img {
+  height: 100px;
+}
+.UpdateCouponFormDivColl .SmallImage {
+  display: flex;
+}
