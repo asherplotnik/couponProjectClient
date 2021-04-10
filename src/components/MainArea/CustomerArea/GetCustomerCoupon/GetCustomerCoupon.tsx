@@ -20,6 +20,10 @@ function GetCustomerCoupon(props: GcProps): JSX.Element {
     e.preventDefault();
     const formData = new FormData(document.querySelector("#getCouponForm"));
     const couponId = parseInt(formData.get("couponId") as string);
+    if (formData.get("couponId") === "") {
+      setFetchedCoupon(null);
+      return;
+    }
     for (const coupon of fetchedData) {
       if (coupon.id === couponId) {
         setFetchedCoupon(coupon);
