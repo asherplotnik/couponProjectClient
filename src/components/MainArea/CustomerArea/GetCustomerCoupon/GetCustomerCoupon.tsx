@@ -9,6 +9,7 @@ import ErrorModel from "../../../../Models/ErrorModel";
 
 interface GcProps {
   token: string;
+  id?: number;
 }
 function GetCustomerCoupon(props: GcProps): JSX.Element {
   const token = props.token;

@@ -14,7 +14,7 @@ interface GpProps {
 
 const GetCompanyCouponsByMaxPrice = (props: GpProps) => {
   const token = props.token;
-  const [st, setSt] = useState<CouponModel[]>([]);
+  const [st, setSt] = useState<CouponModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);
   const fetchCouponsHandler = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -45,13 +45,13 @@ const GetCompanyCouponsByMaxPrice = (props: GpProps) => {
       <Form id="fetchCouponsByPriceForm" onSubmit={fetchCouponsHandler}>
         <div className="innerFormDiv">
           <Form.Group>
-            <Form.Label>CATEGORY ID: </Form.Label>
+            <Form.Label>MAXIMUM PRICE: </Form.Label>
             <Form.Control id="mPrice" name="mPrice" />
           </Form.Group>
           <Button type="submit">FETCH</Button>
         </div>
       </Form>
-      <CouponsTable err={err} data={st} title="Coupons List" />
+      {st && <CouponsTable err={err} data={st} title="Coupons List" />}
     </div>
   );
 };

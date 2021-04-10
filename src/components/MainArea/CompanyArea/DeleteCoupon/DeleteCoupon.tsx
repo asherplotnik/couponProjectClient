@@ -1,12 +1,11 @@
 import axios from "axios";
-import { SyntheticEvent, useState } from "react";
-//import { localUrl } from "../../../helper";
+import { SyntheticEvent, useEffect, useState } from "react";
 import globals from "../../../../Services/Globals";
 import "./DeleteCoupon.css";
-import CouponTable from "../../../UI/CouponTable";
 import { Button, Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
+import CouponCard from "../../../SharedArea/CouponCard/CouponCard";
 
 interface DcProps {
   token: string;
@@ -14,7 +13,8 @@ interface DcProps {
 
 const DeleteCoupon = (props: DcProps) => {
   const token = props.token;
-  let [fetchedData, setFetchedData] = useState<CouponModel>(null);
+  let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
+  let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
   const deleteCouponHandler = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -25,6 +25,21 @@ const DeleteCoupon = (props: DcProps) => {
         headers: { token: token },
       })
       .then(function (response) {
+        fetchCoupons();
+        setFetchedCoupon(response.data);
+      })
+      .catch(function (error) {
+        setErr(error);
+        console.log(error);
+      });
+  };
+
+  const fetchCoupons = () => {
+    axios
+      .get(globals.urls.localUrl + ":8080//api/company/getCompanyCoupons/", {
+        headers: { token: token },
+      })
+      .then(function (response) {
         setFetchedData(response.data);
       })
       .catch(function (error) {
@@ -32,22 +47,53 @@ const DeleteCoupon = (props: DcProps) => {
         console.log(error);
       });
   };
+  useEffect(() => {
+    axios
+      .get(globals.urls.localUrl + ":8080//api/company/getCompanyCoupons/", {
+        headers: { token: token },
+      })
+      .then(function (response) {
+        setFetchedData(response.data);
+      })
+      .catch(function (error) {
+        setErr(error);
+        console.log(error);
+      });
+  }, [token]);
+
   return (
     <div className="DeleteCoupon">
       <h3 className="h3Div">Delete Coupon</h3>
       <Form id="deleteCouponForm" onSubmit={deleteCouponHandler}>
         <div className="FormColl">
           <Form.Group>
-            <Form.Label>ID to delete: </Form.Label>
-            <Form.Control name="id" /> <Button type="submit">SUBMIT</Button>
+            <Form.Control name="id" as="select" id="actionSelect" size="lg">
+              <option value="">-- choose one --</option>
+              {fetchedData && (
+                <>
+                  {fetchedData.map((opt: CouponModel) => {
+                    return (
+                      <option key={opt.id} value={opt.id}>
+                        ID) {opt.id}
+                        {"\u00A0"} {"\u00A0"}
+                        {"\u00A0"}
+                        Title: {opt.title}
+                      </option>
+                    );
+                  })}
+                </>
+              )}
+            </Form.Control>
+            <Button type="submit">SUBMIT</Button>
           </Form.Group>
         </div>
       </Form>
-      <CouponTable
-        err={err}
-        data={fetchedData}
-        title="COUPON DELETED SUCCESSFULLY"
-      />
+      {fetchedCoupon && (
+        <>
+          <h3>COUPON DELETED SUCCESSFULLY</h3>
+          <CouponCard err={err} data={fetchedCoupon} />{" "}
+        </>
+      )}
     </div>
   );
 };

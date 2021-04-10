@@ -1,9 +1,7 @@
 import axios from "axios";
-import { SyntheticEvent, useState } from "react";
-//import { localUrl } from "../../../helper";
+import { SyntheticEvent, useEffect, useState } from "react";
 import globals from "../../../../Services/Globals";
 import "./UpdateCoupon.css";
-// CouponTable from "../../../UI/CouponTable";
 import { Button, Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
@@ -16,8 +14,9 @@ interface UcProps {
 const UpdateCoupon = (props: UcProps) => {
   const token = props.token;
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
+  let [fetchedUpdate, setFetchedUpdate] = useState<CouponModel>(null);
+  let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
-  let [fetchedData, setFetchedData] = useState<CouponModel>(null);
   const updateCouponHandler = (e: SyntheticEvent) => {
     e.preventDefault();
     const formData = new FormData(document.querySelector("#updateCouponForm"));
@@ -33,8 +32,9 @@ const UpdateCoupon = (props: UcProps) => {
         }
       )
       .then(function (response) {
+        fetchCoupons();
         setFetchedCoupon(null);
-        setFetchedData(response.data);
+        setFetchedUpdate(response.data);
       })
       .catch(function (error) {
         setErr(error);
@@ -43,31 +43,52 @@ const UpdateCoupon = (props: UcProps) => {
 
   const fetchCouponByIdHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const cId = parseInt(
-      (document.querySelector("#couponId") as HTMLInputElement).value
-    );
-    axios
-      .get(
-        globals.urls.localUrl +
-          ":8080//api/company/getCompanyCouponById/" +
-          cId,
-        {
-          headers: { token: token },
-        }
-      )
-      .then(function (response) {
+    const formData = new FormData(document.querySelector("#updateCouponForm"));
+    if ((formData.get("couponId") as string) === "") {
+      return;
+    }
+    const couponId = parseInt(formData.get("couponId") as string);
+
+    for (const coupon of fetchedData) {
+      if (coupon.id === couponId) {
         (document.getElementById(
           "updateCouponForm"
         ) as HTMLFormElement).reset();
-        setFetchedCoupon(response.data);
+        setFetchedCoupon(coupon);
+        return;
+      }
+    }
+    (document.getElementById("updateCouponForm") as HTMLFormElement).reset();
+    setErr(new ErrorModel());
+  };
+
+  const fetchCoupons = () => {
+    axios
+      .get(globals.urls.localUrl + ":8080//api/company/getAllCompanies/", {
+        headers: { token: token },
+      })
+      .then(function (response) {
+        setFetchedData(response.data);
       })
       .catch(function (error) {
         setErr(error);
-        (document.getElementById(
-          "updateCouponForm"
-        ) as HTMLFormElement).reset();
+        console.log(error);
       });
   };
+  useEffect(() => {
+    axios
+      .get(globals.urls.localUrl + ":8080//api/company/getCompanyCoupons/", {
+        headers: { token: token },
+      })
+      .then(function (response) {
+        setFetchedData(response.data);
+      })
+      .catch(function (error) {
+        setErr(error);
+        console.log(error);
+      });
+  }, [token]);
+
   return (
     <div className="UpdateCouponWrapper">
       <h3 className="h3Div">Update Coupon</h3>
@@ -75,11 +96,23 @@ const UpdateCoupon = (props: UcProps) => {
         <Form.Group>
           <Form.Label>ID: </Form.Label>
           <div className="UpdateCouponFormColl">
-            <Form.Control
-              id="couponId"
-              name="couponId"
-              defaultValue={fetchedCoupon && fetchedCoupon.id}
-            />
+            <Form.Control name="couponId" as="select" id="couponId" size="lg">
+              <option value="">-- choose one --</option>
+              {fetchedData && (
+                <>
+                  {fetchedData.map((opt: CouponModel) => {
+                    return (
+                      <option key={opt.id} value={opt.id}>
+                        ID) {opt.id}
+                        {"\u00A0"} {"\u00A0"}
+                        {"\u00A0"}
+                        Title: {opt.title}
+                      </option>
+                    );
+                  })}
+                </>
+              )}
+            </Form.Control>
           </div>
         </Form.Group>
         <Button id="fetch" onClick={fetchCouponByIdHandler}>
@@ -155,8 +188,8 @@ const UpdateCoupon = (props: UcProps) => {
       </Form>
       <div>
         {fetchedCoupon && <CouponCard err={err} data={fetchedCoupon} />}
-        {fetchedData && <h4>COUPON ADDED SUCCESSFULLY</h4>}
-        {fetchedData && <CouponCard err={err} data={fetchedData} />}
+        {fetchedUpdate && <h4>COUPON ADDED SUCCESSFULLY</h4>}
+        {fetchedUpdate && <CouponCard err={err} data={fetchedUpdate} />}
       </div>
     </div>
   );
