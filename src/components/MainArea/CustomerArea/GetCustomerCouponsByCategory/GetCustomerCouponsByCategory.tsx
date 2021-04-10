@@ -21,10 +21,14 @@ const GetCustomerCouponsByCategory = (props: GcProps) => {
       document.querySelector("#fetchCouponsByIdForm")
     );
     const categoryId = parseInt(formData.get("categoryId") as string);
+    if (formData.get("categoryId") === "") {
+      setSt(null);
+      return;
+    }
     axios
       .get(
         globals.urls.localUrl +
-          ":8080//api/customer//getCustomerCouponsByCategory/" +
+          ":8080/api/customer/getCustomerCouponsByCategory/" +
           categoryId,
         {
           headers: { token: token },
@@ -44,16 +48,25 @@ const GetCustomerCouponsByCategory = (props: GcProps) => {
         <h3 className="h3Div">Customer's Coupons by Category ID</h3>
         <Form id="fetchCouponsByIdForm" onSubmit={fetchCouponsHandler}>
           <div className="FormColl">
-            <Form.Group>
-              <Form.Label>CATEGORY ID: </Form.Label>
-              <Form.Control id="categoryId" name="categoryId" />
-            </Form.Group>
+            <Form.Control
+              name="categoryId"
+              as="select"
+              id="categoryId"
+              size="lg"
+            >
+              <option value="">-- choose one --</option>
+              <option value="1">1) Food</option>
+              <option value="2">2) Movie</option>
+              <option value="3">3) Discount</option>
+              <option value="4">4) Restaurant</option>
+              <option value="5">5) Vacation</option>
+            </Form.Control>
           </div>
           <Button type="submit">FETCH</Button>
         </Form>
       </div>
       <br />
-      <CouponsTable err={err} data={st} title="Coupons List" />
+      {st && <CouponsTable err={err} data={st} title="Coupons List" />}
     </div>
   );
 };

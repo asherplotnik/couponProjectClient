@@ -14,7 +14,7 @@ interface GpProps {
 
 const GetCompanyCouponsByCategoryId = (props: GpProps) => {
   const token = props.token;
-  const [st, setSt] = useState<CouponModel[]>([]);
+  const [st, setSt] = useState<CouponModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);
   const fetchCouponsHandler = (e: SyntheticEvent) => {
     e.preventDefault();

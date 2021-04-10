@@ -6,7 +6,7 @@ import "./AddCoupon.css";
 import { Button, Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
-import CouponCard from "../../../SharedArea/CouponCard/CouponCard";
+import CouponCard from "../../../UI/CouponCard/CouponCard";
 
 interface AcProps {
   token: string;

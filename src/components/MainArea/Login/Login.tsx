@@ -47,7 +47,7 @@ function Login(): JSX.Element {
     loginView = (
       <div className="Login">
         <div className="wrapperDiv">
-          <h3>COUPONS API</h3>
+          <h3>LOGIN</h3>
           <Form className="ulForm" id="loginForm" onSubmit={fetchLogin}>
             <Form.Group>
               <Form.Label>Email :</Form.Label>

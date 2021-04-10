@@ -1,4 +1,4 @@
-import CouponCard from "../../../SharedArea/CouponCard/CouponCard";
+import CouponCard from "../../../UI/CouponCard/CouponCard";
 import "./GetCompanyCoupon.css";
 import axios from "axios";
 import { SyntheticEvent, useEffect, useState } from "react";

@@ -16,8 +16,12 @@
 }
 
 .CouponsTable .tableRow td {
-  font-size: small;
   vertical-align: middle;
+  font-weight: bold;
+}
+
+.CouponsTable .HoveredRow {
+  background-color: rgb(252, 247, 247);
 }
 
 .CouponsTable .BoxImage {

@@ -2,15 +2,27 @@ import "./CouponsTable.css";
 import { Table } from "react-bootstrap";
 import CouponModel from "../../Models/CouponModel";
 import ErrorModel from "../../Models/ErrorModel";
+import { useState } from "react";
 
 interface CpProps {
   data: CouponModel[];
   title: string;
   showTitleWhenEmpty?: boolean;
   err?: ErrorModel;
+  selectRow?: Function;
 }
 
 const CouponsTable = (props: CpProps) => {
+  const [rowHovered, setRowHovered] = useState(-1);
+  const cat = ["", "FOOD", "MOVIE", "DISCOUNT", "RESTAURANT", "VACATION"];
+
+  const handleHover = (row: number) => {
+    setRowHovered(row);
+  };
+
+  const handleSelect = (id: number) => {
+    if (props.selectRow) props.selectRow(id);
+  };
   let fetchedCoupons = props.data;
   if (fetchedCoupons) {
     return (
@@ -22,7 +34,7 @@ const CouponsTable = (props: CpProps) => {
           <thead>
             <tr className="tableRow">
               <th>ID</th>
-              <th>Category ID</th>
+              <th>Category</th>
               <th>Company ID</th>
               <th>Title</th>
               <th>Description</th>
@@ -35,9 +47,19 @@ const CouponsTable = (props: CpProps) => {
           </thead>
           <tbody>
             {fetchedCoupons.map((coupon, index) => (
-              <tr key={index} className="tableRow">
+              <tr
+                key={index}
+                className={
+                  rowHovered === index ? "tableRow HoveredRow" : "tableRow"
+                }
+                onMouseEnter={() => handleHover(index)}
+                onMouseLeave={() => handleHover(-1)}
+                onClick={() => handleSelect(coupon.id)}
+              >
                 <td>{coupon.id}</td>
-                <td>{coupon.categoryId}</td>
+                <td>
+                  #{coupon.categoryId} -- {cat[coupon.categoryId]}
+                </td>
                 <td>{coupon.company.id}</td>
                 <td>{coupon.title}</td>
                 <td>{coupon.description}</td>
