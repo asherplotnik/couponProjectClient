@@ -1,18 +1,19 @@
 import "./Login.css";
 import axios from "axios";
-//import { localUrl } from "../../helper";
 import globals from "../../../Services/Globals";
-import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import * as actions from "../../../Redux/actions";
 import { useState } from "react";
 import Spinner from "../../UI/Spinner/Spinner";
 import { Form, Button } from "react-bootstrap";
+import store from "../../../Redux/Store";
+import { setSessionAction } from "../../../Redux/SessionState";
+
 function Login(): JSX.Element {
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
+  const [userTypeState, setUserTypeState] = useState(-1);
   const history = useHistory();
-  const fetchLogin = (e: React.SyntheticEvent) => {
+
+  const fetchLogin = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const formData = new FormData(
       document.querySelector("#loginForm") as HTMLFormElement
@@ -21,18 +22,20 @@ function Login(): JSX.Element {
     const email = formData.get("email");
     const userType = parseInt(formData.get("userType") as string);
     setLoading(true);
-    axios
+    await axios
       .post(globals.urls.localUrl + `:8080//login/${email}/${userType}`, {
         password: password,
       })
       .then((response) => {
-        setLoading(false);
-        dispatch(
-          actions.setSession({
+        //dispatch(actions.setSession({token: response.data as string,userType: userType,}));
+        setUserTypeState(userType);
+        store.dispatch(
+          setSessionAction({
             token: response.data as string,
             userType: userType,
           })
         );
+        setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
@@ -41,7 +44,6 @@ function Login(): JSX.Element {
       });
   };
 
-  let userT = useSelector<SessionState, any>((state) => state.session.userType);
   let loginView = <Spinner />;
   if (!loading) {
     loginView = (
@@ -92,8 +94,7 @@ function Login(): JSX.Element {
       // </div>
     );
   }
-  console.log(userT);
-  switch (userT) {
+  switch (userTypeState) {
     case 0:
       history.push("/admin");
       break;

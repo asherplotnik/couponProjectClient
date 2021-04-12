@@ -1,8 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Company.css";
-import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import * as actions from "../../../../Redux/actions";
 import { Form } from "react-bootstrap";
 import AddCoupon from "../AddCoupon/AddCoupon";
 import DeleteCoupon from "../DeleteCoupon/DeleteCoupon";
@@ -12,17 +10,22 @@ import GetCompanyCoupons from "../GetCompanyCoupons/GetCompanyCoupons";
 import GetCompanyCouponsByMaxPrice from "../GetCompanyCouponsByMaxPrice/GetCompanyCouponsByMaxPrice";
 import GetCompanyDetails from "../GetCompanyDetails/GetCompanyDetails";
 import GetCompanyCoupon from "../GetCompanyCoupon/GetCompanyCoupon";
+import store from "../../../../Redux/Store";
+import { setSessionAction } from "../../../../Redux/SessionState";
 
 const Company = (): JSX.Element => {
   const actionSelector = (event: React.ChangeEvent<{ value: unknown }>) => {
     event.preventDefault();
     setSubFormState(parseInt(event.target.value as string));
   };
-
   const [subFormState, setSubFormState] = useState(0);
-  const dispatch = useDispatch();
+  let [token, setToken] = useState(store.getState().SessionState.session.token);
   const history = useHistory();
-  let token = useSelector<SessionState, any>((state) => state.session.token);
+  //let token = useSelector<SessionState, any>((state) => state.session.token);
+  useEffect(() => {
+    setToken(store.getState().SessionState.session.token);
+  }, [token]);
+
   let subForm: JSX.Element;
   switch (subFormState) {
     case 1:
@@ -50,7 +53,7 @@ const Company = (): JSX.Element => {
       subForm = <GetCompanyDetails token={token} />;
       break;
     case 9:
-      dispatch(actions.setSession({ token: "", userType: -1 }));
+      store.dispatch(setSessionAction({ token: "", userType: -1 }));
       history.replace("/login");
       break;
     default:

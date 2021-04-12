@@ -188,7 +188,7 @@ const UpdateCoupon = (props: UcProps) => {
       </Form>
       <div>
         {fetchedCoupon && <CouponCard err={err} data={fetchedCoupon} />}
-        {fetchedUpdate && <h4>COUPON ADDED SUCCESSFULLY</h4>}
+        {fetchedUpdate && <h4>COUPON UPDATED SUCCESSFULLY</h4>}
         {fetchedUpdate && <CouponCard err={err} data={fetchedUpdate} />}
       </div>
     </div>

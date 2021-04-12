@@ -1,8 +1,6 @@
 import "./Admin.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import * as actions from "../../../../Redux/actions";
 import AddCompany from "../AddCompany/AddCompany";
 import AddCustomer from "../AddCustomer/AddCustomer";
 import DeleteCompany from "../DeleteCompany/DeleteCompany";
@@ -14,15 +12,22 @@ import GetAllCustomers from "../GetAllCustomers/GetAllCustomers";
 import GetCompany from "../GetCompany/GetCompany";
 import GetCustomer from "../GetCustomer/GetCustomer";
 import Form from "react-bootstrap/Form";
+import store from "../../../../Redux/Store";
+import { setSessionAction } from "../../../../Redux/SessionState";
 function Admin() {
   const [subFormState, setSubFormState] = useState(0);
-  const dispatch = useDispatch();
+  let [token, setToken] = useState(store.getState().SessionState.session.token);
   const history = useHistory();
 
-  let token = useSelector<SessionState, any>((state) => state.session.token);
+  //let token = useSelector<SessionState, any>((state) => state.session.token);
   const actionSelector = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSubFormState(parseInt(event.target.value as string));
   };
+
+  useEffect(() => {
+    setToken(store.getState().SessionState.session.token);
+  }, [token]);
+
   let subForm: JSX.Element;
   switch (subFormState) {
     case 1:
@@ -56,8 +61,9 @@ function Admin() {
       subForm = <GetAllCustomers token={token} />;
       break;
     case 11:
-      dispatch(actions.setSession({ token: "", userType: -1 }));
-      history.replace("/login");
+      //dispatch(actions.setSession({ token: "", userType: -1 }));
+      store.dispatch(setSessionAction({ token: "", userType: -1 }));
+      history.push("/login");
       break;
     default:
       subForm = <div></div>;

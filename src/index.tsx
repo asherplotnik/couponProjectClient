@@ -4,20 +4,12 @@ import "./index.css";
 import Layout from "./Components/LayoutArea/Layout";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
-import sessionReducer from "./Redux/reducers/sessionReducer";
-import { createStore, Store } from "redux";
-import { Provider } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
-const store: Store<SessionState, SessionAction> & {
-  dispatch: DispatchType;
-} = createStore(sessionReducer);
 
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <Layout />
-    </React.StrictMode>
-  </Provider>,
+  <React.StrictMode>
+    <Layout />
+  </React.StrictMode>,
   document.getElementById("root")
 );
 
