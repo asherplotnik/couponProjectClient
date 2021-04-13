@@ -2,7 +2,7 @@ import axios from "axios";
 import { SyntheticEvent, useEffect, useState } from "react";
 import CompanyTable from "../../../UI/CompanyTable";
 import globals from "../../../../Services/Globals";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import "./GetCompany.css";
 import CouponsTable from "../../../UI/CouponsTable";
 import CompanyModel from "../../../../Models/CompanyModel";
@@ -69,9 +69,15 @@ const GetCompany = (props: GcProps) => {
   return (
     <div className="GetCompany">
       <h3 className="h3Div">Get Company details</h3>
-      <Form id="getCompanyForm" onSubmit={fetchCompanyByIdHandler}>
+      <Form id="getCompanyForm">
         <div className="FormColl">
-          <Form.Control name="companyId" as="select" id="companyId" size="lg">
+          <Form.Control
+            name="companyId"
+            as="select"
+            id="companyId"
+            size="lg"
+            onChange={fetchCompanyByIdHandler}
+          >
             <option value="">-- choose one --</option>
             {fetchedData && (
               <>
@@ -87,7 +93,6 @@ const GetCompany = (props: GcProps) => {
             )}
           </Form.Control>
         </div>
-        <Button type="submit">FETCH</Button>
       </Form>
       <div>
         {fetchedCompany && (

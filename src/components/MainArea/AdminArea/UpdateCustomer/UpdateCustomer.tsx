@@ -94,7 +94,13 @@ function UpdateCustomer(props: UcProps) {
       <h3 className="h3Div">Update Customer</h3>
       <Form id="updateCustomerForm" onSubmit={updateCustomerHandler}>
         <div className="FormColl">
-          <Form.Control id="customerId" name="customerId" as="select" size="lg">
+          <Form.Control
+            id="customerId"
+            name="customerId"
+            as="select"
+            size="lg"
+            onChange={fetchCustomerByIdHandler}
+          >
             <option value="">-- choose one --</option>
             {fetchedData && (
               <>
@@ -110,14 +116,6 @@ function UpdateCustomer(props: UcProps) {
               </>
             )}
           </Form.Control>
-          <Button
-            type="button"
-            variant="secondary"
-            id="fetch"
-            onClick={fetchCustomerByIdHandler}
-          >
-            FETCH
-          </Button>
           <Form.Group>
             <Form.Label>First Name: </Form.Label>
             <Form.Control

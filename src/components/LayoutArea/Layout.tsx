@@ -31,17 +31,6 @@ class Layout extends Component<{}, LayoutState> {
   public componentWillUnmount(): void {
     this.unsubscribeMe(); // Unsubscribe from the subscribe operation.
   }
-  //let user = useSelector<SessionState, any>((state) => state.session.userType);
-  public guard = (
-    childComponent: JSX.Element,
-    userType: number
-  ): JSX.Element => {
-    if (this.state.user === userType) {
-      return childComponent;
-    }
-    <Redirect from="/" to="/login" exact />;
-    return null;
-  };
 
   public render(): JSX.Element {
     return (
@@ -53,25 +42,12 @@ class Layout extends Component<{}, LayoutState> {
 
           <main>
             <Switch>
-              {/* <Route path="/login" component={Login} />; */}
               <Route path="/login" component={Login} exact />;
-              <Route
-                path="/admin"
-                component={() => this.guard(<Admin />, 0)}
-                exact
-              />
+              <Route path="/admin" component={Admin} exact />
               ;
-              <Route
-                path="/company"
-                component={() => this.guard(<Company />, 1)}
-                exact
-              />
+              <Route path="/company" component={Company} exact />
               ;
-              <Route
-                path="/customer"
-                component={() => this.guard(<Customer />, 2)}
-                exact
-              />
+              <Route path="/customer" component={Customer} exact />
               ;
               <Redirect from="/" to="/login" />;
             </Switch>

@@ -4,7 +4,7 @@ import PurchaseCoupon from "../PurchaseCoupon/PurchaseCoupon";
 import GetCustomerCoupons from "../GetCustomerCoupons/GetCustomerCoupons";
 import GetCustomerCouponsByCategoryId from "../GetCustomerCouponsByCategory/GetCustomerCouponsByCategory";
 import GetCustomerCouponsByMaxPrice from "../GetCustomerCouponsByMaxPrice/GetCustomerCouponsByMaxPrice";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import GetCustomerDetails from "../GetCustomerDetails/GetCustomerDetails";
 import Form from "react-bootstrap/Form";
 import GetCustomerCoupon from "../GetCustomerCoupon/GetCustomerCoupon";
@@ -54,7 +54,9 @@ function Customer() {
     default:
       subForm = <div></div>;
   }
-
+  if (store.getState().SessionState.session.userType !== 2) {
+    return <Redirect from="/company" to="/login" />;
+  }
   return (
     <div>
       <h2 className="CustomerH2">customer Menu</h2>

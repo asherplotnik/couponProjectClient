@@ -1,7 +1,7 @@
 import axios from "axios";
 import { SyntheticEvent, useEffect, useState } from "react";
 import globals from "../../../../Services/Globals";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import "./GetCustomer.css";
 import CouponsTable from "../../../UI/CouponsTable";
 import CustomerTable from "../../../UI/CustomerTable";
@@ -68,9 +68,15 @@ const GetCustomer = (props: GcProps) => {
 
   return (
     <div className="GetCustomer">
-      <Form id="getCustomerForm" onSubmit={fetchCustomerByIdHandler}>
+      <Form id="getCustomerForm">
         <div className="FormColl">
-          <Form.Control id="customerId" name="customerId" as="select" size="lg">
+          <Form.Control
+            id="customerId"
+            name="customerId"
+            as="select"
+            size="lg"
+            onChange={fetchCustomerByIdHandler}
+          >
             <option value="">-- choose one --</option>
             {fetchedData && (
               <>
@@ -87,7 +93,6 @@ const GetCustomer = (props: GcProps) => {
             )}
           </Form.Control>
         </div>
-        <Button type="submit">FETCH</Button>
       </Form>
       <div>
         {fetchedCustomer && (

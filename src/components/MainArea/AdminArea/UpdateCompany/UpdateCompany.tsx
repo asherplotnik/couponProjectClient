@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect } from "react";
+import { SyntheticEvent, useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import globals from "../../../../Services/Globals";
@@ -95,7 +95,13 @@ function UpdateCompany(props: UcProps) {
       <Form id="updateCompanyForm" onSubmit={updateCompanyHandler}>
         <div className="FormColl">
           <Form.Group>
-            <Form.Control id="companyId" name="companyId" as="select" size="lg">
+            <Form.Control
+              id="companyId"
+              name="companyId"
+              as="select"
+              size="lg"
+              onChange={fetchCompanyByIdHandler}
+            >
               <option value="">-- choose one --</option>
               {fetchedData && (
                 <>
@@ -111,14 +117,6 @@ function UpdateCompany(props: UcProps) {
               )}
             </Form.Control>
           </Form.Group>
-          <Button
-            type="button"
-            variant="secondary"
-            id="fetch"
-            onClick={fetchCompanyByIdHandler}
-          >
-            FETCH
-          </Button>
           <Form.Group>
             <Form.Label>Name: </Form.Label>
             <Form.Control
