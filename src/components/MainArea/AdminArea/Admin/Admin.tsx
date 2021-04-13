@@ -1,5 +1,5 @@
 import "./Admin.css";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import AddCompany from "../AddCompany/AddCompany";
 import AddCustomer from "../AddCustomer/AddCustomer";
@@ -14,6 +14,7 @@ import GetCustomer from "../GetCustomer/GetCustomer";
 import Form from "react-bootstrap/Form";
 import store from "../../../../Redux/Store";
 import { setSessionAction } from "../../../../Redux/SessionState";
+import Menu from "../../../UI/Menu/Menu";
 function Admin() {
   const [subFormState, setSubFormState] = useState(0);
   let [token, setToken] = useState(store.getState().SessionState.session.token);
@@ -21,6 +22,7 @@ function Admin() {
 
   //let token = useSelector<SessionState, any>((state) => state.session.token);
   const actionSelector = (event: React.ChangeEvent<{ value: unknown }>) => {
+    event.preventDefault();
     setSubFormState(parseInt(event.target.value as string));
   };
 
