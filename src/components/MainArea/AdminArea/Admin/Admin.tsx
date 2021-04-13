@@ -1,6 +1,6 @@
 import "./Admin.css";
 import { useEffect, useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import AddCompany from "../AddCompany/AddCompany";
 import AddCustomer from "../AddCustomer/AddCustomer";
 import DeleteCompany from "../DeleteCompany/DeleteCompany";
@@ -69,9 +69,6 @@ function Admin() {
       subForm = <div></div>;
   }
 
-  if (store.getState().SessionState.session.userType !== 0) {
-    return <Redirect from="/admin" to="/login" />;
-  }
   return (
     <div>
       <h2 className="h2">Admin Menu</h2>

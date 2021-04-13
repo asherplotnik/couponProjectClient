@@ -10,6 +10,7 @@ import Customer from "../MainArea/CustomerArea/Cusotmer/Customer";
 import store from "../../Redux/Store";
 import { Component } from "react";
 import { Unsubscribe } from "redux";
+import Unauthorized from "../MainArea/Unauthorized/Unauthorized";
 
 interface LayoutState {
   user: number;
@@ -39,17 +40,25 @@ class Layout extends Component<{}, LayoutState> {
           <header>
             <Header />
           </header>
-
           <main>
             <Switch>
-              <Route path="/login" component={Login} exact />;
-              <Route path="/admin" component={Admin} exact />
-              ;
-              <Route path="/company" component={Company} exact />
-              ;
-              <Route path="/customer" component={Customer} exact />
-              ;
-              <Redirect from="/" to="/login" />;
+              <Route path="/login" component={Login} exact />
+              <Route
+                path="/admin"
+                component={this.state.user === 0 ? Admin : Unauthorized}
+                exact
+              />
+              <Route
+                path="/company"
+                component={this.state.user === 1 ? Company : Unauthorized}
+                exact
+              />
+              <Route
+                path="/customer"
+                component={this.state.user === 2 ? Customer : Unauthorized}
+                exact
+              />
+              <Redirect from="/" to="/login" />
             </Switch>
           </main>
           <footer>

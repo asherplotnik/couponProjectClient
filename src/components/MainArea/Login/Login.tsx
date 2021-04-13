@@ -91,7 +91,6 @@ function Login(): JSX.Element {
           </Form>
         </div>
       </div>
-      // </div>
     );
   }
   switch (userTypeState) {

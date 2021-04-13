@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Company.css";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import AddCoupon from "../AddCoupon/AddCoupon";
 import DeleteCoupon from "../DeleteCoupon/DeleteCoupon";
@@ -60,9 +60,6 @@ const Company = (): JSX.Element => {
       subForm = <div></div>;
   }
 
-  if (store.getState().SessionState.session.userType !== 1) {
-    return <Redirect from="/company" to="/login" />;
-  }
   return (
     <div className="Company">
       <h3>Company Menu</h3>
