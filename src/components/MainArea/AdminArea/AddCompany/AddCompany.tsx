@@ -46,15 +46,20 @@ function AddCompany(props: AcProps) {
         <div className="FormColl">
           <Form.Group>
             <Form.Label>Name: </Form.Label>
-            <Form.Control name="username" />
+            <Form.Control name="username" type="text" minLength={4} required />
           </Form.Group>
           <Form.Group>
             <Form.Label>Email: </Form.Label>
-            <Form.Control name="email" />
+            <Form.Control name="email" type="email" minLength={4} required />
           </Form.Group>
           <Form.Group>
             <Form.Label>password: </Form.Label>
-            <Form.Control name="password" />
+            <Form.Control
+              name="password"
+              type="password"
+              minLength={6}
+              required
+            />
           </Form.Group>
         </div>
         <Button type="submit">SUBMIT</Button>
