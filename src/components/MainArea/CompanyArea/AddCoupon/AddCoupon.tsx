@@ -21,6 +21,10 @@ const AddCoupon = (props: AcProps) => {
     const formData = new FormData(document.querySelector("#addCouponForm"));
     formData.append("id", "0");
     formData.append("image", (formData.get("imageFile") as File).name);
+    let cat = formData.get("categoryId") as string;
+    if (+cat === 0) {
+      alert("Must choose category");
+    }
     axios
       .post(globals.urls.localUrl + ":8080//api/company/addCoupon", formData, {
         headers: { token: token, "Content-Type": "multipart/form-data" },
@@ -41,44 +45,45 @@ const AddCoupon = (props: AcProps) => {
         <div className="AddCouponFormDiv">
           <div className="AddCouponFormDivColl">
             <Form.Group>
-              <Form.Label>Category ID: </Form.Label>
-              <Form.Control
-                name="categoryId"
-                type="number"
-                min="1"
-                max="5"
-                className="FormEl"
-              />
+              <Form.Label>Category: </Form.Label>
+              <Form.Control name="categoryId" as="select" className="FormEl">
+                <option value="0">-- Choose one --</option>
+                <option value="1"> Food</option>
+                <option value="2"> Movie</option>
+                <option value="3"> Discount</option>
+                <option value="4"> Restaurant</option>
+                <option value="5"> Vacation</option>
+              </Form.Control>
             </Form.Group>
             <Form.Group>
               <Form.Label>Title: </Form.Label>
-              <Form.Control name="title" />
+              <Form.Control name="title" required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Start date: </Form.Label>
-              <Form.Control type="date" name="startDate" />
+              <Form.Control type="date" name="startDate" required />
             </Form.Group>
             <Form.Group>
               <Form.Label>End date: </Form.Label>
-              <Form.Control type="date" name="endDate" />
+              <Form.Control type="date" name="endDate" required />
             </Form.Group>
           </div>
           <div className="AddCouponFormDivColl">
             <Form.Group>
               <Form.Label>Description: </Form.Label>
-              <Form.Control name="description" />
+              <Form.Control name="description" required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Amount: </Form.Label>
-              <Form.Control name="amount" />
+              <Form.Control type="number" name="amount" required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Price: </Form.Label>
-              <Form.Control name="price" />
+              <Form.Control type="number" step="0.1" name="price" required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Image: </Form.Label>
-              <Form.Control name="imageFile" type="file" />
+              <Form.Control name="imageFile" type="file" required />
             </Form.Group>
           </div>
         </div>

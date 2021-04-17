@@ -18,7 +18,6 @@ function UpdateCompany(props: UcProps) {
   const [fetchedUpdate, setFetchedUpdate] = useState<CompanyModel>(null);
   const [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);
-
   const updateCompanyHandler = (e: SyntheticEvent) => {
     e.preventDefault();
     if (fetchedUpdate === null) {
@@ -29,9 +28,14 @@ function UpdateCompany(props: UcProps) {
     company.id = fetchedUpdate.id;
     company.email = formData.get("email") as string;
     company.password = formData.get("password") as string;
+    let conf = formData.get("confirm") as string;
     company.name = (document.querySelector(
       "#companyName"
     ) as HTMLInputElement).value;
+    if (conf !== company.password) {
+      alert("password don't match!!!");
+      return;
+    }
     axios
       .post(globals.urls.localUrl + ":8080//api/admin/updateCompany", company, {
         headers: { token: token },
@@ -130,14 +134,29 @@ function UpdateCompany(props: UcProps) {
             <Form.Label>Email: </Form.Label>
             <Form.Control
               name="email"
+              type="email"
+              minLength={4}
               defaultValue={fetchedUpdate && fetchedUpdate.email}
+              required
             />
           </Form.Group>
           <Form.Group>
             <Form.Label>password: </Form.Label>
             <Form.Control
               name="password"
+              type="password"
+              minLength={6}
               defaultValue={fetchedUpdate && fetchedUpdate.password}
+              required
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>confirm password: </Form.Label>
+            <Form.Control
+              name="confirm"
+              type="password"
+              minLength={6}
+              required
             />
           </Form.Group>
         </div>

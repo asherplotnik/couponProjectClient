@@ -16,6 +16,7 @@ const UpdateCoupon = (props: UcProps) => {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
   let [fetchedUpdate, setFetchedUpdate] = useState<CouponModel>(null);
   let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);
+  let [formCategory, setFormCategory] = useState("0");
   let [err, setErr] = useState<ErrorModel>(null);
   const updateCouponHandler = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -23,6 +24,10 @@ const UpdateCoupon = (props: UcProps) => {
     formData.append("id", fetchedCoupon.id.toString());
     if (formData.get("imageFile") as File)
       formData.append("image", (formData.get("imageFile") as File).name);
+    let cat = formData.get("categoryId") as string;
+    if (cat === "0") {
+      alert("Must choose category");
+    }
     axios
       .post(
         globals.urls.localUrl + ":8080//api/company/updateCoupon",
@@ -55,6 +60,7 @@ const UpdateCoupon = (props: UcProps) => {
           "updateCouponForm"
         ) as HTMLFormElement).reset();
         setFetchedCoupon(coupon);
+        setFormCategory(coupon.categoryId.toString());
         return;
       }
     }
@@ -64,7 +70,7 @@ const UpdateCoupon = (props: UcProps) => {
 
   const fetchCoupons = () => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/company/getAllCompanies/", {
+      .get(globals.urls.localUrl + ":8080//api/company/getCompanyCoupons", {
         headers: { token: token },
       })
       .then(function (response) {
@@ -89,6 +95,10 @@ const UpdateCoupon = (props: UcProps) => {
       });
   }, [token]);
 
+  const onSelectCategory = (e: SyntheticEvent) => {
+    setFormCategory((e.target as HTMLInputElement).value as string);
+  };
+
   return (
     <div className="UpdateCouponWrapper">
       <h3 className="h3Div">Update Coupon</h3>
@@ -96,7 +106,13 @@ const UpdateCoupon = (props: UcProps) => {
         <Form.Group>
           <Form.Label>ID: </Form.Label>
           <div className="UpdateCouponFormColl">
-            <Form.Control name="couponId" as="select" id="couponId" size="lg">
+            <Form.Control
+              name="couponId"
+              as="select"
+              id="couponId"
+              size="lg"
+              onChange={fetchCouponByIdHandler}
+            >
               <option value="">-- choose one --</option>
               {fetchedData && (
                 <>
@@ -115,20 +131,24 @@ const UpdateCoupon = (props: UcProps) => {
             </Form.Control>
           </div>
         </Form.Group>
-        <Button id="fetch" onClick={fetchCouponByIdHandler}>
-          FETCH
-        </Button>
         <div className="UpdateCouponFormDiv">
           <div className="UpdateCouponFormDivColl">
             <Form.Group>
-              <Form.Label>Category ID: </Form.Label>
+              <Form.Label>Category: </Form.Label>
               <Form.Control
                 name="categoryId"
-                type="number"
-                min="1"
-                max="5"
-                defaultValue={fetchedCoupon && fetchedCoupon.categoryId}
-              />
+                as="select"
+                className="FormEl"
+                value={formCategory}
+                onChange={onSelectCategory}
+              >
+                <option value="0">-- Choose one --</option>
+                <option value="1"> Food</option>
+                <option value="2"> Movie</option>
+                <option value="3"> Discount</option>
+                <option value="4"> Restaurant</option>
+                <option value="5"> Vacation</option>
+              </Form.Control>
             </Form.Group>
             <Form.Group>
               <Form.Label>Title: </Form.Label>
@@ -167,6 +187,7 @@ const UpdateCoupon = (props: UcProps) => {
             <Form.Group>
               <Form.Label>Amount: </Form.Label>
               <Form.Control
+                type="number"
                 name="amount"
                 defaultValue={fetchedCoupon && fetchedCoupon.amount}
               />
@@ -175,6 +196,8 @@ const UpdateCoupon = (props: UcProps) => {
               <Form.Label>Price: </Form.Label>
               <Form.Control
                 name="price"
+                type="number"
+                step="0.1"
                 defaultValue={fetchedCoupon && fetchedCoupon.price}
               />
             </Form.Group>

@@ -9,4 +9,5 @@
 .GetCompanyCouponsByCategoryId .innerFormDiv {
   margin: auto;
   width: 40%;
+  margin-bottom: 20px;
 }

@@ -29,6 +29,11 @@ function UpdateCustomer(props: UcProps) {
     customer.password = formData.get("password") as string;
     customer.first_name = formData.get("firstName") as string;
     customer.last_name = formData.get("lastName") as string;
+    let conf = formData.get("confirm") as string;
+    if (conf !== customer.password) {
+      alert("Password don't match!!");
+      return;
+    }
     axios
       .post(
         globals.urls.localUrl + ":8080//api/admin/updateCustomer",
@@ -122,6 +127,7 @@ function UpdateCustomer(props: UcProps) {
               name="firstName"
               id="firstName"
               defaultValue={fetchedUpdate && fetchedUpdate.first_name}
+              required
             />
           </Form.Group>
           <Form.Group>
@@ -130,20 +136,35 @@ function UpdateCustomer(props: UcProps) {
               name="lastName"
               id="lastName"
               defaultValue={fetchedUpdate && fetchedUpdate.last_name}
+              required
             />
           </Form.Group>
           <Form.Group>
             <Form.Label>Email: </Form.Label>
             <Form.Control
               name="email"
+              type="email"
               defaultValue={fetchedUpdate && fetchedUpdate.email}
+              required
             />
           </Form.Group>
           <Form.Group>
             <Form.Label>password: </Form.Label>
             <Form.Control
               name="password"
+              type="password"
+              minLength={6}
               defaultValue={fetchedUpdate && fetchedUpdate.password}
+              required
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>confirm password: </Form.Label>
+            <Form.Control
+              name="confirm"
+              type="password"
+              minLength={6}
+              required
             />
           </Form.Group>
         </div>

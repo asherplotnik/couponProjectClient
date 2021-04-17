@@ -45,19 +45,19 @@ function AddCustomer(props: AcProps) {
         <div className="FormColl">
           <Form.Group>
             <Form.Label>First Name: </Form.Label>
-            <Form.Control name="firstname" />
+            <Form.Control name="firstname" minLength={2} required />
           </Form.Group>
           <Form.Group>
             <Form.Label>Name: </Form.Label>
-            <Form.Control name="lastname" />
+            <Form.Control name="lastname" minLength={2} required />
           </Form.Group>
           <Form.Group>
             <Form.Label>Email: </Form.Label>
-            <Form.Control name="email" />
+            <Form.Control name="email" minLength={4} required />
           </Form.Group>
           <Form.Group>
             <Form.Label>password: </Form.Label>
-            <Form.Control name="password" />
+            <Form.Control name="password" minLength={6} required />
           </Form.Group>
         </div>
         <Button type="submit">SUBMIT</Button>

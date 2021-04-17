@@ -6,7 +6,7 @@ import "./GetCompanyCouponsByCategoryId.css";
 import CouponsTable from "../../../UI/CouponsTable";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 interface GpProps {
   token: string;
@@ -47,9 +47,15 @@ const GetCompanyCouponsByCategoryId = (props: GpProps) => {
   return (
     <div className="GetCompanyCouponsByCategoryId">
       <h3 className="h3Div">Get Company coupons by category ID</h3>
-      <Form id="fetchCouponsByIdForm" onSubmit={fetchCouponsHandler}>
+      <Form id="fetchCouponsByIdForm">
         <div className="innerFormDiv">
-          <Form.Control name="categoryId" as="select" id="categoryId" size="lg">
+          <Form.Control
+            name="categoryId"
+            as="select"
+            id="categoryId"
+            size="lg"
+            onChange={fetchCouponsHandler}
+          >
             <option value="">-- choose one --</option>
             <option value="1">1) Food</option>
             <option value="2">2) Movie</option>
@@ -57,7 +63,6 @@ const GetCompanyCouponsByCategoryId = (props: GpProps) => {
             <option value="4">4) Restaurant</option>
             <option value="5">5) Vacation</option>
           </Form.Control>
-          <Button type="submit">FETCH</Button>
         </div>
       </Form>
       {st && <CouponsTable err={err} data={st} title="Coupons list" />}

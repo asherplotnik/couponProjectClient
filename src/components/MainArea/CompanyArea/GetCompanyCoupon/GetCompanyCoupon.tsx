@@ -3,7 +3,7 @@ import "./GetCompanyCoupon.css";
 import axios from "axios";
 import { SyntheticEvent, useEffect, useState } from "react";
 import globals from "../../../../Services/Globals";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 
@@ -15,6 +15,7 @@ function GetCompanyCoupon(props: GcProps): JSX.Element {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
   let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
+
   const fetchCouponHandler = (e: SyntheticEvent) => {
     e.preventDefault();
     const formData = new FormData(document.querySelector("#getCouponForm"));
@@ -45,9 +46,15 @@ function GetCompanyCoupon(props: GcProps): JSX.Element {
   return (
     <div className="GetCompanyCoupon">
       <h3 className="h3Div">Get Coupon details</h3>
-      <Form id="getCouponForm" onSubmit={fetchCouponHandler}>
+      <Form id="getCouponForm">
         <div className="FormColl">
-          <Form.Control name="couponId" as="select" id="couponId" size="lg">
+          <Form.Control
+            name="couponId"
+            as="select"
+            id="couponId"
+            size="lg"
+            onChange={fetchCouponHandler}
+          >
             <option value="">-- choose one --</option>
             {fetchedData && (
               <>
@@ -65,7 +72,6 @@ function GetCompanyCoupon(props: GcProps): JSX.Element {
             )}
           </Form.Control>
         </div>
-        <Button type="submit">FETCH</Button>
       </Form>
       <div>
         {fetchedCoupon && <CouponCard err={err} data={fetchedCoupon} />}
