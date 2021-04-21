@@ -14,7 +14,7 @@ const GetCustomerDetails = (props: CdProps) => {
   const [err, setErr] = useState<ErrorModel>(null);
   useEffect(() => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/customer/getCustomerDetails", {
+      .get(globals.urls.localUrl + "api/customer/getCustomerDetails", {
         headers: { token: token },
       })
       .then(function (response) {

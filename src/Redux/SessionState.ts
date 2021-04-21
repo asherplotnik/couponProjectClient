@@ -6,6 +6,12 @@ import SessionModel from "../Models/SessionModel";
 // Products AppState - המידע ברמת האפליקציה הקשור למוצרים - אלו בעצם כל המוצרים:
 export class SessionState {
     public session: SessionModel = {token:"",userType:-1} ; // We're going to create initial object
+    public constructor() {
+        const storedSession = JSON.parse(localStorage.getItem("session"));
+        if(storedSession) {
+            this.session = storedSession;
+        }
+    }
 }
 
 // ----------------------------------------------------------------------------------
@@ -13,7 +19,7 @@ export class SessionState {
 // Products Action Types - אלו פעולות ניתן לבצע על המידע ברמת האפליקציה:
 export enum SessionActionType {
     SetSession="SetSession",
- // RemoveSession="RemoveSession", 
+    RemoveSession="RemoveSession", 
 }
 
 // ----------------------------------------------------------------------------------
@@ -21,7 +27,7 @@ export enum SessionActionType {
 // Product Action - אובייקט המכיל את המידע עבור הפעולה שאנו מבצעים על המידע ברמת הפליקציה
 export interface SessionAction {
     type: SessionActionType;
-    payload: any; // payload?: any; if the payload can be empty.
+    payload?: any; // payload?: any; if the payload can be empty.
 }
 
 // ----------------------------------------------------------------------------------
@@ -30,6 +36,10 @@ export interface SessionAction {
 
 export function setSessionAction(session: SessionModel): SessionAction {
     return { type: SessionActionType.SetSession, payload: session };
+}
+
+export function removeSessionAction(session: SessionModel): SessionAction {
+    return { type: SessionActionType.RemoveSession};
 }
 
 // ----------------------------------------------------------------------------------
@@ -43,6 +53,11 @@ export function SessionReducer(currentState: SessionState = new SessionState(), 
         case SessionActionType.SetSession:
             newState.session.token = action.payload.token; 
             newState.session.userType = action.payload.userType; 
+            localStorage.setItem("session", JSON.stringify(newState.session));
+            break;
+        case SessionActionType.RemoveSession:
+            newState.session = null;
+            localStorage.removeItem("session"); // clear user from the local storage.
             break;
     }
 

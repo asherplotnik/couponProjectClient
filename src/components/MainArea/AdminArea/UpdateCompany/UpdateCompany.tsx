@@ -37,7 +37,7 @@ function UpdateCompany(props: UcProps) {
       return;
     }
     axios
-      .post(globals.urls.localUrl + ":8080//api/admin/updateCompany", company, {
+      .post(globals.urls.localUrl + "api/admin/updateCompany", company, {
         headers: { token: token },
       })
       .then(function (response) {
@@ -51,7 +51,7 @@ function UpdateCompany(props: UcProps) {
 
   const fetchCompanies = () => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/admin/getAllCompanies/", {
+      .get(globals.urls.localUrl + "api/admin/getAllCompanies/", {
         headers: { token: token },
       })
       .then(function (response) {
@@ -64,7 +64,7 @@ function UpdateCompany(props: UcProps) {
   };
   useEffect(() => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/admin/getAllCompanies/", {
+      .get(globals.urls.localUrl + "api/admin/getAllCompanies/", {
         headers: { token: token },
       })
       .then(function (response) {

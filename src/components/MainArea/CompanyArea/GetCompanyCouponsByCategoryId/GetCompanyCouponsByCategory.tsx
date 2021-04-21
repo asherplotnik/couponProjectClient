@@ -29,7 +29,7 @@ const GetCompanyCouponsByCategoryId = (props: GpProps) => {
     axios
       .get(
         globals.urls.localUrl +
-          ":8080/api/company/getCompanyCouponsByCategory/" +
+          "api/company/getCompanyCouponsByCategory/" +
           categoryId,
         {
           headers: { token: token },

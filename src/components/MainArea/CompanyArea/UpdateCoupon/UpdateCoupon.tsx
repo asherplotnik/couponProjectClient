@@ -29,13 +29,9 @@ const UpdateCoupon = (props: UcProps) => {
       alert("Must choose category");
     }
     axios
-      .post(
-        globals.urls.localUrl + ":8080//api/company/updateCoupon",
-        formData,
-        {
-          headers: { token: token, "Content-Type": "multipart/form-data" },
-        }
-      )
+      .post(globals.urls.localUrl + "api/company/updateCoupon", formData, {
+        headers: { token: token, "Content-Type": "multipart/form-data" },
+      })
       .then(function (response) {
         fetchCoupons();
         setFetchedCoupon(null);
@@ -70,7 +66,7 @@ const UpdateCoupon = (props: UcProps) => {
 
   const fetchCoupons = () => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/company/getCompanyCoupons", {
+      .get(globals.urls.localUrl + "api/company/getCompanyCoupons", {
         headers: { token: token },
       })
       .then(function (response) {
@@ -83,7 +79,7 @@ const UpdateCoupon = (props: UcProps) => {
   };
   useEffect(() => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/company/getCompanyCoupons/", {
+      .get(globals.urls.localUrl + "api/company/getCompanyCoupons/", {
         headers: { token: token },
       })
       .then(function (response) {

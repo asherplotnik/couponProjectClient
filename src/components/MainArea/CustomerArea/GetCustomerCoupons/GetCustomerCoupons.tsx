@@ -14,7 +14,7 @@ const GetCustomerCoupons = (props: GcProps) => {
   const [st, setSt] = useState<CouponModel[]>(null);
   useEffect(() => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/customer/getCustomerCoupons", {
+      .get(globals.urls.localUrl + "api/customer/getCustomerCoupons", {
         headers: { token: token },
       })
       .then(function (response) {

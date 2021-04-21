@@ -26,7 +26,7 @@ function AddCustomer(props: AcProps) {
     customer.email = formData.get("email") as string;
     customer.password = formData.get("password") as string;
     axios
-      .post(globals.urls.localUrl + ":8080//api/admin/addCustomer", customer, {
+      .post(globals.urls.localUrl + "api/admin/addCustomer", customer, {
         headers: { token: token },
       })
       .then(function (response) {

@@ -28,7 +28,7 @@ const GetCustomerCouponsByCategory = (props: GcProps) => {
     axios
       .get(
         globals.urls.localUrl +
-          ":8080/api/customer/getCustomerCouponsByCategory/" +
+          "api/customer/getCustomerCouponsByCategory/" +
           categoryId,
         {
           headers: { token: token },

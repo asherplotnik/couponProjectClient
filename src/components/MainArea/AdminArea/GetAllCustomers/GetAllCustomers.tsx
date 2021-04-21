@@ -14,7 +14,7 @@ const GetAllCustomers = (props: GcProps) => {
   useEffect(() => {
     axios
       .get<CustomerModel[]>(
-        globals.urls.localUrl + ":8080//api/admin/getAllCustomers",
+        globals.urls.localUrl + "api/admin/getAllCustomers",
         {
           headers: { token: token },
         }

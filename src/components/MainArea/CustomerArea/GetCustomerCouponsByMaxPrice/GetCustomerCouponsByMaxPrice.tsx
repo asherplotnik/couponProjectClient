@@ -24,7 +24,7 @@ const GetCustomerCouponsByMaxPrice = (props: GcProps) => {
     axios
       .get(
         globals.urls.localUrl +
-          ":8080//api/customer/getCustomerCouponsByMaxPrice/" +
+          "api/customer/getCustomerCouponsByMaxPrice/" +
           mPrice,
         {
           headers: { token: token },

@@ -15,7 +15,7 @@ const GetAllCompanies = (props: GcProps) => {
   useEffect(() => {
     axios
       .get<CompanyModel[]>(
-        globals.urls.localUrl + ":8080//api/admin/getAllCompanies",
+        globals.urls.localUrl + "api/admin/getAllCompanies",
         {
           headers: { token: token },
         }

@@ -26,7 +26,7 @@ const AddCoupon = (props: AcProps) => {
       alert("Must choose category");
     }
     axios
-      .post(globals.urls.localUrl + ":8080//api/company/addCoupon", formData, {
+      .post(globals.urls.localUrl + "api/company/addCoupon", formData, {
         headers: { token: token, "Content-Type": "multipart/form-data" },
       })
       .then(function (response) {

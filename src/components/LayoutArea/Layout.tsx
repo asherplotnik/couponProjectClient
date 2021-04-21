@@ -3,7 +3,7 @@ import Header from "./Header/Header";
 import "./Layout.css";
 import Footer from "./Footer/Footer";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import Login from "../MainArea/Login/Login";
+import Login from "../MainArea/Auth/Login";
 import Admin from "../MainArea/AdminArea/Admin/Admin";
 import Company from "../MainArea/CompanyArea/Company/Company";
 import Customer from "../MainArea/CustomerArea/Cusotmer/Customer";

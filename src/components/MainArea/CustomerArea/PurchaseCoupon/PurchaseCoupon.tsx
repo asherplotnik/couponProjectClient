@@ -24,9 +24,7 @@ const PurchaseCoupon = (props: PcProps) => {
   const purchaseCouponHandler = () => {
     axios
       .post(
-        globals.urls.localUrl +
-          ":8080//api/customer/purchaseCoupon/" +
-          selectId,
+        globals.urls.localUrl + "api/customer/purchaseCoupon/" + selectId,
         {},
         {
           headers: { token: token },
@@ -46,8 +44,7 @@ const PurchaseCoupon = (props: PcProps) => {
   useEffect(() => {
     axios
       .get(
-        globals.urls.localUrl +
-          ":8080//api/customer/getAvailableCouponsforCustomer",
+        globals.urls.localUrl + "api/customer/getAvailableCouponsforCustomer",
         {
           headers: { token: token },
         }

@@ -16,7 +16,7 @@ const GetCompanyDetails = (props: CdProps) => {
   useEffect(() => {
     axios
       .get<CompanyModel>(
-        globals.urls.localUrl + ":8080//api/company/getCompanyDetails",
+        globals.urls.localUrl + "api/company/getCompanyDetails",
         {
           headers: { token: token },
         }

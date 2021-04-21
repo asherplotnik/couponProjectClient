@@ -23,7 +23,7 @@ function DeleteCustomerForm(props: DcProps) {
     const id = parseInt(formData.get("id") as string);
     setFetchedCustomer(null);
     axios
-      .delete(globals.urls.localUrl + ":8080//api/admin/deleteCustomer/" + id, {
+      .delete(globals.urls.localUrl + "api/admin/deleteCustomer/" + id, {
         headers: { token: token },
       })
       .then(function (response) {
@@ -37,7 +37,7 @@ function DeleteCustomerForm(props: DcProps) {
   };
   const fetchCustomers = () => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/admin/getAllCustomers/", {
+      .get(globals.urls.localUrl + "api/admin/getAllCustomers/", {
         headers: { token: token },
       })
       .then(function (response) {
@@ -50,7 +50,7 @@ function DeleteCustomerForm(props: DcProps) {
   };
   useEffect(() => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/admin/getAllCustomers/", {
+      .get(globals.urls.localUrl + "api/admin/getAllCustomers/", {
         headers: { token: token },
       })
       .then(function (response) {

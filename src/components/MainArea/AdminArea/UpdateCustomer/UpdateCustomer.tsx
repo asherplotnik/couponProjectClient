@@ -35,11 +35,9 @@ function UpdateCustomer(props: UcProps) {
       return;
     }
     axios
-      .post(
-        globals.urls.localUrl + ":8080//api/admin/updateCustomer",
-        customer,
-        { headers: { token: token } }
-      )
+      .post(globals.urls.localUrl + "api/admin/updateCustomer", customer, {
+        headers: { token: token },
+      })
       .then(function (response) {
         fetchCustomers();
         setFetchedCustomer(response.data);
@@ -69,7 +67,7 @@ function UpdateCustomer(props: UcProps) {
 
   const fetchCustomers = () => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/admin/getAllCustomers/", {
+      .get(globals.urls.localUrl + "api/admin/getAllCustomers/", {
         headers: { token: token },
       })
       .then(function (response) {
@@ -82,7 +80,7 @@ function UpdateCustomer(props: UcProps) {
   };
   useEffect(() => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/admin/getAllCustomers/", {
+      .get(globals.urls.localUrl + "api/admin/getAllCustomers/", {
         headers: { token: token },
       })
       .then(function (response) {

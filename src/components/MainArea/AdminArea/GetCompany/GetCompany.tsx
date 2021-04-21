@@ -35,14 +35,9 @@ const GetCompany = (props: GcProps) => {
     }
     if (!found) setErr(new ErrorModel());
     axios
-      .get(
-        globals.urls.localUrl +
-          ":8080//api/admin/getCompanyCoupons/" +
-          companyId,
-        {
-          headers: { token: token },
-        }
-      )
+      .get(globals.urls.localUrl + "api/admin/getCompanyCoupons/" + companyId, {
+        headers: { token: token },
+      })
       .then(function (response) {
         setFetchedCoupons(response.data);
       })
@@ -54,7 +49,7 @@ const GetCompany = (props: GcProps) => {
 
   useEffect(() => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/admin/getAllCompanies/", {
+      .get(globals.urls.localUrl + "api/admin/getAllCompanies/", {
         headers: { token: token },
       })
       .then(function (response) {

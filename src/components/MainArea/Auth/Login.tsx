@@ -23,7 +23,7 @@ function Login(): JSX.Element {
     const userType = parseInt(formData.get("userType") as string);
     setLoading(true);
     await axios
-      .post(globals.urls.localUrl + `:8080//login/${email}/${userType}`, {
+      .post(globals.urls.localUrl + `login/${email}/${userType}`, {
         password: password,
       })
       .then((response) => {

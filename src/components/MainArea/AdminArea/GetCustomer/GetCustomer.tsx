@@ -36,9 +36,7 @@ const GetCustomer = (props: GcProps) => {
     if (!found) setErr(new ErrorModel());
     axios
       .get(
-        globals.urls.localUrl +
-          ":8080//api/admin/getCustomerCoupons/" +
-          customerId,
+        globals.urls.localUrl + "api/admin/getCustomerCoupons/" + customerId,
         {
           headers: { token: token },
         }
@@ -54,7 +52,7 @@ const GetCustomer = (props: GcProps) => {
 
   useEffect(() => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/admin/getAllCustomers/", {
+      .get(globals.urls.localUrl + "api/admin/getAllCustomers/", {
         headers: { token: token },
       })
       .then(function (response) {

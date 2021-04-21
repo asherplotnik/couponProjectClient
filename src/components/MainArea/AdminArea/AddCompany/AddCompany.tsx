@@ -27,7 +27,7 @@ function AddCompany(props: AcProps) {
     company.password = formData.get("password") as string;
 
     axios
-      .post(globals.urls.localUrl + ":8080//api/admin/addCompany", company, {
+      .post(globals.urls.localUrl + "api/admin/addCompany", company, {
         headers: { token: token },
       })
       .then(function (response) {

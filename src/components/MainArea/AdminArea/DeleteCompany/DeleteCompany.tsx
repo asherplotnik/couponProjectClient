@@ -22,7 +22,7 @@ function DeleteCompany(props: DcProps) {
     const id = parseInt(formData.get("id") as string);
     setFetchedCompany(null);
     axios
-      .delete(globals.urls.localUrl + ":8080//api/admin/deleteCompany/" + id, {
+      .delete(globals.urls.localUrl + "api/admin/deleteCompany/" + id, {
         headers: { token: token },
       })
       .then(function (response) {
@@ -37,7 +37,7 @@ function DeleteCompany(props: DcProps) {
 
   const fetchCompanies = () => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/admin/getAllCompanies/", {
+      .get(globals.urls.localUrl + "api/admin/getAllCompanies/", {
         headers: { token: token },
       })
       .then(function (response) {
@@ -50,7 +50,7 @@ function DeleteCompany(props: DcProps) {
   };
   useEffect(() => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/admin/getAllCompanies/", {
+      .get(globals.urls.localUrl + "api/admin/getAllCompanies/", {
         headers: { token: token },
       })
       .then(function (response) {

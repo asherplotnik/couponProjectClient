@@ -7,16 +7,16 @@ class DevelopmentGlobals extends Globals {
     public urls = {
         products: "http://localhost:8080/api/products/",
         couponImages: "http://localhost:8080/images/",
-        localUrl : "http://localhost"
+        localUrl : "http://localhost:8080/"
     };
 }
 
 // Global settings which are suitable only for production:
 class ProductionGlobals extends Globals {
     public urls = {
-        products: "http://localhost:3030/api/products/", // In real life there will be the production address
-        couponImages:"http://localhost:8080/images/",
-        localUrl : "http://localhost"
+        products: "https://ashercouponsystem.herokuapp.com/api/products/", // In real life there will be the production address
+        couponImages:"https://ashercouponsystem.herokuapp.com/images/",
+        localUrl : "https://ashercouponsystem.herokuapp.com/"
     };
 }
 

@@ -18,7 +18,7 @@ const GetCompanyCoupons = (props: GcProps) => {
 
   useEffect(() => {
     axios
-      .get(globals.urls.localUrl + ":8080//api/company/getCompanyCoupons", {
+      .get(globals.urls.localUrl + "api/company/getCompanyCoupons", {
         headers: { token: token },
       })
       .then(function (response) {
