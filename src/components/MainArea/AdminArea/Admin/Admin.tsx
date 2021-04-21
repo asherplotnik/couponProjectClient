@@ -14,12 +14,12 @@ import GetCustomer from "../GetCustomer/GetCustomer";
 import Form from "react-bootstrap/Form";
 import store from "../../../../Redux/Store";
 import { setSessionAction } from "../../../../Redux/SessionState";
+import Unauthorized from "../../Unauthorized/Unauthorized";
 function Admin() {
   const [subFormState, setSubFormState] = useState(0);
   let [token, setToken] = useState(store.getState().SessionState.session.token);
   const history = useHistory();
 
-  //let token = useSelector<SessionState, any>((state) => state.session.token);
   const actionSelector = (event: React.ChangeEvent<{ value: unknown }>) => {
     event.preventDefault();
     setSubFormState(parseInt(event.target.value as string));
@@ -30,6 +30,9 @@ function Admin() {
   }, [token]);
 
   let subForm: JSX.Element;
+  if (!token) {
+    return <Unauthorized />;
+  }
   switch (subFormState) {
     case 1:
       subForm = <AddCompany token={token} />;
@@ -62,7 +65,6 @@ function Admin() {
       subForm = <GetAllCustomers token={token} />;
       break;
     case 11:
-      //dispatch(actions.setSession({ token: "", userType: -1 }));
       store.dispatch(setSessionAction({ token: "", userType: -1 }));
       history.push("/login");
       break;

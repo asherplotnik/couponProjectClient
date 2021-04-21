@@ -12,6 +12,7 @@ import GetCompanyDetails from "../GetCompanyDetails/GetCompanyDetails";
 import GetCompanyCoupon from "../GetCompanyCoupon/GetCompanyCoupon";
 import store from "../../../../Redux/Store";
 import { setSessionAction } from "../../../../Redux/SessionState";
+import Unauthorized from "../../Unauthorized/Unauthorized";
 
 const Company = (): JSX.Element => {
   const actionSelector = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -21,12 +22,14 @@ const Company = (): JSX.Element => {
   const [subFormState, setSubFormState] = useState(0);
   let [token, setToken] = useState(store.getState().SessionState.session.token);
   const history = useHistory();
-  //let token = useSelector<SessionState, any>((state) => state.session.token);
   useEffect(() => {
     setToken(store.getState().SessionState.session.token);
   }, [token]);
 
   let subForm: JSX.Element;
+  if (!token) {
+    return <Unauthorized />;
+  }
   switch (subFormState) {
     case 1:
       subForm = <AddCoupon token={token} />;

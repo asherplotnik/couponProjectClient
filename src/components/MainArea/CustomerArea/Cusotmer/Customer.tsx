@@ -10,13 +10,12 @@ import Form from "react-bootstrap/Form";
 import GetCustomerCoupon from "../GetCustomerCoupon/GetCustomerCoupon";
 import store from "../../../../Redux/Store";
 import { setSessionAction } from "../../../../Redux/SessionState";
+import Unauthorized from "../../Unauthorized/Unauthorized";
 
 function Customer() {
   const [subFormState, setSubFormState] = useState(0);
   let [token, setToken] = useState(store.getState().SessionState.session.token);
   const history = useHistory();
-  let subForm: JSX.Element;
-  //let token = useSelector<SessionState, any>((state) => state.session.token);
 
   useEffect(() => {
     setToken(store.getState().SessionState.session.token);
@@ -27,6 +26,10 @@ function Customer() {
     setSubFormState(parseInt(event.target.value as string));
   };
 
+  let subForm: JSX.Element;
+  if (!token) {
+    return <Unauthorized />;
+  }
   switch (subFormState) {
     case 1:
       subForm = <PurchaseCoupon token={token} />;
