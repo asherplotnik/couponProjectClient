@@ -48,7 +48,7 @@ function AddCustomer(props: AcProps) {
             <Form.Control name="firstname" minLength={2} required />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Name: </Form.Label>
+            <Form.Label>Last Name: </Form.Label>
             <Form.Control name="lastname" minLength={2} required />
           </Form.Group>
           <Form.Group>
