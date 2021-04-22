@@ -1,6 +1,6 @@
 import Header from "./Header/Header";
 //import Side from "./Side/Side";
-import "./Layout.css";
+import "./layout.css";
 import Footer from "./Footer/Footer";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Login from "../MainArea/Auth/Login";
