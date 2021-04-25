@@ -4,7 +4,7 @@ import { SyntheticEvent, useState } from "react";
 import CouponsTable from "../../../UI/CouponsTable";
 import "./GetCustomerCouponsByCategory.css";
 import CouponModel from "../../../../Models/CouponModel";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import ErrorModel from "../../../../Models/ErrorModel";
 
 interface GcProps {
@@ -46,13 +46,14 @@ const GetCustomerCouponsByCategory = (props: GcProps) => {
     <div>
       <div className="GetCustomerCouponsByCategory">
         <h3 className="h3Div">Customer's Coupons by Category ID</h3>
-        <Form id="fetchCouponsByIdForm" onSubmit={fetchCouponsHandler}>
+        <Form id="fetchCouponsByIdForm">
           <div className="FormColl">
             <Form.Control
               name="categoryId"
               as="select"
               id="categoryId"
               size="lg"
+              onChange={fetchCouponsHandler}
             >
               <option value="">-- choose one --</option>
               <option value="1">1) Food</option>
@@ -62,7 +63,6 @@ const GetCustomerCouponsByCategory = (props: GcProps) => {
               <option value="5">5) Vacation</option>
             </Form.Control>
           </div>
-          <Button type="submit">FETCH</Button>
         </Form>
       </div>
       <br />

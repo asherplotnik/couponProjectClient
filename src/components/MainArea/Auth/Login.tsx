@@ -7,6 +7,7 @@ import Spinner from "../../UI/Spinner/Spinner";
 import { Form, Button } from "react-bootstrap";
 import store from "../../../Redux/Store";
 import { setSessionAction } from "../../../Redux/SessionState";
+import UserPayload from "../../../Models/UserPayload";
 
 function Login(): JSX.Element {
   const [loading, setLoading] = useState(false);
@@ -20,19 +21,17 @@ function Login(): JSX.Element {
     );
     const password = formData.get("password");
     const email = formData.get("email");
-    const userType = parseInt(formData.get("userType") as string);
     setLoading(true);
     await axios
-      .post(globals.urls.localUrl + `login/${email}/${userType}`, {
+      .post<UserPayload>(globals.urls.localUrl + `login/${email}`, {
         password: password,
       })
       .then((response) => {
-        //dispatch(actions.setSession({token: response.data as string,userType: userType,}));
-        setUserTypeState(userType);
+        setUserTypeState(response.data.userType as number);
         store.dispatch(
           setSessionAction({
-            token: response.data as string,
-            userType: userType,
+            token: response.data.token as string,
+            userType: response.data.userType as number,
           })
         );
         setLoading(false);
@@ -70,20 +69,6 @@ function Login(): JSX.Element {
                 // type="password"
                 placeholder="Password"
               />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>User type:</Form.Label>
-              <Form.Control
-                as="select"
-                id="userType"
-                name="userType"
-                required
-                size="lg"
-              >
-                <option value="0">ADMIN</option>
-                <option value="1">COMPANY</option>
-                <option value="2">CUSTOMER</option>
-              </Form.Control>
             </Form.Group>
             <Button id="submitButton" type="submit">
               SUBMIT
