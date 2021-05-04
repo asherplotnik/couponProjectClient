@@ -23,8 +23,8 @@ function Login(): JSX.Element {
     const email = formData.get("email");
     setLoading(true);
     await axios
-      .post<UserPayload>(globals.urls.localUrl + `login/${email}`, {
-        password: password,
+      .get<UserPayload>(globals.urls.localUrl + `login/${email}`, {
+        headers: { password: password },
       })
       .then((response) => {
         setUserTypeState(response.data.userType as number);
