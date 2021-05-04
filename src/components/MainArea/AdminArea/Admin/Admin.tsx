@@ -30,7 +30,7 @@ function Admin() {
   }, [token]);
 
   let subForm: JSX.Element;
-  if (!token) {
+  if (!token || store.getState().SessionState.session.userType !== 0) {
     return <Unauthorized />;
   }
   switch (subFormState) {

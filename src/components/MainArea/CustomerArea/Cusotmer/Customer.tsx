@@ -27,7 +27,7 @@ function Customer() {
   };
 
   let subForm: JSX.Element;
-  if (!token) {
+  if (!token || store.getState().SessionState.session.userType !== 2) {
     return <Unauthorized />;
   }
   switch (subFormState) {

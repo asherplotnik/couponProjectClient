@@ -27,7 +27,7 @@ const Company = (): JSX.Element => {
   }, [token]);
 
   let subForm: JSX.Element;
-  if (!token) {
+  if (!token || store.getState().SessionState.session.userType !== 1) {
     return <Unauthorized />;
   }
   switch (subFormState) {
