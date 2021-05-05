@@ -56,7 +56,7 @@ const Company = (): JSX.Element => {
       subForm = <GetCompanyDetails token={token} />;
       break;
     case 9:
-      store.dispatch(setSessionAction({ token: "", userType: -1 }));
+      store.dispatch(setSessionAction({ token: "", name: "", userType: -1 }));
       history.replace("/login");
       break;
     default:

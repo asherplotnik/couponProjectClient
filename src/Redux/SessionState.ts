@@ -5,7 +5,7 @@ import SessionModel from "../Models/SessionModel";
 
 // Products AppState - המידע ברמת האפליקציה הקשור למוצרים - אלו בעצם כל המוצרים:
 export class SessionState {
-    public session: SessionModel = {token:"",userType:-1} ; // We're going to create initial object
+    public session: SessionModel = {token:"",name:"" ,userType:-1} ; // We're going to create initial object
     public constructor() {
         const storedSession = JSON.parse(localStorage.getItem("session"));
         if(storedSession) {
@@ -52,6 +52,7 @@ export function SessionReducer(currentState: SessionState = new SessionState(), 
     switch(action.type) {
         case SessionActionType.SetSession:
             newState.session.token = action.payload.token; 
+            newState.session.name = action.payload.name; 
             newState.session.userType = action.payload.userType; 
             localStorage.setItem("session", JSON.stringify(newState.session));
             break;

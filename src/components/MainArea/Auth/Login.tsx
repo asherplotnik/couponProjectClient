@@ -31,6 +31,7 @@ function Login(): JSX.Element {
         store.dispatch(
           setSessionAction({
             token: response.data.token as string,
+            name: response.data.name as string,
             userType: response.data.userType as number,
           })
         );

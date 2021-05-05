@@ -65,7 +65,7 @@ function Admin() {
       subForm = <GetAllCustomers token={token} />;
       break;
     case 11:
-      store.dispatch(setSessionAction({ token: "", userType: -1 }));
+      store.dispatch(setSessionAction({ token: "", name: "", userType: -1 }));
       history.push("/login");
       break;
     default:

@@ -51,7 +51,7 @@ function Customer() {
       break;
     case 7:
       //dispatch(actions.setSession({ token: "", userType: -1 }));
-      store.dispatch(setSessionAction({ token: "", userType: -1 }));
+      store.dispatch(setSessionAction({ token: "", name: "", userType: -1 }));
       history.replace("/login");
       break;
     default:
