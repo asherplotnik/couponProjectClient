@@ -1,6 +1,10 @@
 .Header {
   height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: rgb(145, 192, 214);
+  color: black;
+  align-items: center;
+  padding: 10px;
 }

@@ -22,18 +22,20 @@ function DeleteCustomerForm(props: DcProps) {
     );
     const id = parseInt(formData.get("id") as string);
     setFetchedCustomer(null);
-    axios
-      .delete(globals.urls.localUrl + "api/admin/deleteCustomer/" + id, {
-        headers: { token: token },
-      })
-      .then(function (response) {
-        setFetchedCustomer(response.data);
-        fetchCustomers();
-      })
-      .catch(function (error) {
-        setErr(error);
-        console.log(error);
-      });
+    if (id > 0) {
+      axios
+        .delete(globals.urls.localUrl + "api/admin/deleteCustomer/" + id, {
+          headers: { token: token },
+        })
+        .then(function (response) {
+          setFetchedCustomer(response.data);
+          fetchCustomers();
+        })
+        .catch(function (error) {
+          setErr(error);
+          console.log(error);
+        });
+    }
   };
   const fetchCustomers = () => {
     axios
@@ -59,6 +61,7 @@ function DeleteCustomerForm(props: DcProps) {
       .catch(function (error) {
         setErr(error);
         console.log(error);
+        alert(error.response.data.message);
       });
   }, [token]);
 
@@ -72,7 +75,7 @@ function DeleteCustomerForm(props: DcProps) {
             <Form.Control name="id" /> <Button type="submit">SUBMIT</Button>
           </Form.Group> */}
           <Form.Control name="id" as="select" id="actionSelect" size="lg">
-            <option value="">-- choose one --</option>
+            <option value={0}>-- choose one --</option>
             {fetchedData && (
               <>
                 {fetchedData.map((opt: CustomerModel) => {

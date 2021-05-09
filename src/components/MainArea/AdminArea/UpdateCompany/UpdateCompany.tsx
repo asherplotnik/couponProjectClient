@@ -46,6 +46,7 @@ function UpdateCompany(props: UcProps) {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
       });
   };
 
@@ -59,6 +60,7 @@ function UpdateCompany(props: UcProps) {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
         console.log(error);
       });
   };
@@ -72,6 +74,7 @@ function UpdateCompany(props: UcProps) {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
         console.log(error);
       });
   }, [token]);
@@ -128,6 +131,9 @@ function UpdateCompany(props: UcProps) {
               id="companyName"
               defaultValue={fetchedUpdate && fetchedUpdate.name}
               disabled={true}
+              type="text"
+              minLength={4}
+              required
             />
           </Form.Group>
           <Form.Group>

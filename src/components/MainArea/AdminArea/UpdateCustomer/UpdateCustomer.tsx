@@ -44,6 +44,7 @@ function UpdateCustomer(props: UcProps) {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
       });
   };
   const fetchCustomerByIdHandler = (e: SyntheticEvent) => {
@@ -75,6 +76,7 @@ function UpdateCustomer(props: UcProps) {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
         console.log(error);
       });
   };
@@ -88,6 +90,7 @@ function UpdateCustomer(props: UcProps) {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
         console.log(error);
       });
   }, [token]);
@@ -125,6 +128,7 @@ function UpdateCustomer(props: UcProps) {
               name="firstName"
               id="firstName"
               defaultValue={fetchedUpdate && fetchedUpdate.first_name}
+              minLength={2}
               required
             />
           </Form.Group>
@@ -134,6 +138,7 @@ function UpdateCustomer(props: UcProps) {
               name="lastName"
               id="lastName"
               defaultValue={fetchedUpdate && fetchedUpdate.last_name}
+              minLength={2}
               required
             />
           </Form.Group>
@@ -143,6 +148,7 @@ function UpdateCustomer(props: UcProps) {
               name="email"
               type="email"
               defaultValue={fetchedUpdate && fetchedUpdate.email}
+              minLength={4}
               required
             />
           </Form.Group>

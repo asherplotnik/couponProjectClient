@@ -36,6 +36,7 @@ const PurchaseCoupon = (props: PcProps) => {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
         changeShowModal();
         console.log(error);
       });
@@ -55,6 +56,7 @@ const PurchaseCoupon = (props: PcProps) => {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
       });
   }, [token, cp]);
 

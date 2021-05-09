@@ -34,6 +34,8 @@ const AddCoupon = (props: AcProps) => {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
+        setFetchedData(null);
         console.log(error);
       });
   };
@@ -57,7 +59,7 @@ const AddCoupon = (props: AcProps) => {
             </Form.Group>
             <Form.Group>
               <Form.Label>Title: </Form.Label>
-              <Form.Control name="title" required />
+              <Form.Control name="title" minLength={4} required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Start date: </Form.Label>
@@ -71,15 +73,21 @@ const AddCoupon = (props: AcProps) => {
           <div className="AddCouponFormDivColl">
             <Form.Group>
               <Form.Label>Description: </Form.Label>
-              <Form.Control name="description" required />
+              <Form.Control name="description" minLength={10} required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Amount: </Form.Label>
-              <Form.Control type="number" name="amount" required />
+              <Form.Control type="number" name="amount" required min={1} />
             </Form.Group>
             <Form.Group>
               <Form.Label>Price: </Form.Label>
-              <Form.Control type="number" step="0.1" name="price" required />
+              <Form.Control
+                type="number"
+                min={1}
+                step="0.1"
+                name="price"
+                required
+              />
             </Form.Group>
             <Form.Group>
               <Form.Label>Image: </Form.Label>

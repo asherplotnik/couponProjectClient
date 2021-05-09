@@ -39,6 +39,7 @@ const GetCustomerCouponsByCategory = (props: GcProps) => {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
       });
   };
 

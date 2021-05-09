@@ -53,11 +53,16 @@ function AddCustomer(props: AcProps) {
           </Form.Group>
           <Form.Group>
             <Form.Label>Email: </Form.Label>
-            <Form.Control name="email" minLength={4} required />
+            <Form.Control name="email" type="email" minLength={4} required />
           </Form.Group>
           <Form.Group>
             <Form.Label>password: </Form.Label>
-            <Form.Control name="password" minLength={6} required />
+            <Form.Control
+              name="password"
+              type="password"
+              minLength={6}
+              required
+            />
           </Form.Group>
         </div>
         <Button type="submit">SUBMIT</Button>

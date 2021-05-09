@@ -26,6 +26,7 @@ const GetCompanyDetails = (props: CdProps) => {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
         console.log(error);
       });
   }, [token]);

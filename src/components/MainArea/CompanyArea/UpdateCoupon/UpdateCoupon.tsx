@@ -38,7 +38,10 @@ const UpdateCoupon = (props: UcProps) => {
         setFetchedUpdate(response.data);
       })
       .catch(function (error) {
+        setFetchedCoupon(null);
+        setFetchedUpdate(null);
         setErr(error);
+        alert(error.response.data.message);
       });
   };
 
@@ -74,6 +77,7 @@ const UpdateCoupon = (props: UcProps) => {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
         console.log(error);
       });
   };
@@ -87,6 +91,7 @@ const UpdateCoupon = (props: UcProps) => {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
         console.log(error);
       });
   }, [token]);
@@ -151,6 +156,8 @@ const UpdateCoupon = (props: UcProps) => {
               <Form.Control
                 name="title"
                 defaultValue={fetchedCoupon && fetchedCoupon.title}
+                minLength={4}
+                required
               />
             </Form.Group>
             <Form.Group>
@@ -158,6 +165,8 @@ const UpdateCoupon = (props: UcProps) => {
               <Form.Control
                 name="description"
                 defaultValue={fetchedCoupon && fetchedCoupon.description}
+                minLength={10}
+                required
               />
             </Form.Group>
             <Form.Group>
@@ -186,6 +195,8 @@ const UpdateCoupon = (props: UcProps) => {
                 type="number"
                 name="amount"
                 defaultValue={fetchedCoupon && fetchedCoupon.amount}
+                required
+                min={1}
               />
             </Form.Group>
             <Form.Group>
@@ -194,6 +205,7 @@ const UpdateCoupon = (props: UcProps) => {
                 name="price"
                 type="number"
                 step="0.1"
+                min={1}
                 defaultValue={fetchedCoupon && fetchedCoupon.price}
               />
             </Form.Group>

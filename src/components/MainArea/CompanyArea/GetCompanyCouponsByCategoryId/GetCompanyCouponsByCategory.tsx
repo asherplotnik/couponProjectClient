@@ -41,6 +41,7 @@ const GetCompanyCouponsByCategoryId = (props: GpProps) => {
       .catch(function (error) {
         console.log(error);
         setErr(error);
+        alert(error.response.data.message);
       });
   };
 

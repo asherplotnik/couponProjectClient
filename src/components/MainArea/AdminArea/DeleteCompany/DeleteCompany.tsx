@@ -21,18 +21,20 @@ function DeleteCompany(props: DcProps) {
     const formData = new FormData(document.querySelector("#deleteCompanyForm"));
     const id = parseInt(formData.get("id") as string);
     setFetchedCompany(null);
-    axios
-      .delete(globals.urls.localUrl + "api/admin/deleteCompany/" + id, {
-        headers: { token: token },
-      })
-      .then(function (response) {
-        setFetchedCompany(response.data);
-        fetchCompanies();
-      })
-      .catch(function (error) {
-        setErr(error);
-        console.log(error);
-      });
+    if (id > 0) {
+      axios
+        .delete(globals.urls.localUrl + "api/admin/deleteCompany/" + id, {
+          headers: { token: token },
+        })
+        .then(function (response) {
+          setFetchedCompany(response.data);
+          fetchCompanies();
+        })
+        .catch(function (error) {
+          setErr(error);
+          console.log(error);
+        });
+    }
   };
 
   const fetchCompanies = () => {
@@ -59,6 +61,7 @@ function DeleteCompany(props: DcProps) {
       .catch(function (error) {
         setErr(error);
         console.log(error);
+        alert(error.response.data.message);
       });
   }, [token]);
 
@@ -68,7 +71,7 @@ function DeleteCompany(props: DcProps) {
       <Form id="deleteCompanyForm" onSubmit={deleteCompanyHandler}>
         <div className="FormColl">
           <Form.Control name="id" as="select" id="actionSelect" size="lg">
-            <option value="">-- choose one --</option>
+            <option value={0}>-- choose one --</option>
             {fetchedData && (
               <>
                 {fetchedData.map((opt: CompanyModel) => {

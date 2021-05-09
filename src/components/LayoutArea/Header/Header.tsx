@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import store from "../../../Redux/Store";
 import "./Header.css";
+import Logo from "./Logo/Logo";
 
 function Header(): JSX.Element {
   const [name, setName] = useState(store.getState().SessionState.session.name);
@@ -16,9 +17,18 @@ function Header(): JSX.Element {
 
   return (
     <div className="Header">
+      <Logo />
       <h3>COUPON PROJECT</h3>
-      {name && <span>Hello {name.substring(0, 10)}, you are logged in</span>}
-      {!name && <span> Hello user, please login. </span>}
+      <div>
+        {name && <span>Hello {name} </span>}
+        {!name && (
+          <span>
+            {" "}
+            Hello user,
+            <br /> please login.{" "}
+          </span>
+        )}
+      </div>
     </div>
   );
 }

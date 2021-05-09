@@ -20,18 +20,20 @@ const DeleteCoupon = (props: DcProps) => {
     e.preventDefault();
     const formData = new FormData(document.querySelector("#deleteCouponForm"));
     const id = parseInt(formData.get("id") as string);
-    axios
-      .delete(globals.urls.localUrl + "api/company/deleteCoupon/" + id, {
-        headers: { token: token },
-      })
-      .then(function (response) {
-        fetchCoupons();
-        setFetchedCoupon(response.data);
-      })
-      .catch(function (error) {
-        setErr(error);
-        console.log(error);
-      });
+    if (id > 0) {
+      axios
+        .delete(globals.urls.localUrl + "api/company/deleteCoupon/" + id, {
+          headers: { token: token },
+        })
+        .then(function (response) {
+          fetchCoupons();
+          setFetchedCoupon(response.data);
+        })
+        .catch(function (error) {
+          setErr(error);
+          console.log(error);
+        });
+    }
   };
 
   const fetchCoupons = () => {
@@ -44,6 +46,7 @@ const DeleteCoupon = (props: DcProps) => {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
         console.log(error);
       });
   };
@@ -57,6 +60,7 @@ const DeleteCoupon = (props: DcProps) => {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
         console.log(error);
       });
   }, [token]);
@@ -68,7 +72,7 @@ const DeleteCoupon = (props: DcProps) => {
         <div className="FormColl">
           <Form.Group>
             <Form.Control name="id" as="select" id="actionSelect" size="lg">
-              <option value="">-- choose one --</option>
+              <option value={0}>-- choose one --</option>
               {fetchedData && (
                 <>
                   {fetchedData.map((opt: CouponModel) => {

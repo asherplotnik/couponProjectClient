@@ -22,6 +22,7 @@ const GetCustomerCoupons = (props: GcProps) => {
       })
       .catch(function (error) {
         setSt(error);
+        alert(error.response.data.message);
       });
   }, [token]);
   return (

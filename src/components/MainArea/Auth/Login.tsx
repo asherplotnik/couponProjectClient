@@ -39,8 +39,8 @@ function Login(): JSX.Element {
       })
       .catch((error) => {
         setLoading(false);
-        console.log(error);
-        alert(error);
+        console.log(error.response.data.message);
+        alert(error.response.data.message);
       });
   };
 
@@ -57,6 +57,7 @@ function Login(): JSX.Element {
                 // type="email"
                 id="email"
                 name="email"
+                type="email"
                 required
                 placeholder="Enter email"
               />
@@ -67,7 +68,7 @@ function Login(): JSX.Element {
                 id="password"
                 name="password"
                 required
-                // type="password"
+                type="password"
                 placeholder="Password"
               />
             </Form.Group>

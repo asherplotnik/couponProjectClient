@@ -36,6 +36,7 @@ const GetCompanyCouponsByMaxPrice = (props: GpProps) => {
       })
       .catch(function (error) {
         setErr(error);
+        alert(error.response.data.message);
       });
   };
 

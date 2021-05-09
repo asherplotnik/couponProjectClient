@@ -51,6 +51,7 @@ const GetAllCustomers = (props: GcProps) => {
         );
       })
       .catch(function (error) {
+        alert(error.response.data.message);
         console.log(error);
       });
   }, [token]);
