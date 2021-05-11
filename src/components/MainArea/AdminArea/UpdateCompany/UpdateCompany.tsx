@@ -1,5 +1,4 @@
-import { SyntheticEvent, useEffect } from "react";
-import axios from "axios";
+import { SyntheticEvent, useCallback, useEffect } from "react";
 import { useState } from "react";
 import globals from "../../../../Services/Globals";
 import { Form, Button } from "react-bootstrap";
@@ -7,13 +6,9 @@ import "./UpdateCompany.css";
 import CompanyTable from "../../../UI/CompanyTable";
 import CompanyModel from "../../../../Models/CompanyModel";
 import ErrorModel from "../../../../Models/ErrorModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface UcProps {
-  token: string;
-}
-
-function UpdateCompany(props: UcProps) {
-  const token = props.token;
+function UpdateCompany() {
   const [fetchedCompany, setFetchedCompany] = useState<CompanyModel>(null);
   const [fetchedUpdate, setFetchedUpdate] = useState<CompanyModel>(null);
   const [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);
@@ -29,17 +24,15 @@ function UpdateCompany(props: UcProps) {
     company.email = formData.get("email") as string;
     company.password = formData.get("password") as string;
     let conf = formData.get("confirm") as string;
-    company.name = (document.querySelector(
-      "#companyName"
-    ) as HTMLInputElement).value;
+    company.name = (
+      document.querySelector("#companyName") as HTMLInputElement
+    ).value;
     if (conf !== company.password) {
       alert("password don't match!!!");
       return;
     }
-    axios
-      .post(globals.urls.localUrl + "api/admin/updateCompany", company, {
-        headers: { token: token },
-      })
+    jwtAxios
+      .post(globals.urls.localUrl + "api/admin/updateCompany", company)
       .then(function (response) {
         fetchCompanies();
         setFetchedCompany(response.data);
@@ -50,11 +43,9 @@ function UpdateCompany(props: UcProps) {
       });
   };
 
-  const fetchCompanies = () => {
-    axios
-      .get(globals.urls.localUrl + "api/admin/getAllCompanies/", {
-        headers: { token: token },
-      })
+  const fetchCompanies = useCallback(() => {
+    jwtAxios
+      .get(globals.urls.localUrl + "api/admin/getAllCompanies/")
       .then(function (response) {
         setFetchedData(response.data);
       })
@@ -63,21 +54,10 @@ function UpdateCompany(props: UcProps) {
         alert(error.response.data.message);
         console.log(error);
       });
-  };
+  }, []);
   useEffect(() => {
-    axios
-      .get(globals.urls.localUrl + "api/admin/getAllCompanies/", {
-        headers: { token: token },
-      })
-      .then(function (response) {
-        setFetchedData(response.data);
-      })
-      .catch(function (error) {
-        setErr(error);
-        alert(error.response.data.message);
-        console.log(error);
-      });
-  }, [token]);
+    fetchCompanies();
+  }, [fetchCompanies]);
 
   const fetchCompanyByIdHandler = (e: SyntheticEvent) => {
     e.preventDefault();

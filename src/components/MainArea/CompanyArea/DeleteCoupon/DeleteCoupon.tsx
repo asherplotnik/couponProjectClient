@@ -1,18 +1,13 @@
-import axios from "axios";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import globals from "../../../../Services/Globals";
 import "./DeleteCoupon.css";
 import { Button, Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CouponCard from "../../../UI/CouponCard/CouponCard";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface DcProps {
-  token: string;
-}
-
-const DeleteCoupon = (props: DcProps) => {
-  const token = props.token;
+const DeleteCoupon = () => {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
   let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
@@ -21,10 +16,8 @@ const DeleteCoupon = (props: DcProps) => {
     const formData = new FormData(document.querySelector("#deleteCouponForm"));
     const id = parseInt(formData.get("id") as string);
     if (id > 0) {
-      axios
-        .delete(globals.urls.localUrl + "api/company/deleteCoupon/" + id, {
-          headers: { token: token },
-        })
+      jwtAxios
+        .delete(globals.urls.localUrl + "api/company/deleteCoupon/" + id)
         .then(function (response) {
           fetchCoupons();
           setFetchedCoupon(response.data);
@@ -36,11 +29,9 @@ const DeleteCoupon = (props: DcProps) => {
     }
   };
 
-  const fetchCoupons = () => {
-    axios
-      .get(globals.urls.localUrl + "api/company/getCompanyCoupons/", {
-        headers: { token: token },
-      })
+  const fetchCoupons = useCallback(() => {
+    jwtAxios
+      .get(globals.urls.localUrl + "api/company/getCompanyCoupons/")
       .then(function (response) {
         setFetchedData(response.data);
       })
@@ -49,21 +40,10 @@ const DeleteCoupon = (props: DcProps) => {
         alert(error.response.data.message);
         console.log(error);
       });
-  };
+  }, []);
   useEffect(() => {
-    axios
-      .get(globals.urls.localUrl + "api/company/getCompanyCoupons/", {
-        headers: { token: token },
-      })
-      .then(function (response) {
-        setFetchedData(response.data);
-      })
-      .catch(function (error) {
-        setErr(error);
-        alert(error.response.data.message);
-        console.log(error);
-      });
-  }, [token]);
+    fetchCoupons();
+  }, [fetchCoupons]);
 
   return (
     <div className="DeleteCoupon">

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { SyntheticEvent, useState } from "react";
 import globals from "../../../../Services/Globals";
 import Form from "react-bootstrap/Form";
@@ -7,13 +6,9 @@ import CompanyTable from "../../../UI/CompanyTable";
 import CompanyModel from "../../../../Models/CompanyModel";
 import { Button } from "react-bootstrap";
 import ErrorModel from "../../../../Models/ErrorModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface AcProps {
-  token: string;
-}
-
-function AddCompany(props: AcProps) {
-  const token = props.token;
+function AddCompany() {
   let [fetchedCompany, setFetchedCompany] = useState<CompanyModel>(null);
   let [err, setErr] = useState<ErrorModel>(null);
   const addCompanyHandler = (e: SyntheticEvent) => {
@@ -26,10 +21,8 @@ function AddCompany(props: AcProps) {
     company.email = formData.get("email") as string;
     company.password = formData.get("password") as string;
 
-    axios
-      .post(globals.urls.localUrl + "api/admin/addCompany", company, {
-        headers: { token: token },
-      })
+    jwtAxios
+      .post(globals.urls.localUrl + "api/admin/addCompany", company)
       .then(function (response) {
         setFetchedCompany(response.data);
       })

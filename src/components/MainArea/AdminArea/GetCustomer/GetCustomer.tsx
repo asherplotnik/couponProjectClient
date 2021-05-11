@@ -1,4 +1,3 @@
-import axios from "axios";
 import { SyntheticEvent, useEffect, useState } from "react";
 import globals from "../../../../Services/Globals";
 import { Form } from "react-bootstrap";
@@ -8,13 +7,9 @@ import CustomerTable from "../../../UI/CustomerTable";
 import CustomerModel from "../../../../Models/CustomerModel";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface GcProps {
-  token: string;
-}
-
-const GetCustomer = (props: GcProps) => {
-  const token = props.token;
+const GetCustomer = () => {
   let [fetchedCustomer, setFetchedCustomer] = useState<CustomerModel>(null);
   let [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[]>(null);
   let [fetchedData, setFetchedData] = useState<CustomerModel[]>(null);
@@ -34,13 +29,8 @@ const GetCustomer = (props: GcProps) => {
       }
     }
     if (!found) setErr(new ErrorModel());
-    axios
-      .get(
-        globals.urls.localUrl + "api/admin/getCustomerCoupons/" + customerId,
-        {
-          headers: { token: token },
-        }
-      )
+    jwtAxios
+      .get(globals.urls.localUrl + "api/admin/getCustomerCoupons/" + customerId)
       .then(function (response) {
         setFetchedCoupons(response.data);
       })
@@ -51,10 +41,8 @@ const GetCustomer = (props: GcProps) => {
   };
 
   useEffect(() => {
-    axios
-      .get(globals.urls.localUrl + "api/admin/getAllCustomers/", {
-        headers: { token: token },
-      })
+    jwtAxios
+      .get(globals.urls.localUrl + "api/admin/getAllCustomers/")
       .then(function (response) {
         setFetchedData(response.data);
       })
@@ -63,7 +51,7 @@ const GetCustomer = (props: GcProps) => {
         alert(error.response.data.message);
         console.log(error);
       });
-  }, [token]);
+  }, []);
 
   return (
     <div className="GetCustomer">

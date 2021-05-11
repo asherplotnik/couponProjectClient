@@ -1,4 +1,3 @@
-import axios from "axios";
 import { SyntheticEvent, useEffect, useState } from "react";
 import CompanyTable from "../../../UI/CompanyTable";
 import globals from "../../../../Services/Globals";
@@ -8,13 +7,9 @@ import CouponsTable from "../../../UI/CouponsTable";
 import CompanyModel from "../../../../Models/CompanyModel";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface GcProps {
-  token: string;
-}
-
-const GetCompany = (props: GcProps) => {
-  const token = props.token;
+const GetCompany = () => {
   let [fetchedCompany, setFetchedCompany] = useState<CompanyModel>(null);
   let [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[]>(null);
   let [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);
@@ -34,10 +29,8 @@ const GetCompany = (props: GcProps) => {
       }
     }
     if (!found) setErr(new ErrorModel());
-    axios
-      .get(globals.urls.localUrl + "api/admin/getCompanyCoupons/" + companyId, {
-        headers: { token: token },
-      })
+    jwtAxios
+      .get(globals.urls.localUrl + "api/admin/getCompanyCoupons/" + companyId)
       .then(function (response) {
         setFetchedCoupons(response.data);
       })
@@ -48,10 +41,8 @@ const GetCompany = (props: GcProps) => {
   };
 
   useEffect(() => {
-    axios
-      .get(globals.urls.localUrl + "api/admin/getAllCompanies/", {
-        headers: { token: token },
-      })
+    jwtAxios
+      .get(globals.urls.localUrl + "api/admin/getAllCompanies/")
       .then(function (response) {
         setFetchedData(response.data);
       })
@@ -60,7 +51,7 @@ const GetCompany = (props: GcProps) => {
         alert(error.response.data.message);
         console.log(error);
       });
-  }, [token]);
+  }, []);
 
   return (
     <div className="GetCompany">

@@ -1,18 +1,13 @@
-import React, { SyntheticEvent, useEffect } from "react";
-import axios from "axios";
+import React, { SyntheticEvent, useCallback, useEffect } from "react";
 import { useState } from "react";
 import globals from "../../../../Services/Globals";
 import "./DeleteCompany.css";
 import CompanyTable from "../../../UI/CompanyTable";
 import { Button, Form } from "react-bootstrap";
 import CompanyModel from "../../../../Models/CompanyModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface DcProps {
-  token: string;
-}
-
-function DeleteCompany(props: DcProps) {
-  const token = props.token;
+function DeleteCompany() {
   let [fetchedCompany, setFetchedCompany] = useState(null);
   let [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);
   let [err, setErr] = useState(null);
@@ -22,10 +17,8 @@ function DeleteCompany(props: DcProps) {
     const id = parseInt(formData.get("id") as string);
     setFetchedCompany(null);
     if (id > 0) {
-      axios
-        .delete(globals.urls.localUrl + "api/admin/deleteCompany/" + id, {
-          headers: { token: token },
-        })
+      jwtAxios
+        .delete(globals.urls.localUrl + "api/admin/deleteCompany/" + id)
         .then(function (response) {
           setFetchedCompany(response.data);
           fetchCompanies();
@@ -37,11 +30,9 @@ function DeleteCompany(props: DcProps) {
     }
   };
 
-  const fetchCompanies = () => {
-    axios
-      .get(globals.urls.localUrl + "api/admin/getAllCompanies/", {
-        headers: { token: token },
-      })
+  const fetchCompanies = useCallback(() => {
+    jwtAxios
+      .get(globals.urls.localUrl + "api/admin/getAllCompanies/")
       .then(function (response) {
         setFetchedData(response.data);
       })
@@ -49,21 +40,10 @@ function DeleteCompany(props: DcProps) {
         setErr(error);
         console.log(error);
       });
-  };
+  }, []);
   useEffect(() => {
-    axios
-      .get(globals.urls.localUrl + "api/admin/getAllCompanies/", {
-        headers: { token: token },
-      })
-      .then(function (response) {
-        setFetchedData(response.data);
-      })
-      .catch(function (error) {
-        setErr(error);
-        console.log(error);
-        alert(error.response.data.message);
-      });
-  }, [token]);
+    fetchCompanies();
+  }, [fetchCompanies]);
 
   return (
     <div className="DeleteCompany">

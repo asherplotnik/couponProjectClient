@@ -1,22 +1,16 @@
-import axios from "axios";
 import globals from "../../../../Services/Globals";
 import { useEffect, useState } from "react";
 import CustomerTable from "../../../UI/CustomerTable";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CustomerModel from "../../../../Models/CustomerModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface CdProps {
-  token: string;
-}
-const GetCustomerDetails = (props: CdProps) => {
-  const token = props.token;
+const GetCustomerDetails = () => {
   const [st, setSt] = useState<CustomerModel>(null);
   const [err, setErr] = useState<ErrorModel>(null);
   useEffect(() => {
-    axios
-      .get(globals.urls.localUrl + "api/customer/getCustomerDetails", {
-        headers: { token: token },
-      })
+    jwtAxios
+      .get(globals.urls.localUrl + "api/customer/getCustomerDetails")
       .then(function (response) {
         setSt(response.data);
       })
@@ -25,7 +19,7 @@ const GetCustomerDetails = (props: CdProps) => {
         alert(error.response.data.message);
         console.log(error);
       });
-  }, [token]);
+  }, []);
 
   if (st) {
     return (

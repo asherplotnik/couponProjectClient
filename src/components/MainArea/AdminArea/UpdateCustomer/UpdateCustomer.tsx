@@ -1,5 +1,4 @@
-import React, { SyntheticEvent, useEffect } from "react";
-import axios from "axios";
+import React, { SyntheticEvent, useCallback, useEffect } from "react";
 import { useState } from "react";
 import globals from "../../../../Services/Globals";
 import { Form, Button } from "react-bootstrap";
@@ -7,13 +6,9 @@ import CustomerTable from "../../../UI/CustomerTable";
 import "./UpdateCustomer.css";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CustomerModel from "../../../../Models/CustomerModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface UcProps {
-  token: string;
-}
-
-function UpdateCustomer(props: UcProps) {
-  const token = props.token;
+function UpdateCustomer() {
   let [fetchedUpdate, setFetchedUpdate] = useState<CustomerModel>(null);
   let [fetchedCustomer, setFetchedCustomer] = useState<CustomerModel>(null);
   const [fetchedData, setFetchedData] = useState<CustomerModel[]>(null);
@@ -34,10 +29,8 @@ function UpdateCustomer(props: UcProps) {
       alert("Password don't match!!");
       return;
     }
-    axios
-      .post(globals.urls.localUrl + "api/admin/updateCustomer", customer, {
-        headers: { token: token },
-      })
+    jwtAxios
+      .post(globals.urls.localUrl + "api/admin/updateCustomer", customer)
       .then(function (response) {
         fetchCustomers();
         setFetchedCustomer(response.data);
@@ -66,11 +59,9 @@ function UpdateCustomer(props: UcProps) {
     setErr(new ErrorModel());
   };
 
-  const fetchCustomers = () => {
-    axios
-      .get(globals.urls.localUrl + "api/admin/getAllCustomers/", {
-        headers: { token: token },
-      })
+  const fetchCustomers = useCallback(() => {
+    jwtAxios
+      .get(globals.urls.localUrl + "api/admin/getAllCustomers/")
       .then(function (response) {
         setFetchedData(response.data);
       })
@@ -79,21 +70,10 @@ function UpdateCustomer(props: UcProps) {
         alert(error.response.data.message);
         console.log(error);
       });
-  };
+  }, []);
   useEffect(() => {
-    axios
-      .get(globals.urls.localUrl + "api/admin/getAllCustomers/", {
-        headers: { token: token },
-      })
-      .then(function (response) {
-        setFetchedData(response.data);
-      })
-      .catch(function (error) {
-        setErr(error);
-        alert(error.response.data.message);
-        console.log(error);
-      });
-  }, [token]);
+    fetchCustomers();
+  }, [fetchCustomers]);
 
   return (
     <div className="UpdateCustomer">

@@ -1,18 +1,13 @@
 import CouponCard from "../../../UI/CouponCard/CouponCard";
 import "./GetCustomerCoupon.css";
-import axios from "axios";
 import { SyntheticEvent, useEffect, useState } from "react";
 import globals from "../../../../Services/Globals";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface GcProps {
-  token: string;
-  id?: number;
-}
-function GetCustomerCoupon(props: GcProps): JSX.Element {
-  const token = props.token;
+function GetCustomerCoupon(): JSX.Element {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
   let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
@@ -34,10 +29,8 @@ function GetCustomerCoupon(props: GcProps): JSX.Element {
   };
 
   useEffect(() => {
-    axios
-      .get(globals.urls.localUrl + "api/customer/getCustomerCoupons/", {
-        headers: { token: token },
-      })
+    jwtAxios
+      .get(globals.urls.localUrl + "api/customer/getCustomerCoupons/")
       .then(function (response) {
         setFetchedData(response.data);
       })
@@ -46,14 +39,20 @@ function GetCustomerCoupon(props: GcProps): JSX.Element {
         alert(error.response.data.message);
         console.log(error);
       });
-  }, [token]);
+  }, []);
 
   return (
     <div className="GetCustomerCoupon">
       <h3 className="h3Div">Get Coupon details</h3>
-      <Form id="getCouponForm" onSubmit={fetchCouponHandler}>
+      <Form id="getCouponForm">
         <div className="FormColl">
-          <Form.Control name="couponId" as="select" id="couponId" size="lg">
+          <Form.Control
+            onChange={fetchCouponHandler}
+            name="couponId"
+            as="select"
+            id="couponId"
+            size="lg"
+          >
             <option value="">-- choose one --</option>
             {fetchedData && (
               <>
@@ -71,8 +70,8 @@ function GetCustomerCoupon(props: GcProps): JSX.Element {
             )}
           </Form.Control>
         </div>
-        <Button type="submit">FETCH</Button>
       </Form>
+      <br />
       <div>
         {fetchedCoupon && <CouponCard err={err} data={fetchedCoupon} />}
       </div>

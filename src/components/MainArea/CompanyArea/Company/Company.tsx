@@ -32,28 +32,28 @@ const Company = (): JSX.Element => {
   }
   switch (subFormState) {
     case 1:
-      subForm = <AddCoupon token={token} />;
+      subForm = <AddCoupon />;
       break;
     case 2:
-      subForm = <DeleteCoupon token={token} />;
+      subForm = <DeleteCoupon />;
       break;
     case 3:
-      subForm = <UpdateCoupon token={token} />;
+      subForm = <UpdateCoupon />;
       break;
     case 4:
-      subForm = <GetCompanyCoupon token={token} />;
+      subForm = <GetCompanyCoupon />;
       break;
     case 5:
-      subForm = <GetCompanyCoupons token={token} />;
+      subForm = <GetCompanyCoupons />;
       break;
     case 6:
-      subForm = <GetCompanyCouponsByCategoryId token={token} />;
+      subForm = <GetCompanyCouponsByCategoryId />;
       break;
     case 7:
-      subForm = <GetCompanyCouponsByMaxPrice token={token} />;
+      subForm = <GetCompanyCouponsByMaxPrice />;
       break;
     case 8:
-      subForm = <GetCompanyDetails token={token} />;
+      subForm = <GetCompanyDetails />;
       break;
     case 9:
       store.dispatch(setSessionAction({ token: "", name: "", userType: -1 }));

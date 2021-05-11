@@ -1,4 +1,3 @@
-import axios from "axios";
 import globals from "../../../../Services/Globals";
 import { SyntheticEvent, useState } from "react";
 import CouponsTable from "../../../UI/CouponsTable";
@@ -6,13 +5,9 @@ import "./GetCustomerCouponsByCategory.css";
 import CouponModel from "../../../../Models/CouponModel";
 import { Form } from "react-bootstrap";
 import ErrorModel from "../../../../Models/ErrorModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface GcProps {
-  token: string;
-}
-
-const GetCustomerCouponsByCategory = (props: GcProps) => {
-  const token = props.token;
+const GetCustomerCouponsByCategory = () => {
   const [st, setSt] = useState<CouponModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);
   const fetchCouponsHandler = (e: SyntheticEvent) => {
@@ -25,14 +20,11 @@ const GetCustomerCouponsByCategory = (props: GcProps) => {
       setSt(null);
       return;
     }
-    axios
+    jwtAxios
       .get(
         globals.urls.localUrl +
           "api/customer/getCustomerCouponsByCategory/" +
-          categoryId,
-        {
-          headers: { token: token },
-        }
+          categoryId
       )
       .then(function (response) {
         setSt(response.data);

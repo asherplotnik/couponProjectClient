@@ -1,17 +1,13 @@
 import CouponCard from "../../../UI/CouponCard/CouponCard";
 import "./GetCompanyCoupon.css";
-import axios from "axios";
 import { SyntheticEvent, useEffect, useState } from "react";
 import globals from "../../../../Services/Globals";
 import { Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface GcProps {
-  token: string;
-}
-function GetCompanyCoupon(props: GcProps): JSX.Element {
-  const token = props.token;
+function GetCompanyCoupon(): JSX.Element {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
   let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
@@ -30,10 +26,8 @@ function GetCompanyCoupon(props: GcProps): JSX.Element {
   };
 
   useEffect(() => {
-    axios
-      .get(globals.urls.localUrl + "api/company/getCompanyCoupons/", {
-        headers: { token: token },
-      })
+    jwtAxios
+      .get(globals.urls.localUrl + "api/company/getCompanyCoupons/")
       .then(function (response) {
         setFetchedData(response.data);
       })
@@ -42,7 +36,7 @@ function GetCompanyCoupon(props: GcProps): JSX.Element {
         alert(error.response.data.message);
         console.log(error);
       });
-  }, [token]);
+  }, []);
 
   return (
     <div className="GetCompanyCoupon">

@@ -1,5 +1,3 @@
-//import { SyntheticEvent } from "react";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import globals from "../../../../Services/Globals";
 import CouponsTable from "../../../UI/CouponsTable";
@@ -9,27 +7,17 @@ import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CouponCard from "../../../UI/CouponCard/CouponCard";
 import Modal from "../../../UI/Modal/Modal";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface PcProps {
-  token: string;
-}
-
-const PurchaseCoupon = (props: PcProps) => {
-  const token = props.token;
+const PurchaseCoupon = () => {
   const [resState, setResState] = useState<CouponModel[]>(null);
   const [cp, setCp] = useState<CouponModel>(null);
   const [err, setErr] = useState<ErrorModel>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectId, setSelectedId] = useState<number>(-1);
   const purchaseCouponHandler = () => {
-    axios
-      .post(
-        globals.urls.localUrl + "api/customer/purchaseCoupon/" + selectId,
-        {},
-        {
-          headers: { token: token },
-        }
-      )
+    jwtAxios
+      .post(globals.urls.localUrl + "api/customer/purchaseCoupon/" + selectId)
       .then(function (response) {
         setCp(response.data);
         changeShowModal();
@@ -43,12 +31,9 @@ const PurchaseCoupon = (props: PcProps) => {
   };
 
   useEffect(() => {
-    axios
+    jwtAxios
       .get(
-        globals.urls.localUrl + "api/customer/getAvailableCouponsforCustomer",
-        {
-          headers: { token: token },
-        }
+        globals.urls.localUrl + "api/customer/getAvailableCouponsforCustomer"
       )
       .then(function (response) {
         setResState(response.data);
@@ -58,7 +43,7 @@ const PurchaseCoupon = (props: PcProps) => {
         setErr(error);
         alert(error.response.data.message);
       });
-  }, [token, cp]);
+  }, [cp]);
 
   const changeShowModal = () => {
     setShowModal(!showModal);

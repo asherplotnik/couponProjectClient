@@ -35,34 +35,34 @@ function Admin() {
   }
   switch (subFormState) {
     case 1:
-      subForm = <AddCompany token={token} />;
+      subForm = <AddCompany />;
       break;
     case 2:
-      subForm = <DeleteCompany token={token} />;
+      subForm = <DeleteCompany />;
       break;
     case 3:
-      subForm = <UpdateCompany token={token} />;
+      subForm = <UpdateCompany />;
       break;
     case 4:
-      subForm = <GetCompany token={token} />;
+      subForm = <GetCompany />;
       break;
     case 5:
-      subForm = <GetAllCompanies token={token} />;
+      subForm = <GetAllCompanies />;
       break;
     case 6:
-      subForm = <AddCustomer token={token} />;
+      subForm = <AddCustomer />;
       break;
     case 7:
-      subForm = <DeleteCustomer token={token} />;
+      subForm = <DeleteCustomer />;
       break;
     case 8:
-      subForm = <UpdateCustomer token={token} />;
+      subForm = <UpdateCustomer />;
       break;
     case 9:
-      subForm = <GetCustomer token={token} />;
+      subForm = <GetCustomer />;
       break;
     case 10:
-      subForm = <GetAllCustomers token={token} />;
+      subForm = <GetAllCustomers />;
       break;
     case 11:
       store.dispatch(setSessionAction({ token: "", name: "", userType: -1 }));

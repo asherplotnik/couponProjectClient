@@ -1,5 +1,3 @@
-import axios from "axios";
-//import { localUrl } from "../../../helper";
 import globals from "../../../../Services/Globals";
 import { SyntheticEvent, useState } from "react";
 import "./GetCompanyCouponsByMaxPrice.css";
@@ -7,13 +5,9 @@ import CouponsTable from "../../../UI/CouponsTable";
 import { Button, Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface GpProps {
-  token: string;
-}
-
-const GetCompanyCouponsByMaxPrice = (props: GpProps) => {
-  const token = props.token;
+const GetCompanyCouponsByMaxPrice = () => {
   const [st, setSt] = useState<CouponModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);
   const fetchCouponsHandler = (e: SyntheticEvent) => {
@@ -22,14 +16,11 @@ const GetCompanyCouponsByMaxPrice = (props: GpProps) => {
       document.querySelector("#fetchCouponsByPriceForm")
     );
     const mPrice = parseFloat(formData.get("mPrice") as string);
-    axios
+    jwtAxios
       .get(
         globals.urls.localUrl +
           "api/company//getCompanyCouponsByMaxPrice/" +
-          mPrice,
-        {
-          headers: { token: token },
-        }
+          mPrice
       )
       .then(function (response) {
         setSt(response.data);
@@ -47,7 +38,13 @@ const GetCompanyCouponsByMaxPrice = (props: GpProps) => {
         <div className="innerFormDiv">
           <Form.Group>
             <Form.Label>MAXIMUM PRICE: </Form.Label>
-            <Form.Control id="mPrice" name="mPrice" />
+            <Form.Control
+              type="number"
+              id="mPrice"
+              name="mPrice"
+              min={1}
+              step={0.1}
+            />
           </Form.Group>
           <Button type="submit">FETCH</Button>
         </div>

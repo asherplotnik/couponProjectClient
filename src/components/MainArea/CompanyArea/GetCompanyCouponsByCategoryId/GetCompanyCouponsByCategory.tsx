@@ -1,5 +1,3 @@
-import axios from "axios";
-//import { localUrl } from "../../../helper";
 import globals from "../../../../Services/Globals";
 import { SyntheticEvent, useState } from "react";
 import "./GetCompanyCouponsByCategoryId.css";
@@ -7,13 +5,9 @@ import CouponsTable from "../../../UI/CouponsTable";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import { Form } from "react-bootstrap";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface GpProps {
-  token: string;
-}
-
-const GetCompanyCouponsByCategoryId = (props: GpProps) => {
-  const token = props.token;
+const GetCompanyCouponsByCategoryId = () => {
   const [st, setSt] = useState<CouponModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);
   const fetchCouponsHandler = (e: SyntheticEvent) => {
@@ -26,14 +20,11 @@ const GetCompanyCouponsByCategoryId = (props: GpProps) => {
       setSt(null);
       return;
     }
-    axios
+    jwtAxios
       .get(
         globals.urls.localUrl +
           "api/company/getCompanyCouponsByCategory/" +
-          categoryId,
-        {
-          headers: { token: token },
-        }
+          categoryId
       )
       .then(function (response) {
         setSt(response.data);

@@ -1,25 +1,15 @@
-import axios from "axios";
 import globals from "../../../../Services/Globals";
 import { useEffect, useState } from "react";
 import "./GetAllCompanies.css";
 import Table from "react-bootstrap/Table";
 import CompanyModel from "../../../../Models/CompanyModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface GcProps {
-  token: string;
-}
-
-const GetAllCompanies = (props: GcProps) => {
-  const token = props.token;
+const GetAllCompanies = () => {
   const [st, setSt] = useState(null);
   useEffect(() => {
-    axios
-      .get<CompanyModel[]>(
-        globals.urls.localUrl + "api/admin/getAllCompanies",
-        {
-          headers: { token: token },
-        }
-      )
+    jwtAxios
+      .get<CompanyModel[]>(globals.urls.localUrl + "api/admin/getAllCompanies")
       .then(function (response) {
         setSt(
           <div>
@@ -53,7 +43,7 @@ const GetAllCompanies = (props: GcProps) => {
         alert(error.response.data.message);
         console.log(error);
       });
-  }, [token]);
+  }, []);
   return <div className="GetAllCompanies">{st}</div>;
 };
 export default GetAllCompanies;

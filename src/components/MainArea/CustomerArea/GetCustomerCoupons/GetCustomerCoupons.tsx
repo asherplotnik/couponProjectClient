@@ -1,22 +1,15 @@
-import axios from "axios";
 import globals from "../../../../Services/Globals";
 import { useEffect, useState } from "react";
 import CouponsTable from "../../../UI/CouponsTable";
 import "./GetCustomerCoupons.css";
 import CouponModel from "../../../../Models/CouponModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface GcProps {
-  token: string;
-}
-
-const GetCustomerCoupons = (props: GcProps) => {
-  const token = props.token;
+const GetCustomerCoupons = () => {
   const [st, setSt] = useState<CouponModel[]>(null);
   useEffect(() => {
-    axios
-      .get(globals.urls.localUrl + "api/customer/getCustomerCoupons", {
-        headers: { token: token },
-      })
+    jwtAxios
+      .get(globals.urls.localUrl + "api/customer/getCustomerCoupons")
       .then(function (response) {
         setSt(response.data);
       })
@@ -24,7 +17,7 @@ const GetCustomerCoupons = (props: GcProps) => {
         setSt(error);
         alert(error.response.data.message);
       });
-  }, [token]);
+  }, []);
   return (
     <div className="GetCustomerCoupons">
       <CouponsTable data={st} title="Customer's Coupons" />

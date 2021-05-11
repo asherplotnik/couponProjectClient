@@ -1,5 +1,4 @@
 import React, { SyntheticEvent } from "react";
-import axios from "axios";
 import { useState } from "react";
 import globals from "../../../../Services/Globals";
 import { Form, Button } from "react-bootstrap";
@@ -7,13 +6,9 @@ import "./AddCustomer.css";
 import CustomerTable from "../../../UI/CustomerTable";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CustomerModel from "../../../../Models/CustomerModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface AcProps {
-  token: string;
-}
-
-function AddCustomer(props: AcProps) {
-  const token = props.token;
+function AddCustomer() {
   let [fetchedData, setFetchedData] = useState<CustomerModel>(null);
   let [err, setErr] = useState<ErrorModel>(null);
   const addCustomerHandler = (e: SyntheticEvent) => {
@@ -25,10 +20,8 @@ function AddCustomer(props: AcProps) {
     customer.first_name = formData.get("firstname") as string;
     customer.email = formData.get("email") as string;
     customer.password = formData.get("password") as string;
-    axios
-      .post(globals.urls.localUrl + "api/admin/addCustomer", customer, {
-        headers: { token: token },
-      })
+    jwtAxios
+      .post(globals.urls.localUrl + "api/admin/addCustomer", customer)
       .then(function (response) {
         setFetchedData(response.data);
       })

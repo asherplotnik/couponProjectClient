@@ -1,24 +1,15 @@
-import axios from "axios";
 import globals from "../../../../Services/Globals";
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import "./GetAllCustomers.css";
 import CustomerModel from "../../../../Models/CustomerModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface GcProps {
-  token: string;
-}
-const GetAllCustomers = (props: GcProps) => {
-  const token = props.token;
+const GetAllCustomers = () => {
   const [st, setSt] = useState(null);
   useEffect(() => {
-    axios
-      .get<CustomerModel[]>(
-        globals.urls.localUrl + "api/admin/getAllCustomers",
-        {
-          headers: { token: token },
-        }
-      )
+    jwtAxios
+      .get<CustomerModel[]>(globals.urls.localUrl + "api/admin/getAllCustomers")
       .then(function (response) {
         setSt(
           <div>
@@ -51,10 +42,10 @@ const GetAllCustomers = (props: GcProps) => {
         );
       })
       .catch(function (error) {
-        alert(error.response.data.message);
+        alert(error?.response?.data?.message);
         console.log(error);
       });
-  }, [token]);
+  }, []);
   return <div>{st}</div>;
 };
 export default GetAllCustomers;

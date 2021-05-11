@@ -1,19 +1,13 @@
-import axios from "axios";
 import { SyntheticEvent, useState } from "react";
 import globals from "../../../../Services/Globals";
 import "./AddCoupon.css";
-//import CouponTable from "../../../UI/CouponTable";
 import { Button, Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CouponCard from "../../../UI/CouponCard/CouponCard";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface AcProps {
-  token: string;
-}
-
-const AddCoupon = (props: AcProps) => {
-  const token = props.token;
+const AddCoupon = () => {
   let [fetchedData, setFetchedData] = useState<CouponModel>(null);
   let [err, setErr] = useState<ErrorModel>(null);
   const addCouponHandler = (e: SyntheticEvent) => {
@@ -25,10 +19,8 @@ const AddCoupon = (props: AcProps) => {
     if (+cat === 0) {
       alert("Must choose category");
     }
-    axios
-      .post(globals.urls.localUrl + "api/company/addCoupon", formData, {
-        headers: { token: token, "Content-Type": "multipart/form-data" },
-      })
+    jwtAxios
+      .post(globals.urls.localUrl + "api/company/addCoupon", formData)
       .then(function (response) {
         setFetchedData(response.data);
       })

@@ -1,17 +1,12 @@
-import axios from "axios";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import globals from "../../../../Services/Globals";
 import "./DeleteCustomer.css";
 import CustomerTable from "../../../UI/CustomerTable";
 import { Button, Form } from "react-bootstrap";
 import CustomerModel from "../../../../Models/CustomerModel";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface DcProps {
-  token: string;
-}
-
-function DeleteCustomerForm(props: DcProps) {
-  const token = props.token;
+function DeleteCustomerForm() {
   let [fetchedCustomer, setFetchedCustomer] = useState<CustomerModel>(null);
   let [fetchedData, setFetchedData] = useState<CustomerModel[]>(null);
   let [err, setErr] = useState(null);
@@ -23,10 +18,8 @@ function DeleteCustomerForm(props: DcProps) {
     const id = parseInt(formData.get("id") as string);
     setFetchedCustomer(null);
     if (id > 0) {
-      axios
-        .delete(globals.urls.localUrl + "api/admin/deleteCustomer/" + id, {
-          headers: { token: token },
-        })
+      jwtAxios
+        .delete(globals.urls.localUrl + "api/admin/deleteCustomer/" + id)
         .then(function (response) {
           setFetchedCustomer(response.data);
           fetchCustomers();
@@ -37,11 +30,9 @@ function DeleteCustomerForm(props: DcProps) {
         });
     }
   };
-  const fetchCustomers = () => {
-    axios
-      .get(globals.urls.localUrl + "api/admin/getAllCustomers/", {
-        headers: { token: token },
-      })
+  const fetchCustomers = useCallback(() => {
+    jwtAxios
+      .get(globals.urls.localUrl + "api/admin/getAllCustomers/")
       .then(function (response) {
         setFetchedData(response.data);
       })
@@ -49,21 +40,10 @@ function DeleteCustomerForm(props: DcProps) {
         setErr(error);
         console.log(error);
       });
-  };
+  }, []);
   useEffect(() => {
-    axios
-      .get(globals.urls.localUrl + "api/admin/getAllCustomers/", {
-        headers: { token: token },
-      })
-      .then(function (response) {
-        setFetchedData(response.data);
-      })
-      .catch(function (error) {
-        setErr(error);
-        console.log(error);
-        alert(error.response.data.message);
-      });
-  }, [token]);
+    fetchCustomers();
+  }, [fetchCustomers]);
 
   return (
     <div className="DeleteCustomer">

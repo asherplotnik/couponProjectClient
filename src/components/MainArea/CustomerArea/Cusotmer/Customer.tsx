@@ -32,25 +32,24 @@ function Customer() {
   }
   switch (subFormState) {
     case 1:
-      subForm = <PurchaseCoupon token={token} />;
+      subForm = <PurchaseCoupon />;
       break;
     case 2:
-      subForm = <GetCustomerCoupon token={token} />;
+      subForm = <GetCustomerCoupon />;
       break;
     case 3:
-      subForm = <GetCustomerCoupons token={token} />;
+      subForm = <GetCustomerCoupons />;
       break;
     case 4:
-      subForm = <GetCustomerCouponsByCategoryId token={token} />;
+      subForm = <GetCustomerCouponsByCategoryId />;
       break;
     case 5:
-      subForm = <GetCustomerCouponsByMaxPrice token={token} />;
+      subForm = <GetCustomerCouponsByMaxPrice />;
       break;
     case 6:
-      subForm = <GetCustomerDetails token={token} />;
+      subForm = <GetCustomerDetails />;
       break;
     case 7:
-      //dispatch(actions.setSession({ token: "", userType: -1 }));
       store.dispatch(setSessionAction({ token: "", name: "", userType: -1 }));
       history.replace("/login");
       break;

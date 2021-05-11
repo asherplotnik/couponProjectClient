@@ -1,18 +1,13 @@
-import axios from "axios";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import globals from "../../../../Services/Globals";
 import "./UpdateCoupon.css";
 import { Button, Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CouponCard from "../../../UI/CouponCard/CouponCard";
+import jwtAxios from "../../../../Services/jwtAxios";
 
-interface UcProps {
-  token: string;
-}
-
-const UpdateCoupon = (props: UcProps) => {
-  const token = props.token;
+const UpdateCoupon = () => {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
   let [fetchedUpdate, setFetchedUpdate] = useState<CouponModel>(null);
   let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);
@@ -28,10 +23,8 @@ const UpdateCoupon = (props: UcProps) => {
     if (cat === "0") {
       alert("Must choose category");
     }
-    axios
-      .post(globals.urls.localUrl + "api/company/updateCoupon", formData, {
-        headers: { token: token, "Content-Type": "multipart/form-data" },
-      })
+    jwtAxios
+      .post(globals.urls.localUrl + "api/company/updateCoupon", formData)
       .then(function (response) {
         fetchCoupons();
         setFetchedCoupon(null);
@@ -55,9 +48,9 @@ const UpdateCoupon = (props: UcProps) => {
 
     for (const coupon of fetchedData) {
       if (coupon.id === couponId) {
-        (document.getElementById(
-          "updateCouponForm"
-        ) as HTMLFormElement).reset();
+        (
+          document.getElementById("updateCouponForm") as HTMLFormElement
+        ).reset();
         setFetchedCoupon(coupon);
         setFormCategory(coupon.categoryId.toString());
         return;
@@ -67,11 +60,9 @@ const UpdateCoupon = (props: UcProps) => {
     setErr(new ErrorModel());
   };
 
-  const fetchCoupons = () => {
-    axios
-      .get(globals.urls.localUrl + "api/company/getCompanyCoupons", {
-        headers: { token: token },
-      })
+  const fetchCoupons = useCallback(() => {
+    jwtAxios
+      .get(globals.urls.localUrl + "api/company/getCompanyCoupons")
       .then(function (response) {
         setFetchedData(response.data);
       })
@@ -80,21 +71,10 @@ const UpdateCoupon = (props: UcProps) => {
         alert(error.response.data.message);
         console.log(error);
       });
-  };
+  }, []);
   useEffect(() => {
-    axios
-      .get(globals.urls.localUrl + "api/company/getCompanyCoupons/", {
-        headers: { token: token },
-      })
-      .then(function (response) {
-        setFetchedData(response.data);
-      })
-      .catch(function (error) {
-        setErr(error);
-        alert(error.response.data.message);
-        console.log(error);
-      });
-  }, [token]);
+    fetchCoupons();
+  }, [fetchCoupons]);
 
   const onSelectCategory = (e: SyntheticEvent) => {
     setFormCategory((e.target as HTMLInputElement).value as string);
