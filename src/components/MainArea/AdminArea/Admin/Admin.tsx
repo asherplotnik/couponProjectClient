@@ -15,7 +15,7 @@ import Form from "react-bootstrap/Form";
 import store from "../../../../Redux/Store";
 import { setSessionAction } from "../../../../Redux/SessionState";
 import Unauthorized from "../../Unauthorized/Unauthorized";
-function Admin() {
+const Admin = () => {
   const [subFormState, setSubFormState] = useState(0);
   let [token, setToken] = useState(store.getState().SessionState.session.token);
   const history = useHistory();
@@ -107,6 +107,6 @@ function Admin() {
       </div>
     </div>
   );
-}
+};
 
 export default Admin;

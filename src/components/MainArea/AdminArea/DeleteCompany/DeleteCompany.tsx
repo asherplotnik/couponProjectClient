@@ -6,8 +6,9 @@ import CompanyTable from "../../../UI/CompanyTable/CompanyTable";
 import { Button, Form } from "react-bootstrap";
 import CompanyModel from "../../../../Models/CompanyModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
-function DeleteCompany() {
+const DeleteCompany = () => {
   let [fetchedCompany, setFetchedCompany] = useState(null);
   let [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);
   let [err, setErr] = useState(null);
@@ -24,9 +25,9 @@ function DeleteCompany() {
           setFetchedCompany(response.data);
           fetchCompanies();
         })
-        .catch(function (error) {
+        .catch((error) => {
           setErr(error);
-          console.log(error);
+          errorAlert(error);
         });
     }
   };
@@ -34,12 +35,12 @@ function DeleteCompany() {
   const fetchCompanies = useCallback(() => {
     jwtAxios
       .get(globals.urls.localUrl + "api/admin/getAllCompanies/")
-      .then(function (response) {
+      .then((response) => {
         setFetchedData(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        console.log(error);
+        errorAlert(error);
       });
   }, []);
   useEffect(() => {
@@ -76,6 +77,6 @@ function DeleteCompany() {
       />
     </div>
   );
-}
+};
 
 export default DeleteCompany;

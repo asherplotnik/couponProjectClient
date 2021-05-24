@@ -12,6 +12,7 @@ import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CouponCard from "../../../UI/CouponCard/CouponCard";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
 const DeleteCoupon = () => {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
@@ -25,13 +26,12 @@ const DeleteCoupon = () => {
     if (id > 0) {
       jwtAxios
         .delete(globals.urls.localUrl + "api/company/deleteCoupon/" + id)
-        .then(function (response) {
+        .then((response) => {
           fetchCoupons();
           setFetchedCoupon(response.data);
         })
-        .catch(function (error) {
+        .catch((error) => {
           setErr(error);
-          console.log(error);
         });
     }
   };
@@ -39,13 +39,12 @@ const DeleteCoupon = () => {
   const fetchCoupons = useCallback(() => {
     jwtAxios
       .get(globals.urls.localUrl + "api/company/getCompanyCoupons/")
-      .then(function (response) {
+      .then((response) => {
         setFetchedData(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
-        console.log(error);
+        errorAlert(error);
       });
   }, []);
   useEffect(() => {

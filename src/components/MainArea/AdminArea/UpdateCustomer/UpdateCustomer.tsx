@@ -7,8 +7,9 @@ import "./UpdateCustomer.css";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CustomerModel from "../../../../Models/CustomerModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
-function UpdateCustomer() {
+const UpdateCustomer = () => {
   let [fetchedUpdate, setFetchedUpdate] = useState<CustomerModel>(null);
   let [fetchedCustomer, setFetchedCustomer] = useState<CustomerModel>(null);
   const [fetchedData, setFetchedData] = useState<CustomerModel[]>(null);
@@ -30,13 +31,13 @@ function UpdateCustomer() {
     }
     jwtAxios
       .put(globals.urls.localUrl + "api/admin/updateCustomer", customer)
-      .then(function (response) {
+      .then((response) => {
         fetchCustomers();
         setFetchedCustomer(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
+        errorAlert(error);
       });
   };
   const fetchCustomerByIdHandler = (e: SyntheticEvent) => {
@@ -59,13 +60,12 @@ function UpdateCustomer() {
   const fetchCustomers = useCallback(() => {
     jwtAxios
       .get(globals.urls.localUrl + "api/admin/getAllCustomers/")
-      .then(function (response) {
+      .then((response) => {
         setFetchedData(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
-        console.log(error);
+        errorAlert(error);
       });
   }, []);
   useEffect(() => {
@@ -158,6 +158,6 @@ function UpdateCustomer() {
       />
     </div>
   );
-}
+};
 
 export default UpdateCustomer;

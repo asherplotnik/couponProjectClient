@@ -5,6 +5,7 @@ import Table from "react-bootstrap/Table";
 import CompanyModel from "../../../../Models/CompanyModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import axios from "axios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
 const GetAllCompanies = () => {
   const [dataState, setDataState] = useState(null);
@@ -12,7 +13,7 @@ const GetAllCompanies = () => {
     const source = axios.CancelToken.source();
     jwtAxios
       .get<CompanyModel[]>(globals.urls.localUrl + "api/admin/getAllCompanies")
-      .then(function (response) {
+      .then((response) => {
         setDataState(
           <div>
             <h3>Companies List</h3>
@@ -41,9 +42,8 @@ const GetAllCompanies = () => {
           </div>
         );
       })
-      .catch(function (error) {
-        alert(error.response.data.message);
-        console.log(error);
+      .catch((error) => {
+        errorAlert(error);
       });
     return () => {
       source.cancel();

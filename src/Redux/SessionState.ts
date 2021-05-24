@@ -34,18 +34,18 @@ export interface SessionAction {
 
 // Products Action Creators - מתאים עבור כל פעולה Action ומחזירות אובייקט payload-פונקציות המקבלות את ה
 
-export function setSessionAction(session: SessionModel): SessionAction {
+export  const setSessionAction = (session: SessionModel): SessionAction => {
     return { type: SessionActionType.SetSession, payload: session };
 }
 
-export function removeSessionAction(session: SessionModel): SessionAction {
+export  const removeSessionAction = (session: SessionModel): SessionAction => {
     return { type: SessionActionType.RemoveSession};
 }
 
 // ----------------------------------------------------------------------------------
 
 // Products Reducer - פונקציה המבצעת את הפעולה בפועל
-export function SessionReducer(currentState: SessionState = new SessionState(), action: SessionAction): SessionState {
+export const SessionReducer = (currentState: SessionState = new SessionState(), action: SessionAction): SessionState => {
     
     const newState = {...currentState}; // Spread Operator - שכפול אובייקט
 

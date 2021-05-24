@@ -8,6 +8,7 @@ import ErrorModel from "../../../../Models/ErrorModel";
 import CouponCard from "../../../UI/CouponCard/CouponCard";
 import Modal from "../../../UI/Modal/Modal";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
 const PurchaseCoupon = () => {
   const [resState, setResState] = useState<CouponModel[]>(null);
@@ -18,15 +19,14 @@ const PurchaseCoupon = () => {
   const purchaseCouponHandler = () => {
     jwtAxios
       .post(globals.urls.localUrl + "api/customer/purchaseCoupon/" + selectId)
-      .then(function (response) {
+      .then((response) => {
         setCp(response.data);
         changeShowModal();
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
+        errorAlert(error);
         changeShowModal();
-        console.log(error);
       });
   };
 
@@ -35,11 +35,10 @@ const PurchaseCoupon = () => {
       .get(
         globals.urls.localUrl + "api/customer/getAvailableCouponsforCustomer"
       )
-      .then(function (response) {
+      .then((response) => {
         setResState(response.data);
-        console.log(Object.keys(response.data).length);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
         alert(error.response.data.message);
       });
@@ -65,6 +64,7 @@ const PurchaseCoupon = () => {
         <p>ARE YOU SURE?</p>
         {resState && (
           <CouponCard
+            noBorderBox={true}
             data={resState.filter((el) => el.id === selectId)[0]}
             err={err}
           />

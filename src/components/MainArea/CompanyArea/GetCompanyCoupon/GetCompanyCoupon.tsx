@@ -6,8 +6,9 @@ import { Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
-function GetCompanyCoupon(): JSX.Element {
+const GetCompanyCoupon = (): JSX.Element => {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
   let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
@@ -28,13 +29,12 @@ function GetCompanyCoupon(): JSX.Element {
   useEffect(() => {
     jwtAxios
       .get(globals.urls.localUrl + "api/company/getCompanyCoupons/")
-      .then(function (response) {
+      .then((response) => {
         setFetchedData(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
-        console.log(error);
+        errorAlert(error);
       });
   }, []);
 
@@ -73,6 +73,6 @@ function GetCompanyCoupon(): JSX.Element {
       </div>
     </div>
   );
-}
+};
 
 export default GetCompanyCoupon;

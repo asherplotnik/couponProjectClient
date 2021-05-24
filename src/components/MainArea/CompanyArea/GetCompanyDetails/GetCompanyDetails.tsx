@@ -4,6 +4,7 @@ import CompanyTable from "../../../UI/CompanyTable/CompanyTable";
 import CompanyModel from "../../../../Models/CompanyModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
 const GetCompanyDetails = () => {
   const [companyState, setCompanyState] = useState<CompanyModel>(null);
@@ -13,13 +14,12 @@ const GetCompanyDetails = () => {
       .get<CompanyModel>(
         globals.urls.localUrl + "api/company/getCompanyDetails"
       )
-      .then(function (response) {
+      .then((response) => {
         setCompanyState(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
-        console.log(error);
+        errorAlert(error);
       });
   }, []);
   if (companyState) {

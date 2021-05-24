@@ -7,15 +7,15 @@ import CompanyModel from "../../../../Models/CompanyModel";
 import { Button } from "react-bootstrap";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
-function AddCompany() {
+const AddCompany = () => {
   let [fetchedCompany, setFetchedCompany] = useState<CompanyModel>(null);
   let [err, setErr] = useState<ErrorModel>(null);
   let formRef = useRef(null);
   const addCompanyHandler = (e: SyntheticEvent) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
-    console.log(formData.get("username"));
     let company: CompanyModel = new CompanyModel();
     company.id = 0;
     company.name = formData.get("username") as string;
@@ -24,12 +24,12 @@ function AddCompany() {
 
     jwtAxios
       .post(globals.urls.localUrl + "api/admin/addCompany", company)
-      .then(function (response) {
+      .then((response) => {
         setFetchedCompany(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        console.log(error);
+        errorAlert(error);
       });
   };
 
@@ -65,6 +65,6 @@ function AddCompany() {
       />
     </div>
   );
-}
+};
 
 export default AddCompany;

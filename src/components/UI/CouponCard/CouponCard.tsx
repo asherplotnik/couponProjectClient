@@ -5,14 +5,15 @@ import "./CouponCard.css";
 interface CcProps {
   data: CouponModel;
   err: ErrorModel;
+  noBorderBox?: boolean;
 }
 
-function CouponCard(props: CcProps): JSX.Element {
+const CouponCard = (props: CcProps): JSX.Element => {
   const cat = ["", "FOOD", "MOVIE", "DISCOUNT", "RESTAURANT", "VACATION"];
 
   return (
     <div className="CouponCard">
-      <div className="BorderBox">
+      <div className={props.noBorderBox ? "" : "BorderBox"}>
         <div className="Box">
           <div>
             <p>ID: {props.data.id}</p>
@@ -35,6 +36,6 @@ function CouponCard(props: CcProps): JSX.Element {
       </div>
     </div>
   );
-}
+};
 
 export default CouponCard;

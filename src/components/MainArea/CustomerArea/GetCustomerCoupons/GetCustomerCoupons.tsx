@@ -4,18 +4,19 @@ import CouponsTable from "../../../UI/CouponsTable/CouponsTable";
 import "./GetCustomerCoupons.css";
 import CouponModel from "../../../../Models/CouponModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
 const GetCustomerCoupons = () => {
   const [dataState, setDataState] = useState<CouponModel[]>(null);
   useEffect(() => {
     jwtAxios
       .get(globals.urls.localUrl + "api/customer/getCustomerCoupons")
-      .then(function (response) {
+      .then((response) => {
         setDataState(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setDataState(error);
-        alert(error.response.data.message);
+        errorAlert(error);
       });
   }, []);
   return (

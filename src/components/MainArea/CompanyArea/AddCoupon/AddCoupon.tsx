@@ -6,6 +6,7 @@ import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CouponCard from "../../../UI/CouponCard/CouponCard";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
 const AddCoupon = () => {
   let [fetchedData, setFetchedData] = useState<CouponModel>(null);
@@ -22,14 +23,12 @@ const AddCoupon = () => {
     }
     jwtAxios
       .post(globals.urls.localUrl + "api/company/addCoupon", formData)
-      .then(function (response) {
+      .then((response) => {
         setFetchedData(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
-        setFetchedData(null);
-        console.log(error);
+        errorAlert(error);
       });
   };
 

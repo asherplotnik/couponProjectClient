@@ -11,8 +11,9 @@ import CustomerTable from "../../../UI/CustomerTable/CustomerTable";
 import { Button, Form } from "react-bootstrap";
 import CustomerModel from "../../../../Models/CustomerModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
-function DeleteCustomerForm() {
+const DeleteCustomerForm = () => {
   let [fetchedCustomer, setFetchedCustomer] = useState<CustomerModel>(null);
   let [fetchedData, setFetchedData] = useState<CustomerModel[]>(null);
   let [err, setErr] = useState(null);
@@ -25,25 +26,25 @@ function DeleteCustomerForm() {
     if (id > 0) {
       jwtAxios
         .delete(globals.urls.localUrl + "api/admin/deleteCustomer/" + id)
-        .then(function (response) {
+        .then((response) => {
           setFetchedCustomer(response.data);
           fetchCustomers();
         })
-        .catch(function (error) {
+        .catch((error) => {
           setErr(error);
-          console.log(error);
+          errorAlert(error);
         });
     }
   };
   const fetchCustomers = useCallback(() => {
     jwtAxios
       .get(globals.urls.localUrl + "api/admin/getAllCustomers/")
-      .then(function (response) {
+      .then((response) => {
         setFetchedData(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        console.log(error);
+        errorAlert(error);
       });
   }, []);
   useEffect(() => {
@@ -81,6 +82,6 @@ function DeleteCustomerForm() {
       />
     </div>
   );
-}
+};
 
 export default DeleteCustomerForm;

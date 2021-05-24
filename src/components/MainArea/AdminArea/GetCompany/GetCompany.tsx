@@ -8,6 +8,7 @@ import CompanyModel from "../../../../Models/CompanyModel";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
 const GetCompany = () => {
   let [fetchedCompany, setFetchedCompany] = useState<CompanyModel>(null);
@@ -32,25 +33,23 @@ const GetCompany = () => {
     if (!found) setErr(new ErrorModel());
     jwtAxios
       .get(globals.urls.localUrl + "api/admin/getCompanyCoupons/" + companyId)
-      .then(function (response) {
+      .then((response) => {
         setFetchedCoupons(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        console.log(error);
       });
   };
 
   useEffect(() => {
     jwtAxios
       .get(globals.urls.localUrl + "api/admin/getAllCompanies/")
-      .then(function (response) {
+      .then((response) => {
         setFetchedData(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
-        console.log(error);
+        errorAlert(error);
       });
   }, []);
 

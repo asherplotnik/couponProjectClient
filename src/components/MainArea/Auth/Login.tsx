@@ -8,8 +8,9 @@ import { Form, Button } from "react-bootstrap";
 import store from "../../../Redux/Store";
 import { setSessionAction } from "../../../Redux/SessionState";
 import UserPayload from "../../../Models/UserPayload";
+import { errorAlert } from "../../../Services/commonFunctionService";
 
-function Login(): JSX.Element {
+const Login = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   let formRef = useRef(null);
@@ -46,11 +47,7 @@ function Login(): JSX.Element {
         }
       })
       .catch((error) => {
-        if (error.response !== undefined) {
-          alert(error.response.data.message);
-        } else {
-          alert("Error!");
-        }
+        errorAlert(error);
         setLoading(false);
       });
   };
@@ -92,6 +89,6 @@ function Login(): JSX.Element {
   }
 
   return loginView;
-}
+};
 
 export default Login;

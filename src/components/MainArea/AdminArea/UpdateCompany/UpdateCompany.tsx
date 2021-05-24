@@ -7,8 +7,9 @@ import CompanyTable from "../../../UI/CompanyTable/CompanyTable";
 import CompanyModel from "../../../../Models/CompanyModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
-function UpdateCompany() {
+const UpdateCompany = () => {
   const [fetchedCompany, setFetchedCompany] = useState<CompanyModel>(null);
   const [fetchedUpdate, setFetchedUpdate] = useState<CompanyModel>(null);
   const [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);
@@ -32,26 +33,25 @@ function UpdateCompany() {
     }
     jwtAxios
       .put(globals.urls.localUrl + "api/admin/updateCompany", company)
-      .then(function (response) {
+      .then((response) => {
         fetchCompanies();
         setFetchedCompany(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
+        errorAlert(error);
       });
   };
 
   const fetchCompanies = useCallback(() => {
     jwtAxios
       .get(globals.urls.localUrl + "api/admin/getAllCompanies/")
-      .then(function (response) {
+      .then((response) => {
         setFetchedData(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
-        console.log(error);
+        errorAlert(error);
       });
   }, []);
   useEffect(() => {
@@ -153,6 +153,6 @@ function UpdateCompany() {
       />
     </div>
   );
-}
+};
 
 export default UpdateCompany;

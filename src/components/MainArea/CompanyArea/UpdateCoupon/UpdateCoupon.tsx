@@ -12,6 +12,7 @@ import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CouponCard from "../../../UI/CouponCard/CouponCard";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
 const UpdateCoupon = () => {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
@@ -32,16 +33,16 @@ const UpdateCoupon = () => {
     }
     jwtAxios
       .put(globals.urls.localUrl + "api/company/updateCoupon", formData)
-      .then(function (response) {
+      .then((response) => {
         fetchCoupons();
         setFetchedCoupon(null);
         setFetchedUpdate(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setFetchedCoupon(null);
         setFetchedUpdate(null);
         setErr(error);
-        alert(error.response.data.message);
+        errorAlert(error);
       });
   };
 
@@ -68,13 +69,12 @@ const UpdateCoupon = () => {
   const fetchCoupons = useCallback(() => {
     jwtAxios
       .get(globals.urls.localUrl + "api/company/getCompanyCoupons")
-      .then(function (response) {
+      .then((response) => {
         setFetchedData(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
-        console.log(error);
+        errorAlert(error);
       });
   }, []);
   useEffect(() => {

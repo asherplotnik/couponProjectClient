@@ -4,6 +4,7 @@ import CustomerTable from "../../../UI/CustomerTable/CustomerTable";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CustomerModel from "../../../../Models/CustomerModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
 const GetCustomerDetails = () => {
   const [dataState, setDataState] = useState<CustomerModel>(null);
@@ -11,13 +12,12 @@ const GetCustomerDetails = () => {
   useEffect(() => {
     jwtAxios
       .get(globals.urls.localUrl + "api/customer/getCustomerDetails")
-      .then(function (response) {
+      .then((response) => {
         setDataState(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
-        console.log(error);
+        errorAlert(error);
       });
   }, []);
 

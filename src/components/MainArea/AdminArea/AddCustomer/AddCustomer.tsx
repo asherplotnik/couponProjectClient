@@ -7,8 +7,8 @@ import CustomerTable from "../../../UI/CustomerTable/CustomerTable";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CustomerModel from "../../../../Models/CustomerModel";
 import jwtAxios from "../../../../Services/jwtAxios";
-
-function AddCustomer() {
+import { errorAlert } from "../../../../Services/commonFunctionService";
+const AddCustomer = () => {
   let [fetchedData, setFetchedData] = useState<CustomerModel>(null);
   let [err, setErr] = useState<ErrorModel>(null);
   let formRef = useRef(null);
@@ -23,12 +23,12 @@ function AddCustomer() {
     customer.password = formData.get("password") as string;
     jwtAxios
       .post(globals.urls.localUrl + "api/admin/addCustomer", customer)
-      .then(function (response) {
+      .then((response) => {
         setFetchedData(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        console.log(error);
+        errorAlert(error);
       });
   };
 
@@ -68,6 +68,6 @@ function AddCustomer() {
       />
     </div>
   );
-}
+};
 
 export default AddCustomer;

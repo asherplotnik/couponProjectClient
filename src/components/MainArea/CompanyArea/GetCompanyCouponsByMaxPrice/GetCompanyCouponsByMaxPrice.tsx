@@ -6,6 +6,7 @@ import { Button, Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import { errorAlert } from "../../../../Services/commonFunctionService";
 
 const GetCompanyCouponsByMaxPrice = () => {
   const [dataState, setDataState] = useState<CouponModel[]>(null);
@@ -21,12 +22,12 @@ const GetCompanyCouponsByMaxPrice = () => {
           "api/company/getCompanyCouponsByMaxPrice/" +
           maxPrice
       )
-      .then(function (response) {
+      .then((response) => {
         setDataState(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
+        errorAlert(error);
       });
   };
 
