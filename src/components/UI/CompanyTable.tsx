@@ -10,7 +10,6 @@ interface CtProps {
 }
 
 const CompanyTable = (props: CtProps) => {
-  console.log(props.err && props.err.response.data.message);
   let fetchedCompany = props.data;
   if (fetchedCompany) {
     return (

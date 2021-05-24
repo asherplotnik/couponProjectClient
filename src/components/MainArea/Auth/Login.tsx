@@ -11,7 +11,6 @@ import UserPayload from "../../../Models/UserPayload";
 
 function Login(): JSX.Element {
   const [loading, setLoading] = useState(false);
-  const [userTypeState, setUserTypeState] = useState(-1);
   const history = useHistory();
 
   const fetchLogin = async (e: React.SyntheticEvent) => {
@@ -27,7 +26,6 @@ function Login(): JSX.Element {
         headers: { password: password },
       })
       .then((response) => {
-        setUserTypeState(response.data.userType as number);
         store.dispatch(
           setSessionAction({
             token: response.data.token as string,
@@ -35,12 +33,27 @@ function Login(): JSX.Element {
             userType: response.data.userType as number,
           })
         );
+        switch (response.data.userType) {
+          case 0:
+            history.push("/admin");
+            break;
+          case 1:
+            history.push("/company");
+            break;
+          case 2:
+            history.push("/customer");
+            break;
+          default:
+        }
         setLoading(false);
       })
       .catch((error) => {
+        if (error.response !== undefined) {
+          alert(error.response.data.message);
+        } else {
+          alert("Error!");
+        }
         setLoading(false);
-        console.log(error.response.data.message);
-        alert(error.response.data.message);
       });
   };
 
@@ -54,7 +67,6 @@ function Login(): JSX.Element {
             <Form.Group>
               <Form.Label>Email :</Form.Label>
               <Form.Control
-                // type="email"
                 id="email"
                 name="email"
                 type="email"
@@ -80,18 +92,7 @@ function Login(): JSX.Element {
       </div>
     );
   }
-  switch (userTypeState) {
-    case 0:
-      history.push("/admin");
-      break;
-    case 1:
-      history.push("/company");
-      break;
-    case 2:
-      history.push("/customer");
-      break;
-    default:
-  }
+
   return loginView;
 }
 

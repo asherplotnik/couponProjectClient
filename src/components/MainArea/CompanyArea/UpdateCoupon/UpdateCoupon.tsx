@@ -24,7 +24,7 @@ const UpdateCoupon = () => {
       alert("Must choose category");
     }
     jwtAxios
-      .post(globals.urls.localUrl + "api/company/updateCoupon", formData)
+      .put(globals.urls.localUrl + "api/company/updateCoupon", formData)
       .then(function (response) {
         fetchCoupons();
         setFetchedCoupon(null);

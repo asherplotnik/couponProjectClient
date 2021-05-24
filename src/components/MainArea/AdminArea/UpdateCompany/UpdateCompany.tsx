@@ -32,7 +32,7 @@ function UpdateCompany() {
       return;
     }
     jwtAxios
-      .post(globals.urls.localUrl + "api/admin/updateCompany", company)
+      .put(globals.urls.localUrl + "api/admin/updateCompany", company)
       .then(function (response) {
         fetchCompanies();
         setFetchedCompany(response.data);

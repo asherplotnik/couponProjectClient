@@ -1,5 +1,5 @@
 import "./Admin.css";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import AddCompany from "../AddCompany/AddCompany";
 import AddCustomer from "../AddCustomer/AddCustomer";
@@ -20,16 +20,22 @@ function Admin() {
   let [token, setToken] = useState(store.getState().SessionState.session.token);
   const history = useHistory();
 
-  const actionSelector = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const actionSelector = (event: SyntheticEvent) => {
     event.preventDefault();
-    setSubFormState(parseInt(event.target.value as string));
+    if (parseInt((event.target as HTMLInputElement).value as string) === 11) {
+      store.dispatch(setSessionAction({ token: "", name: "", userType: -1 }));
+      history.push("/login");
+    }
+    setSubFormState(
+      parseInt((event.target as HTMLInputElement).value as string)
+    );
   };
 
   useEffect(() => {
     setToken(store.getState().SessionState.session.token);
   }, [token]);
 
-  let subForm: JSX.Element;
+  let subForm = <div></div>;
   if (!token || store.getState().SessionState.session.userType !== 0) {
     return <Unauthorized />;
   }
@@ -63,10 +69,6 @@ function Admin() {
       break;
     case 10:
       subForm = <GetAllCustomers />;
-      break;
-    case 11:
-      store.dispatch(setSessionAction({ token: "", name: "", userType: -1 }));
-      history.push("/login");
       break;
     default:
       subForm = <div></div>;

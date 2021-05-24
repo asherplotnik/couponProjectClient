@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import "./Customer.css";
 import PurchaseCoupon from "../PurchaseCoupon/PurchaseCoupon";
 import GetCustomerCoupons from "../GetCustomerCoupons/GetCustomerCoupons";
@@ -21,9 +21,15 @@ function Customer() {
     setToken(store.getState().SessionState.session.token);
   }, [token]);
 
-  const actionSelector = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const actionSelector = (event: SyntheticEvent) => {
     event.preventDefault();
-    setSubFormState(parseInt(event.target.value as string));
+    if (parseInt((event.target as HTMLInputElement).value as string) === 7) {
+      store.dispatch(setSessionAction({ token: "", name: "", userType: -1 }));
+      history.push("/login");
+    }
+    setSubFormState(
+      parseInt((event.target as HTMLInputElement).value as string)
+    );
   };
 
   let subForm: JSX.Element;
@@ -48,10 +54,6 @@ function Customer() {
       break;
     case 6:
       subForm = <GetCustomerDetails />;
-      break;
-    case 7:
-      store.dispatch(setSessionAction({ token: "", name: "", userType: -1 }));
-      history.replace("/login");
       break;
     default:
       subForm = <div></div>;

@@ -4,10 +4,12 @@ import Table from "react-bootstrap/Table";
 import "./GetAllCustomers.css";
 import CustomerModel from "../../../../Models/CustomerModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import axios from "axios";
 
 const GetAllCustomers = () => {
   const [st, setSt] = useState(null);
   useEffect(() => {
+    const source = axios.CancelToken.source();
     jwtAxios
       .get<CustomerModel[]>(globals.urls.localUrl + "api/admin/getAllCustomers")
       .then(function (response) {
@@ -24,7 +26,7 @@ const GetAllCustomers = () => {
                   <th>Email</th>
                   <th>Password</th>
                 </tr>
-              </thead>{" "}
+              </thead>
               <tbody>
                 {response.data.map((customer, index) => (
                   <tr key={index}>
@@ -45,6 +47,10 @@ const GetAllCustomers = () => {
         alert(error?.response?.data?.message);
         console.log(error);
       });
+
+    return () => {
+      source.cancel();
+    };
   }, []);
   return <div>{st}</div>;
 };

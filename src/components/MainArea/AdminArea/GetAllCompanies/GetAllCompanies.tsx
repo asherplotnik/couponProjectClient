@@ -4,10 +4,12 @@ import "./GetAllCompanies.css";
 import Table from "react-bootstrap/Table";
 import CompanyModel from "../../../../Models/CompanyModel";
 import jwtAxios from "../../../../Services/jwtAxios";
+import axios from "axios";
 
 const GetAllCompanies = () => {
   const [st, setSt] = useState(null);
   useEffect(() => {
+    const source = axios.CancelToken.source();
     jwtAxios
       .get<CompanyModel[]>(globals.urls.localUrl + "api/admin/getAllCompanies")
       .then(function (response) {
@@ -23,7 +25,7 @@ const GetAllCompanies = () => {
                   <th>Email</th>
                   <th>Password</th>
                 </tr>
-              </thead>{" "}
+              </thead>
               <tbody>
                 {response.data.map((company, index) => (
                   <tr key={index}>
@@ -43,6 +45,9 @@ const GetAllCompanies = () => {
         alert(error.response.data.message);
         console.log(error);
       });
+    return () => {
+      source.cancel();
+    };
   }, []);
   return <div className="GetAllCompanies">{st}</div>;
 };

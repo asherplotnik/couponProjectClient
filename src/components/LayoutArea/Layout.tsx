@@ -7,6 +7,7 @@ import Login from "../MainArea/Auth/Login";
 import Admin from "../MainArea/AdminArea/Admin/Admin";
 import Company from "../MainArea/CompanyArea/Company/Company";
 import Customer from "../MainArea/CustomerArea/Cusotmer/Customer";
+import Page404 from "../SharedArea/Page404/Page404";
 
 const Layout = (): JSX.Element => {
   return (
@@ -21,7 +22,8 @@ const Layout = (): JSX.Element => {
             <Route path="/admin" component={Admin} exact />
             <Route path="/company" component={Company} exact />
             <Route path="/customer" component={Customer} exact />
-            <Redirect from="/" to="/login" />
+            <Redirect from="/" to="/login" exact />
+            <Route component={Page404} /> {/* Must be Last! */}
           </Switch>
         </main>
         <footer>

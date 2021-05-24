@@ -30,7 +30,7 @@ function UpdateCustomer() {
       return;
     }
     jwtAxios
-      .post(globals.urls.localUrl + "api/admin/updateCustomer", customer)
+      .put(globals.urls.localUrl + "api/admin/updateCustomer", customer)
       .then(function (response) {
         fetchCustomers();
         setFetchedCustomer(response.data);
