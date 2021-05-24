@@ -44,7 +44,6 @@ function Login(): JSX.Element {
             break;
           default:
         }
-        setLoading(false);
       })
       .catch((error) => {
         if (error.response !== undefined) {
