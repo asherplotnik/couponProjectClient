@@ -1,5 +1,4 @@
 import Header from "./Header/Header";
-//import Side from "./Side/Side";
 import "./Layout.css";
 import Footer from "./Footer/Footer";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
@@ -23,7 +22,7 @@ const Layout = (): JSX.Element => {
             <Route path="/company" component={Company} exact />
             <Route path="/customer" component={Customer} exact />
             <Redirect from="/" to="/login" exact />
-            <Route component={Page404} /> {/* Must be Last! */}
+            <Route component={Page404} />
           </Switch>
         </main>
         <footer>

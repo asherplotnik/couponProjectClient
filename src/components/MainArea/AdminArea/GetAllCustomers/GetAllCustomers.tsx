@@ -7,13 +7,13 @@ import jwtAxios from "../../../../Services/jwtAxios";
 import axios from "axios";
 
 const GetAllCustomers = () => {
-  const [st, setSt] = useState(null);
+  const [dataState, setDataState] = useState(null);
   useEffect(() => {
     const source = axios.CancelToken.source();
     jwtAxios
       .get<CustomerModel[]>(globals.urls.localUrl + "api/admin/getAllCustomers")
       .then(function (response) {
-        setSt(
+        setDataState(
           <div>
             <h3 className="GetAllCustomers">Customers List</h3>
             <Table>
@@ -32,8 +32,8 @@ const GetAllCustomers = () => {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{customer.id}</td>
-                    <td>{customer.first_name}</td>
-                    <td>{customer.last_name}</td>
+                    <td>{customer.firstName}</td>
+                    <td>{customer.lastName}</td>
                     <td>{customer.email}</td>
                     <td>{customer.password}</td>
                   </tr>
@@ -52,6 +52,6 @@ const GetAllCustomers = () => {
       source.cancel();
     };
   }, []);
-  return <div>{st}</div>;
+  return <div>{dataState}</div>;
 };
 export default GetAllCustomers;

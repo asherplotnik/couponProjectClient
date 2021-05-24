@@ -3,7 +3,7 @@ import store from "../../../Redux/Store";
 import "./Header.css";
 import Logo from "./Logo/Logo";
 
-function Header(): JSX.Element {
+const Header = (): JSX.Element => {
   const [name, setName] = useState(store.getState().SessionState.session.name);
   useEffect(() => {
     const unsubscribeMe = store.subscribe(() => {
@@ -31,6 +31,6 @@ function Header(): JSX.Element {
       </div>
     </div>
   );
-}
+};
 
 export default Header;

@@ -1,12 +1,12 @@
 import globals from "../../../../Services/Globals";
 import { useEffect, useState } from "react";
-import CompanyTable from "../../../UI/CompanyTable";
+import CompanyTable from "../../../UI/CompanyTable/CompanyTable";
 import CompanyModel from "../../../../Models/CompanyModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 
 const GetCompanyDetails = () => {
-  const [cm, setCm] = useState<CompanyModel>(null);
+  const [companyState, setCompanyState] = useState<CompanyModel>(null);
   const [err, setErr] = useState<ErrorModel>(null);
   useEffect(() => {
     jwtAxios
@@ -14,7 +14,7 @@ const GetCompanyDetails = () => {
         globals.urls.localUrl + "api/company/getCompanyDetails"
       )
       .then(function (response) {
-        setCm(response.data);
+        setCompanyState(response.data);
       })
       .catch(function (error) {
         setErr(error);
@@ -22,8 +22,10 @@ const GetCompanyDetails = () => {
         console.log(error);
       });
   }, []);
-  if (cm) {
-    return <CompanyTable err={err} data={cm} title={cm.name} />;
+  if (companyState) {
+    return (
+      <CompanyTable err={err} data={companyState} title={companyState.name} />
+    );
   } else {
     return null;
   }

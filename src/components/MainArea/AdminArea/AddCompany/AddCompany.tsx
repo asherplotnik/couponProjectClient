@@ -1,8 +1,8 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useRef, useState } from "react";
 import globals from "../../../../Services/Globals";
 import Form from "react-bootstrap/Form";
 import "./AddCompany.css";
-import CompanyTable from "../../../UI/CompanyTable";
+import CompanyTable from "../../../UI/CompanyTable/CompanyTable";
 import CompanyModel from "../../../../Models/CompanyModel";
 import { Button } from "react-bootstrap";
 import ErrorModel from "../../../../Models/ErrorModel";
@@ -11,9 +11,10 @@ import jwtAxios from "../../../../Services/jwtAxios";
 function AddCompany() {
   let [fetchedCompany, setFetchedCompany] = useState<CompanyModel>(null);
   let [err, setErr] = useState<ErrorModel>(null);
+  let formRef = useRef(null);
   const addCompanyHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(document.querySelector("#addCompanyForm"));
+    const formData = new FormData(formRef.current);
     console.log(formData.get("username"));
     let company: CompanyModel = new CompanyModel();
     company.id = 0;
@@ -35,7 +36,7 @@ function AddCompany() {
   return (
     <div className="AddCompany">
       <h3 className="h3Div">Add Company</h3>
-      <Form id="addCompanyForm" onSubmit={addCompanyHandler}>
+      <Form ref={formRef} onSubmit={addCompanyHandler}>
         <div className="FormColl">
           <Form.Group>
             <Form.Label>Name: </Form.Label>

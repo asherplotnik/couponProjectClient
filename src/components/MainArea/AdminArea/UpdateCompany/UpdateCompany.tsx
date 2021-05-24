@@ -1,9 +1,9 @@
-import { SyntheticEvent, useCallback, useEffect } from "react";
+import { SyntheticEvent, useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
 import globals from "../../../../Services/Globals";
 import { Form, Button } from "react-bootstrap";
 import "./UpdateCompany.css";
-import CompanyTable from "../../../UI/CompanyTable";
+import CompanyTable from "../../../UI/CompanyTable/CompanyTable";
 import CompanyModel from "../../../../Models/CompanyModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
@@ -13,20 +13,19 @@ function UpdateCompany() {
   const [fetchedUpdate, setFetchedUpdate] = useState<CompanyModel>(null);
   const [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);
+  let formRef = useRef(null);
   const updateCompanyHandler = (e: SyntheticEvent) => {
     e.preventDefault();
     if (fetchedUpdate === null) {
       return;
     }
-    const formData = new FormData(document.querySelector("#updateCompanyForm"));
+    const formData = new FormData(formRef.current);
     let company: CompanyModel = new CompanyModel();
     company.id = fetchedUpdate.id;
     company.email = formData.get("email") as string;
     company.password = formData.get("password") as string;
     let conf = formData.get("confirm") as string;
-    company.name = (
-      document.querySelector("#companyName") as HTMLInputElement
-    ).value;
+    company.name = fetchedUpdate.name;
     if (conf !== company.password) {
       alert("password don't match!!!");
       return;
@@ -61,7 +60,7 @@ function UpdateCompany() {
 
   const fetchCompanyByIdHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(document.querySelector("#updateCompanyForm"));
+    const formData = new FormData(formRef.current);
     if ((formData.get("companyId") as string) === "") {
       return;
     }
@@ -79,7 +78,7 @@ function UpdateCompany() {
   return (
     <div className="UpdateCompany">
       <h3 className="h3Div">Update Company</h3>
-      <Form id="updateCompanyForm" onSubmit={updateCompanyHandler}>
+      <Form ref={formRef} onSubmit={updateCompanyHandler}>
         <div className="FormColl">
           <Form.Group>
             <Form.Control
@@ -108,7 +107,6 @@ function UpdateCompany() {
             <Form.Label>Name: </Form.Label>
             <Form.Control
               name="companyName"
-              id="companyName"
               defaultValue={fetchedUpdate && fetchedUpdate.name}
               disabled={true}
               type="text"

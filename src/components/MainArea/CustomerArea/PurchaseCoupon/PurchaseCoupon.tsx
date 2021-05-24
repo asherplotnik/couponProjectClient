@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import globals from "../../../../Services/Globals";
-import CouponsTable from "../../../UI/CouponsTable";
+import CouponsTable from "../../../UI/CouponsTable/CouponsTable";
 import { Button } from "react-bootstrap";
 import "./PurchaseCoupon.css";
 import CouponModel from "../../../../Models/CouponModel";
@@ -83,7 +83,6 @@ const PurchaseCoupon = () => {
           err={err}
           showTitleWhenEmpty
           data={resState}
-          //selectRow={purchaseCouponHandler}
           selectRow={handleSelectedRow}
           title={
             Object.keys(resState).length > 0

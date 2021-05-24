@@ -1,6 +1,6 @@
 import globals from "../../../../Services/Globals";
-import { SyntheticEvent, useState } from "react";
-import CouponsTable from "../../../UI/CouponsTable";
+import { SyntheticEvent, useRef, useState } from "react";
+import CouponsTable from "../../../UI/CouponsTable/CouponsTable";
 import "./GetCustomerCouponsByCategory.css";
 import CouponModel from "../../../../Models/CouponModel";
 import { Form } from "react-bootstrap";
@@ -8,16 +8,15 @@ import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 
 const GetCustomerCouponsByCategory = () => {
-  const [st, setSt] = useState<CouponModel[]>(null);
+  const [dataState, setDataState] = useState<CouponModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);
+  let formRef = useRef(null);
   const fetchCouponsHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(
-      document.querySelector("#fetchCouponsByIdForm")
-    );
+    const formData = new FormData(formRef.current);
     const categoryId = parseInt(formData.get("categoryId") as string);
     if (formData.get("categoryId") === "") {
-      setSt(null);
+      setDataState(null);
       return;
     }
     jwtAxios
@@ -27,7 +26,7 @@ const GetCustomerCouponsByCategory = () => {
           categoryId
       )
       .then(function (response) {
-        setSt(response.data);
+        setDataState(response.data);
       })
       .catch(function (error) {
         setErr(error);
@@ -39,7 +38,7 @@ const GetCustomerCouponsByCategory = () => {
     <div>
       <div className="GetCustomerCouponsByCategory">
         <h3 className="h3Div">Customer's Coupons by Category ID</h3>
-        <Form id="fetchCouponsByIdForm">
+        <Form ref={formRef}>
           <div className="FormColl">
             <Form.Control
               name="categoryId"
@@ -59,7 +58,9 @@ const GetCustomerCouponsByCategory = () => {
         </Form>
       </div>
       <br />
-      {st && <CouponsTable err={err} data={st} title="Coupons List" />}
+      {dataState && (
+        <CouponsTable err={err} data={dataState} title="Coupons List" />
+      )}
     </div>
   );
 };

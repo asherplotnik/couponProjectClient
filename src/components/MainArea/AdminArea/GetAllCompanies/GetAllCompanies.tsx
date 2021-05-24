@@ -7,13 +7,13 @@ import jwtAxios from "../../../../Services/jwtAxios";
 import axios from "axios";
 
 const GetAllCompanies = () => {
-  const [st, setSt] = useState(null);
+  const [dataState, setDataState] = useState(null);
   useEffect(() => {
     const source = axios.CancelToken.source();
     jwtAxios
       .get<CompanyModel[]>(globals.urls.localUrl + "api/admin/getAllCompanies")
       .then(function (response) {
-        setSt(
+        setDataState(
           <div>
             <h3>Companies List</h3>
             <Table>
@@ -49,6 +49,6 @@ const GetAllCompanies = () => {
       source.cancel();
     };
   }, []);
-  return <div className="GetAllCompanies">{st}</div>;
+  return <div className="GetAllCompanies">{dataState}</div>;
 };
 export default GetAllCompanies;

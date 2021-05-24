@@ -2,7 +2,7 @@ import "./Login.css";
 import axios from "axios";
 import globals from "../../../Services/Globals";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Spinner from "../../UI/Spinner/Spinner";
 import { Form, Button } from "react-bootstrap";
 import store from "../../../Redux/Store";
@@ -12,16 +12,15 @@ import UserPayload from "../../../Models/UserPayload";
 function Login(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  let formRef = useRef(null);
 
-  const fetchLogin = async (e: React.SyntheticEvent) => {
+  const fetchLogin = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(
-      document.querySelector("#loginForm") as HTMLFormElement
-    );
+    const formData = new FormData(formRef.current as HTMLFormElement);
     const password = formData.get("password");
     const email = formData.get("email");
     setLoading(true);
-    await axios
+    axios
       .get<UserPayload>(globals.urls.localUrl + `login/${email}`, {
         headers: { password: password },
       })
@@ -63,7 +62,7 @@ function Login(): JSX.Element {
       <div className="Login">
         <div className="wrapperDiv">
           <h3>LOGIN</h3>
-          <Form className="ulForm" id="loginForm" onSubmit={fetchLogin}>
+          <Form className="ulForm" ref={formRef} onSubmit={fetchLogin}>
             <Form.Group>
               <Form.Label>Email :</Form.Label>
               <Form.Control

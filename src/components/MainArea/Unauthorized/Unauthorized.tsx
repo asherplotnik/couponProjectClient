@@ -1,6 +1,5 @@
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router";
-import "./Unauthorized.css";
 
 function Unauthorized(): JSX.Element {
   const history = useHistory();

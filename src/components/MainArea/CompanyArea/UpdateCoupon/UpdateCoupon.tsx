@@ -1,4 +1,10 @@
-import { SyntheticEvent, useCallback, useEffect, useState } from "react";
+import {
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import globals from "../../../../Services/Globals";
 import "./UpdateCoupon.css";
 import { Button, Form } from "react-bootstrap";
@@ -13,9 +19,10 @@ const UpdateCoupon = () => {
   let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);
   let [formCategory, setFormCategory] = useState("0");
   let [err, setErr] = useState<ErrorModel>(null);
+  let formRef = useRef(null);
   const updateCouponHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(document.querySelector("#updateCouponForm"));
+    let formData = new FormData(formRef.current);
     formData.append("id", fetchedCoupon.id.toString());
     if (formData.get("imageFile") as File)
       formData.append("image", (formData.get("imageFile") as File).name);
@@ -40,7 +47,7 @@ const UpdateCoupon = () => {
 
   const fetchCouponByIdHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(document.querySelector("#updateCouponForm"));
+    let formData = new FormData(formRef.current);
     if ((formData.get("couponId") as string) === "") {
       return;
     }
@@ -48,15 +55,13 @@ const UpdateCoupon = () => {
 
     for (const coupon of fetchedData) {
       if (coupon.id === couponId) {
-        (
-          document.getElementById("updateCouponForm") as HTMLFormElement
-        ).reset();
+        (formRef.current as HTMLFormElement).reset();
         setFetchedCoupon(coupon);
         setFormCategory(coupon.categoryId.toString());
         return;
       }
     }
-    (document.getElementById("updateCouponForm") as HTMLFormElement).reset();
+    (formRef.current as HTMLFormElement).reset();
     setErr(new ErrorModel());
   };
 
@@ -83,7 +88,7 @@ const UpdateCoupon = () => {
   return (
     <div className="UpdateCouponWrapper">
       <h3 className="h3Div">Update Coupon</h3>
-      <Form id="updateCouponForm" onSubmit={updateCouponHandler}>
+      <Form ref={formRef} onSubmit={updateCouponHandler}>
         <Form.Group>
           <Form.Label>ID: </Form.Label>
           <div className="UpdateCouponFormColl">

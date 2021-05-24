@@ -1,8 +1,8 @@
-import React, { SyntheticEvent, useCallback, useEffect } from "react";
+import React, { SyntheticEvent, useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
 import globals from "../../../../Services/Globals";
 import { Form, Button } from "react-bootstrap";
-import CustomerTable from "../../../UI/CustomerTable";
+import CustomerTable from "../../../UI/CustomerTable/CustomerTable";
 import "./UpdateCustomer.css";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CustomerModel from "../../../../Models/CustomerModel";
@@ -13,17 +13,16 @@ function UpdateCustomer() {
   let [fetchedCustomer, setFetchedCustomer] = useState<CustomerModel>(null);
   const [fetchedData, setFetchedData] = useState<CustomerModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);
+  let formRef = useRef(null);
   const updateCustomerHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(
-      document.querySelector("#updateCustomerForm")
-    );
+    const formData = new FormData(formRef.current);
     let customer: CustomerModel = new CustomerModel();
     customer.id = fetchedUpdate.id;
     customer.email = formData.get("email") as string;
     customer.password = formData.get("password") as string;
-    customer.first_name = formData.get("firstName") as string;
-    customer.last_name = formData.get("lastName") as string;
+    customer.firstName = formData.get("firstName") as string;
+    customer.lastName = formData.get("lastName") as string;
     let conf = formData.get("confirm") as string;
     if (conf !== customer.password) {
       alert("Password don't match!!");
@@ -42,9 +41,7 @@ function UpdateCustomer() {
   };
   const fetchCustomerByIdHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(
-      document.querySelector("#updateCustomerForm")
-    );
+    const formData = new FormData(formRef.current);
     if ((formData.get("customerId") as string) === "") {
       return;
     }
@@ -78,7 +75,7 @@ function UpdateCustomer() {
   return (
     <div className="UpdateCustomer">
       <h3 className="h3Div">Update Customer</h3>
-      <Form id="updateCustomerForm" onSubmit={updateCustomerHandler}>
+      <Form ref={formRef} onSubmit={updateCustomerHandler}>
         <div className="FormColl">
           <Form.Control
             id="customerId"
@@ -95,7 +92,7 @@ function UpdateCustomer() {
                     <option key={opt.id} value={opt.id}>
                       ID) {opt.id}
                       {"\u00A0"} {"\u00A0"}
-                      {"\u00A0"} Name: {opt.first_name} {opt.last_name}
+                      {"\u00A0"} Name: {opt.firstName} {opt.lastName}
                     </option>
                   );
                 })}
@@ -107,7 +104,7 @@ function UpdateCustomer() {
             <Form.Control
               name="firstName"
               id="firstName"
-              defaultValue={fetchedUpdate && fetchedUpdate.first_name}
+              defaultValue={fetchedUpdate && fetchedUpdate.firstName}
               minLength={2}
               required
             />
@@ -117,7 +114,7 @@ function UpdateCustomer() {
             <Form.Control
               name="lastName"
               id="lastName"
-              defaultValue={fetchedUpdate && fetchedUpdate.last_name}
+              defaultValue={fetchedUpdate && fetchedUpdate.lastName}
               minLength={2}
               required
             />

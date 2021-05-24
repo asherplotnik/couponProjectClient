@@ -1,8 +1,8 @@
-import React, { SyntheticEvent, useCallback, useEffect } from "react";
+import React, { SyntheticEvent, useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
 import globals from "../../../../Services/Globals";
 import "./DeleteCompany.css";
-import CompanyTable from "../../../UI/CompanyTable";
+import CompanyTable from "../../../UI/CompanyTable/CompanyTable";
 import { Button, Form } from "react-bootstrap";
 import CompanyModel from "../../../../Models/CompanyModel";
 import jwtAxios from "../../../../Services/jwtAxios";
@@ -11,9 +11,10 @@ function DeleteCompany() {
   let [fetchedCompany, setFetchedCompany] = useState(null);
   let [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);
   let [err, setErr] = useState(null);
+  let formRef = useRef();
   const deleteCompanyHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(document.querySelector("#deleteCompanyForm"));
+    const formData = new FormData(formRef.current);
     const id = parseInt(formData.get("id") as string);
     setFetchedCompany(null);
     if (id > 0) {
@@ -48,7 +49,7 @@ function DeleteCompany() {
   return (
     <div className="DeleteCompany">
       <h3 className="h3Div">Delete Company</h3>
-      <Form id="deleteCompanyForm" onSubmit={deleteCompanyHandler}>
+      <Form ref={formRef} onSubmit={deleteCompanyHandler}>
         <div className="FormColl">
           <Form.Control name="id" as="select" id="actionSelect" size="lg">
             <option value={0}>-- choose one --</option>

@@ -1,9 +1,9 @@
-import { SyntheticEvent, useEffect, useState } from "react";
-import CompanyTable from "../../../UI/CompanyTable";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
+import CompanyTable from "../../../UI/CompanyTable/CompanyTable";
 import globals from "../../../../Services/Globals";
 import { Form } from "react-bootstrap";
 import "./GetCompany.css";
-import CouponsTable from "../../../UI/CouponsTable";
+import CouponsTable from "../../../UI/CouponsTable/CouponsTable";
 import CompanyModel from "../../../../Models/CompanyModel";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
@@ -14,9 +14,10 @@ const GetCompany = () => {
   let [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[]>(null);
   let [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
+  let formRef = useRef(null);
   const fetchCompanyByIdHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(document.querySelector("#getCompanyForm"));
+    const formData = new FormData(formRef.current);
     const companyId = parseInt(formData.get("companyId") as string);
     setFetchedCompany(null);
     setFetchedCoupons(null);
@@ -56,7 +57,7 @@ const GetCompany = () => {
   return (
     <div className="GetCompany">
       <h3 className="h3Div">Get Company details</h3>
-      <Form id="getCompanyForm">
+      <Form ref={formRef}>
         <div className="FormColl">
           <Form.Control
             name="companyId"

@@ -1,7 +1,7 @@
 import "./CompanyTable.css";
 import { Table } from "react-bootstrap";
-import CompanyModel from "../../Models/CompanyModel";
-import ErrorModel from "../../Models/ErrorModel";
+import CompanyModel from "../../../Models/CompanyModel";
+import ErrorModel from "../../../Models/ErrorModel";
 
 interface CtProps {
   title: string;

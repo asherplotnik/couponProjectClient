@@ -1,4 +1,10 @@
-import { SyntheticEvent, useCallback, useEffect, useState } from "react";
+import {
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import globals from "../../../../Services/Globals";
 import "./DeleteCoupon.css";
 import { Button, Form } from "react-bootstrap";
@@ -11,9 +17,10 @@ const DeleteCoupon = () => {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
   let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
+  let formRef = useRef(null);
   const deleteCouponHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(document.querySelector("#deleteCouponForm"));
+    const formData = new FormData(formRef.current);
     const id = parseInt(formData.get("id") as string);
     if (id > 0) {
       jwtAxios
@@ -48,7 +55,7 @@ const DeleteCoupon = () => {
   return (
     <div className="DeleteCoupon">
       <h3 className="h3Div">Delete Coupon</h3>
-      <Form id="deleteCouponForm" onSubmit={deleteCouponHandler}>
+      <Form ref={formRef} onSubmit={deleteCouponHandler}>
         <div className="FormColl">
           <Form.Group>
             <Form.Control name="id" as="select" id="actionSelect" size="lg">

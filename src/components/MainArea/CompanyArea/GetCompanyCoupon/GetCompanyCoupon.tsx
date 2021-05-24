@@ -1,6 +1,6 @@
 import CouponCard from "../../../UI/CouponCard/CouponCard";
 import "./GetCompanyCoupon.css";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import globals from "../../../../Services/Globals";
 import { Form } from "react-bootstrap";
 import CouponModel from "../../../../Models/CouponModel";
@@ -11,10 +11,10 @@ function GetCompanyCoupon(): JSX.Element {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
   let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
-
+  let formRef = useRef(null);
   const fetchCouponHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(document.querySelector("#getCouponForm"));
+    const formData = new FormData(formRef.current);
     const couponId = parseInt(formData.get("couponId") as string);
     for (const coupon of fetchedData) {
       if (coupon.id === couponId) {
@@ -41,7 +41,7 @@ function GetCompanyCoupon(): JSX.Element {
   return (
     <div className="GetCompanyCoupon">
       <h3 className="h3Div">Get Coupon details</h3>
-      <Form id="getCouponForm">
+      <Form ref={formRef}>
         <div className="FormColl">
           <Form.Control
             name="couponId"

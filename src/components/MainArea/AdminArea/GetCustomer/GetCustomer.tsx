@@ -1,9 +1,9 @@
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import globals from "../../../../Services/Globals";
 import { Form } from "react-bootstrap";
 import "./GetCustomer.css";
-import CouponsTable from "../../../UI/CouponsTable";
-import CustomerTable from "../../../UI/CustomerTable";
+import CouponsTable from "../../../UI/CouponsTable/CouponsTable";
+import CustomerTable from "../../../UI/CustomerTable/CustomerTable";
 import CustomerModel from "../../../../Models/CustomerModel";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
@@ -14,9 +14,10 @@ const GetCustomer = () => {
   let [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[]>(null);
   let [fetchedData, setFetchedData] = useState<CustomerModel[]>(null);
   let [err, setErr] = useState<ErrorModel>(null);
+  let formRef = useRef(null);
   const fetchCustomerByIdHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(document.querySelector("#getCustomerForm"));
+    const formData = new FormData(formRef.current);
     const customerId = parseInt(formData.get("customerId") as string);
     setFetchedCustomer(null);
     setFetchedCoupons(null);
@@ -55,7 +56,7 @@ const GetCustomer = () => {
 
   return (
     <div className="GetCustomer">
-      <Form id="getCustomerForm">
+      <Form ref={formRef}>
         <div className="FormColl">
           <Form.Control
             id="customerId"
@@ -72,7 +73,7 @@ const GetCustomer = () => {
                     <option key={opt.id} value={opt.id}>
                       ID) {opt.id}
                       {"\u00A0"} {"\u00A0"}
-                      {"\u00A0"} Name: {opt.first_name} {opt.last_name}
+                      {"\u00A0"} Name: {opt.firstName} {opt.lastName}
                     </option>
                   );
                 })}
@@ -86,7 +87,7 @@ const GetCustomer = () => {
           <CustomerTable
             err={err}
             data={fetchedCustomer}
-            title={fetchedCustomer.first_name + " " + fetchedCustomer.last_name}
+            title={fetchedCustomer.firstName + " " + fetchedCustomer.lastName}
           />
         )}
         {fetchedCoupons && (

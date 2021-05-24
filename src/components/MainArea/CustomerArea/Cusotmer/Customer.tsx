@@ -84,7 +84,6 @@ function Customer() {
               </Form.Control>
             </Form.Group>
           </div>
-          {/* <MyButton type="submit"> SUBMIT </MyButton> */}
         </Form>
         <div className="SubFormCustomer">{subForm}</div>
       </div>

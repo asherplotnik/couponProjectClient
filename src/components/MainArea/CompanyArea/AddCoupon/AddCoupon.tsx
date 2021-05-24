@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useRef, useState } from "react";
 import globals from "../../../../Services/Globals";
 import "./AddCoupon.css";
 import { Button, Form } from "react-bootstrap";
@@ -10,9 +10,10 @@ import jwtAxios from "../../../../Services/jwtAxios";
 const AddCoupon = () => {
   let [fetchedData, setFetchedData] = useState<CouponModel>(null);
   let [err, setErr] = useState<ErrorModel>(null);
+  let formRef = useRef(null);
   const addCouponHandler = (e: SyntheticEvent) => {
     e.preventDefault();
-    const formData = new FormData(document.querySelector("#addCouponForm"));
+    const formData = new FormData(formRef.current);
     formData.append("id", "0");
     formData.append("image", (formData.get("imageFile") as File).name);
     let cat = formData.get("categoryId") as string;
@@ -35,7 +36,7 @@ const AddCoupon = () => {
   return (
     <div className="AddCoupon">
       <h3 className="h3Div">Add Coupon</h3>
-      <Form id="addCouponForm" onSubmit={addCouponHandler}>
+      <Form ref={formRef} onSubmit={addCouponHandler}>
         <div className="AddCouponFormDiv">
           <div className="AddCouponFormDivColl">
             <Form.Group>

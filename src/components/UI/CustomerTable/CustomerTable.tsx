@@ -1,7 +1,7 @@
 import "./CustomerTable.css";
 import Table from "react-bootstrap/Table";
-import CustomerModel from "../../Models/CustomerModel";
-import ErrorModel from "../../Models/ErrorModel";
+import CustomerModel from "../../../Models/CustomerModel";
+import ErrorModel from "../../../Models/ErrorModel";
 
 interface CtProps {
   title: string;
@@ -32,8 +32,8 @@ const CustomerTable = (props: CtProps) => {
             <tr>
               <td>1</td>
               <td>{fetchedCustomer.id}</td>
-              <td>{fetchedCustomer.first_name}</td>
-              <td>{fetchedCustomer.last_name}</td>
+              <td>{fetchedCustomer.firstName}</td>
+              <td>{fetchedCustomer.lastName}</td>
               <td>{fetchedCustomer.email}</td>
               <td>{fetchedCustomer.password}</td>
             </tr>

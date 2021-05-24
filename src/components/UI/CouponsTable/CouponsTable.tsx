@@ -1,7 +1,7 @@
 import "./CouponsTable.css";
 import { Table } from "react-bootstrap";
-import CouponModel from "../../Models/CouponModel";
-import ErrorModel from "../../Models/ErrorModel";
+import CouponModel from "../../../Models/CouponModel";
+import ErrorModel from "../../../Models/ErrorModel";
 import { useState } from "react";
 
 interface CpProps {
