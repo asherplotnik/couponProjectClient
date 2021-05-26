@@ -69,7 +69,7 @@ const Company = (): JSX.Element => {
     <div className="Company">
       <h3>Company Menu</h3>
       <div className="FormDiv">
-        <Form id="actionForm">
+        <Form className="actionForm">
           <div className="Field">
             <Form.Group>
               <Form.Label>Choose Action: </Form.Label>
@@ -78,7 +78,7 @@ const Company = (): JSX.Element => {
                 value={subFormState}
                 name="action"
                 as="select"
-                id="actionSelect"
+                className="ActionSelect"
                 size="lg"
               >
                 <option value="">-- choose one --</option>

@@ -6,12 +6,12 @@
 .Company {
   height: 100%;
 }
-.Company #ActionForm {
+.Company .ActionForm {
   width: 70%;
 }
 .Company .FormDiv {
   margin: auto;
-  width: 70%;
+  width: 65%;
 }
 .Company .FormDiv .Field {
   width: 45%;
