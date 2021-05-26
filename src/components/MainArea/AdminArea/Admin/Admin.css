@@ -2,7 +2,7 @@
   margin: 1.5% 10%;
 }
 
-.Admin #actionForm {
+.Admin .AdminForm {
   margin: auto;
   width: 35%;
 }
@@ -12,4 +12,11 @@
   width: 100%;
   height: 63vh;
   overflow-y: auto;
+}
+
+@media (max-width: 500px) {
+  .Admin .AdminForm {
+    margin: auto;
+    width: 100%;
+  }
 }

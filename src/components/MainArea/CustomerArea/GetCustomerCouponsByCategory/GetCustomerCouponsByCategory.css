@@ -10,3 +10,12 @@
   width: 50%;
   margin: auto;
 }
+
+@media (max-width: 500px) {
+  .GetCustomerCouponsByCategory {
+    margin: 0% 0%;
+  }
+  .GetCustomerCouponsByCategory .FormColl {
+    width: 100%;
+  }
+}

@@ -10,3 +10,11 @@
   margin: auto;
   width: 40%;
 }
+
+@media (max-width: 500px) {
+  .GetCompanyCouponsByMaxPrice .innerFormDiv {
+    margin: auto;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

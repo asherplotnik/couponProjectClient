@@ -6,3 +6,9 @@
   width: 34%;
   margin: auto;
 }
+
+@media (max-width: 500px) {
+  .UpdateCustomer .FormColl {
+    width: 100%;
+  }
+}

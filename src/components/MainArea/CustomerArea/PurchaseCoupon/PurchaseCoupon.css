@@ -10,3 +10,12 @@
   width: 50%;
   margin: auto;
 }
+
+@media (max-width: 500px) {
+  .PurchaseCoupon {
+    margin: 0% 0%;
+  }
+  .PurchaseCoupon .FormColl {
+    width: 100%;
+  }
+}

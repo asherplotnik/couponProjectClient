@@ -10,3 +10,9 @@
   width: 34%;
   margin: auto;
 }
+
+@media (max-width: 500px) {
+  .AddCustomer .FormColl {
+    width: 100%;
+  }
+}

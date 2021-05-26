@@ -13,3 +13,9 @@
 .SelectDiv {
   text-align: center;
 }
+
+@media (max-width: 500px) {
+  .DeleteCompany .FormColl {
+    width: 100%;
+  }
+}

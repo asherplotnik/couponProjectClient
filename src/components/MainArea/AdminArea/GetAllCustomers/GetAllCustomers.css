@@ -1,3 +1,10 @@
 .GetAllCustomers {
   text-align: center;
 }
+
+@media (max-width: 500px) {
+  .GetAllCustomers {
+    width: 100%;
+    margin: 0% 0%;
+  }
+}

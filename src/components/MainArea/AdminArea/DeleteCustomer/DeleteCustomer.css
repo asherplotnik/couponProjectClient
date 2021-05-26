@@ -6,3 +6,9 @@
   width: 34%;
   margin: auto;
 }
+
+@media (max-width: 500px) {
+  .DeleteCustomer .FormColl {
+    width: 100%;
+  }
+}

@@ -11,3 +11,12 @@
   margin: auto;
   margin-bottom: 20px;
 }
+
+@media (max-width: 500px) {
+  .GetCompanyCoupon {
+    margin: 0% 0%;
+  }
+  .GetCompanyCoupon .FormColl {
+    width: 100%;
+  }
+}

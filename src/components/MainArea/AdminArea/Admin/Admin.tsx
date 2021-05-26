@@ -78,7 +78,7 @@ const Admin = () => {
     <div>
       <h2 className="h2">Admin Menu</h2>
       <div className="Admin">
-        <Form id="actionForm">
+        <Form className="AdminForm">
           <Form.Group>
             <Form.Label>Choose Action: </Form.Label>
             <Form.Control

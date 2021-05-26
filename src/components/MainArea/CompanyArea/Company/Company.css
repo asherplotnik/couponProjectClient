@@ -29,3 +29,10 @@
   margin: 5px !important;
   min-width: 250px !important;
 }
+
+@media (max-width: 500px) {
+  .Company .FormDiv .Field {
+    width: 100%;
+    margin: auto;
+  }
+}

@@ -16,3 +16,19 @@
 .AddCoupon .h3Div {
   text-align: center;
 }
+
+@media (max-width: 500px) {
+  .AddCouponFormDiv {
+    display: block;
+    justify-content: center;
+  }
+
+  .AddCoupon {
+    margin: 5% 0%;
+  }
+  .AddCouponFormDivColl {
+    text-align: left;
+    width: 100%;
+    margin-left: 5px;
+  }
+}

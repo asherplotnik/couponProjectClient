@@ -1,6 +1,3 @@
-.UpdateCompany {
-}
-
 .UpdateCompany .h3Div {
   text-align: center;
 }
@@ -8,4 +5,10 @@
 .UpdateCompany .FormColl {
   width: 50%;
   margin: auto;
+}
+
+@media (max-width: 500px) {
+  .UpdateCompany .FormColl {
+    width: 100%;
+  }
 }

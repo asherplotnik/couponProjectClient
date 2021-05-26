@@ -10,3 +10,9 @@
   width: 40%;
   margin: auto;
 }
+
+@media (max-width: 500px) {
+  .DeleteCoupon .FormColl {
+    width: 100%;
+  }
+}

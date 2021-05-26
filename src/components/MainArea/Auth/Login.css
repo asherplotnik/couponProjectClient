@@ -35,9 +35,9 @@
   margin: 10px 35%;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 500px) {
   .Login .wrapperDiv {
-    width: 90%;
+    width: 95%;
   }
 
   .Login .submitButton {

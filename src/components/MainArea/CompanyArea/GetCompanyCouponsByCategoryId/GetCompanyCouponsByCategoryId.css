@@ -11,3 +11,11 @@
   width: 40%;
   margin-bottom: 20px;
 }
+
+@media (max-width: 500px) {
+  .GetCompanyCouponsByCategoryId .innerFormDiv {
+    margin: auto;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

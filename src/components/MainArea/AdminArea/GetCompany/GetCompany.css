@@ -7,8 +7,13 @@
   margin: auto;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 500px) {
+  .GetCompany .FormColl {
+    width: 100%;
+    margin: 0% 0%;
+  }
   .GetCompany {
     margin: 0% 0%;
+    width: 100%;
   }
 }

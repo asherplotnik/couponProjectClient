@@ -19,3 +19,10 @@
 .Layout > * {
   border: 1px solid lightgrey;
 }
+
+@media (max-width: 500px) {
+  .Layout {
+    grid-template-rows: 15% auto 4%;
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
