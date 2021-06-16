@@ -13,7 +13,6 @@ import ErrorModel from "../../../../Models/ErrorModel";
 import CouponCard from "../../../UI/CouponCard/CouponCard";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const DeleteCoupon = () => {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
   let [fetchedData, setFetchedData] = useState<CouponModel[]>(null);

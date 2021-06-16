@@ -31,7 +31,18 @@ const Company = (): JSX.Element => {
   const history = useHistory();
   useEffect(() => {
     setToken(store.getState().SessionState.session.token);
-  }, [token]);
+  }, []);
+
+  useEffect(() => {
+    const unsubscribeMe = store.subscribe(() => {
+      if (store.getState().SessionState.session.token === "") {
+        history.push("/");
+      }
+    });
+    return () => {
+      unsubscribeMe();
+    };
+  }, [history]);
 
   let subForm: JSX.Element;
   if (!token || store.getState().SessionState.session.userType !== 1) {

@@ -7,7 +7,6 @@ import { Button, Form } from "react-bootstrap";
 import CompanyModel from "../../../../Models/CompanyModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const DeleteCompany = () => {
   let [fetchedCompany, setFetchedCompany] = useState(null);
   let [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);

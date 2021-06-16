@@ -38,7 +38,7 @@ export  const setSessionAction = (session: SessionModel): SessionAction => {
     return { type: SessionActionType.SetSession, payload: session };
 }
 
-export  const removeSessionAction = (session: SessionModel): SessionAction => {
+export  const removeSessionAction = (): SessionAction => {
     return { type: SessionActionType.RemoveSession};
 }
 
@@ -57,7 +57,7 @@ export const SessionReducer = (currentState: SessionState = new SessionState(), 
             localStorage.setItem("session", JSON.stringify(newState.session));
             break;
         case SessionActionType.RemoveSession:
-            newState.session = null;
+            newState.session = {token:"",name:"" ,userType:-1};
             localStorage.removeItem("session"); // clear user from the local storage.
             break;
     }

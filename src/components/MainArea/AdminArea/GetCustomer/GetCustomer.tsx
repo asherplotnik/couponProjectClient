@@ -9,7 +9,6 @@ import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const GetCustomer = () => {
   let [fetchedCustomer, setFetchedCustomer] = useState<CustomerModel>(null);
   let [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[]>(null);

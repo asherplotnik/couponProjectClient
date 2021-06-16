@@ -33,7 +33,18 @@ const Admin = () => {
 
   useEffect(() => {
     setToken(store.getState().SessionState.session.token);
-  }, [token]);
+  }, []);
+
+  useEffect(() => {
+    const unsubscribeMe = store.subscribe(() => {
+      if (store.getState().SessionState.session.token === "") {
+        history.push("/");
+      }
+    });
+    return () => {
+      unsubscribeMe();
+    };
+  }, [history]);
 
   let subForm = <div></div>;
   if (!token || store.getState().SessionState.session.userType !== 0) {

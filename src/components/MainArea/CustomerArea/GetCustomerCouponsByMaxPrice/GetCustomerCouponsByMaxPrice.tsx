@@ -7,7 +7,6 @@ import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const GetCustomerCouponsByMaxPrice = () => {
   const [dataState, setDataState] = useState<CouponModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);

@@ -8,7 +8,6 @@ import CompanyModel from "../../../../Models/CompanyModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const UpdateCompany = () => {
   const [fetchedCompany, setFetchedCompany] = useState<CompanyModel>(null);
   const [fetchedUpdate, setFetchedUpdate] = useState<CompanyModel>(null);

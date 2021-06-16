@@ -13,7 +13,6 @@ import ErrorModel from "../../../../Models/ErrorModel";
 import CouponCard from "../../../UI/CouponCard/CouponCard";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const UpdateCoupon = () => {
   let [fetchedCoupon, setFetchedCoupon] = useState<CouponModel>(null);
   let [fetchedUpdate, setFetchedUpdate] = useState<CouponModel>(null);

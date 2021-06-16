@@ -5,7 +5,6 @@ import ErrorModel from "../../../../Models/ErrorModel";
 import CustomerModel from "../../../../Models/CustomerModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const GetCustomerDetails = () => {
   const [dataState, setDataState] = useState<CustomerModel>(null);
   const [err, setErr] = useState<ErrorModel>(null);

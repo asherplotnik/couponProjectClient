@@ -6,7 +6,6 @@ import CustomerModel from "../../../../Models/CustomerModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import axios from "axios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const GetAllCustomers = () => {
   const [dataState, setDataState] = useState(null);
   useEffect(() => {

@@ -5,7 +5,6 @@ import "./GetCustomerCoupons.css";
 import CouponModel from "../../../../Models/CouponModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const GetCustomerCoupons = () => {
   const [dataState, setDataState] = useState<CouponModel[]>(null);
   useEffect(() => {

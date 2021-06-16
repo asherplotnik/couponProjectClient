@@ -6,9 +6,11 @@ import CompanyModel from "../../../../Models/CompanyModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import axios from "axios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
+import { useHistory } from "react-router";
 
 const GetAllCompanies = () => {
   const [dataState, setDataState] = useState(null);
+  const history = useHistory();
   useEffect(() => {
     const source = axios.CancelToken.source();
     jwtAxios
@@ -48,7 +50,7 @@ const GetAllCompanies = () => {
     return () => {
       source.cancel();
     };
-  }, []);
+  }, [history]);
   return <div className="GetAllCompanies">{dataState}</div>;
 };
 export default GetAllCompanies;

@@ -6,7 +6,6 @@ import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const GetCompanyCoupons = () => {
   const [dataState, setDataState] = useState<CouponModel[]>([]);
   const [err, setErr] = useState<ErrorModel>(null);

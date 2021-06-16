@@ -8,7 +8,6 @@ import ErrorModel from "../../../../Models/ErrorModel";
 import CustomerModel from "../../../../Models/CustomerModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const UpdateCustomer = () => {
   let [fetchedUpdate, setFetchedUpdate] = useState<CustomerModel>(null);
   let [fetchedCustomer, setFetchedCustomer] = useState<CustomerModel>(null);

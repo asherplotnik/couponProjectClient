@@ -9,7 +9,6 @@ import CouponCard from "../../../UI/CouponCard/CouponCard";
 import Modal from "../../../UI/Modal/Modal";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const PurchaseCoupon = () => {
   const [resState, setResState] = useState<CouponModel[]>(null);
   const [cp, setCp] = useState<CouponModel>(null);

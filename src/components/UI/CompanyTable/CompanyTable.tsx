@@ -43,7 +43,7 @@ const CompanyTable = (props: CtProps) => {
     if (props.err) {
       return (
         <div className="h3Div">
-          <h3>{props.err.response.data.message}</h3>
+          <h3>{props.err.response && props.err.response.data.message}</h3>
         </div>
       );
     } else {

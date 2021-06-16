@@ -7,7 +7,6 @@ import ErrorModel from "../../../../Models/ErrorModel";
 import { Form } from "react-bootstrap";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const GetCompanyCouponsByCategoryId = () => {
   const [dataState, setDataState] = useState<CouponModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);

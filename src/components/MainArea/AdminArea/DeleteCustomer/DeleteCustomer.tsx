@@ -12,7 +12,6 @@ import { Button, Form } from "react-bootstrap";
 import CustomerModel from "../../../../Models/CustomerModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const DeleteCustomerForm = () => {
   let [fetchedCustomer, setFetchedCustomer] = useState<CustomerModel>(null);
   let [fetchedData, setFetchedData] = useState<CustomerModel[]>(null);

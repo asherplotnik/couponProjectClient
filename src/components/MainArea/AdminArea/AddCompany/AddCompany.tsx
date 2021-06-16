@@ -8,7 +8,6 @@ import { Button } from "react-bootstrap";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const AddCompany = () => {
   let [fetchedCompany, setFetchedCompany] = useState<CompanyModel>(null);
   let [err, setErr] = useState<ErrorModel>(null);

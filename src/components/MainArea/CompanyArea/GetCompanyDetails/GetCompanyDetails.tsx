@@ -5,7 +5,6 @@ import CompanyModel from "../../../../Models/CompanyModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const GetCompanyDetails = () => {
   const [companyState, setCompanyState] = useState<CompanyModel>(null);
   const [err, setErr] = useState<ErrorModel>(null);

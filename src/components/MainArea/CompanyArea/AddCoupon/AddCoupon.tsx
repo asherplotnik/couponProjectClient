@@ -7,7 +7,6 @@ import ErrorModel from "../../../../Models/ErrorModel";
 import CouponCard from "../../../UI/CouponCard/CouponCard";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
-
 const AddCoupon = () => {
   let [fetchedData, setFetchedData] = useState<CouponModel>(null);
   let [err, setErr] = useState<ErrorModel>(null);

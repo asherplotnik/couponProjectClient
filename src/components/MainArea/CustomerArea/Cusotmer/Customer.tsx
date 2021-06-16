@@ -18,8 +18,19 @@ const Customer = () => {
   const history = useHistory();
 
   useEffect(() => {
+    const unsubscribeMe = store.subscribe(() => {
+      if (store.getState().SessionState.session.token === "") {
+        history.push("/");
+      }
+    });
+    return () => {
+      unsubscribeMe();
+    };
+  }, [history]);
+
+  useEffect(() => {
     setToken(store.getState().SessionState.session.token);
-  }, [token]);
+  }, []);
 
   const actionSelector = (event: SyntheticEvent) => {
     event.preventDefault();
