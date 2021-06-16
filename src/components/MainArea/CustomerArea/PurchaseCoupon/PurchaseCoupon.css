@@ -1,21 +1,17 @@
-.PurchaseCoupon {
+.PurchaseCouponDiv {
   margin: 1% 30%;
 }
 
-.PurchaseCoupon .h3Div {
+.PurchaseCouponDiv .h3Div {
   text-align: center;
 }
-
-.PurchaseCoupon .FormColl {
-  width: 50%;
+.PurchaseCouponModal {
   margin: auto;
+  font-weight: bold;
 }
 
 @media (max-width: 500px) {
-  .PurchaseCoupon {
+  .PurchaseCouponDiv {
     margin: 0% 0%;
-  }
-  .PurchaseCoupon .FormColl {
-    width: 100%;
   }
 }

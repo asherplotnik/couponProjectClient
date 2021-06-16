@@ -1,25 +1,25 @@
 import { useState, useEffect } from "react";
 import globals from "../../../../Services/Globals";
 import CouponsTable from "../../../UI/CouponsTable/CouponsTable";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import "./PurchaseCoupon.css";
 import CouponModel from "../../../../Models/CouponModel";
 import ErrorModel from "../../../../Models/ErrorModel";
 import CouponCard from "../../../UI/CouponCard/CouponCard";
-import Modal from "../../../UI/Modal/Modal";
 import jwtAxios from "../../../../Services/jwtAxios";
 import { errorAlert } from "../../../../Services/commonFunctionService";
 const PurchaseCoupon = () => {
   const [resState, setResState] = useState<CouponModel[]>(null);
-  const [cp, setCp] = useState<CouponModel>(null);
+  const [couponState, setCouponState] = useState<CouponModel>(null);
   const [err, setErr] = useState<ErrorModel>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectId, setSelectedId] = useState<number>(-1);
   const purchaseCouponHandler = () => {
+    setSelectedId(-1);
     jwtAxios
       .post(globals.urls.localUrl + "api/customer/purchaseCoupon/" + selectId)
       .then((response) => {
-        setCp(response.data);
+        setCouponState(response.data);
         changeShowModal();
       })
       .catch((error) => {
@@ -39,9 +39,9 @@ const PurchaseCoupon = () => {
       })
       .catch((error) => {
         setErr(error);
-        alert(error.response.data.message);
+        errorAlert(error);
       });
-  }, [cp]);
+  }, [couponState]);
 
   const changeShowModal = () => {
     setShowModal(!showModal);
@@ -53,28 +53,26 @@ const PurchaseCoupon = () => {
   };
 
   return (
-    <div>
-      <Modal
-        show={showModal}
-        modalClosed={changeShowModal}
-        width="45%"
-        left="27.5%"
-      >
-        <p>ARE YOU SURE?</p>
-        {resState && (
+    <div className="PurchaseCoupon">
+      <Modal show={showModal} onHide={changeShowModal}>
+        <Modal.Header closeButton>
+          <p className="PurchaseCouponModal">ARE YOU SURE?</p>
+        </Modal.Header>
+        {selectId !== -1 && (
           <CouponCard
             noBorderBox={true}
             data={resState.filter((el) => el.id === selectId)[0]}
             err={err}
           />
         )}
-
-        <Button onClick={purchaseCouponHandler}>YES</Button>
-        <Button variant="danger" onClick={changeShowModal}>
-          NO
-        </Button>
+        <Modal.Footer className="PurchaseCouponModal">
+          <Button onClick={purchaseCouponHandler}>YES</Button>
+          <Button variant="danger" onClick={changeShowModal}>
+            NO
+          </Button>
+        </Modal.Footer>
       </Modal>
-      <div className="PurchaseCoupon">
+      <div className="PurchaseCouponDiv">
         <h3 className="h3Div">Purchase Coupon</h3>
       </div>
       {resState && (
@@ -90,10 +88,10 @@ const PurchaseCoupon = () => {
           }
         />
       )}
-      {cp && (
+      {couponState && (
         <>
           <h3>Coupon purchased successfully</h3>
-          <CouponCard err={err} data={cp} />
+          <CouponCard err={err} data={couponState} />
         </>
       )}
     </div>
