@@ -7,7 +7,6 @@ import Admin from "../MainArea/AdminArea/Admin/Admin";
 import Company from "../MainArea/CompanyArea/Company/Company";
 import Customer from "../MainArea/CustomerArea/Cusotmer/Customer";
 import Page404 from "../SharedArea/Page404/Page404";
-
 const Layout = (): JSX.Element => {
   return (
     <BrowserRouter>
