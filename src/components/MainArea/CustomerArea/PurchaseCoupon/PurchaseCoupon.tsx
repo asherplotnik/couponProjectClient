@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import globals from "../../../../Services/Globals";
 import CouponsTable from "../../../UI/CouponsTable/CouponsTable";
 import { Button, Modal } from "react-bootstrap";
@@ -14,6 +14,7 @@ const PurchaseCoupon = () => {
   const [err, setErr] = useState<ErrorModel>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectId, setSelectedId] = useState<number>(-1);
+  let scrollDownRef = useRef(null);
   const purchaseCouponHandler = () => {
     setSelectedId(-1);
     jwtAxios
@@ -21,6 +22,10 @@ const PurchaseCoupon = () => {
       .then((response) => {
         setCouponState(response.data);
         changeShowModal();
+        scrollDownRef.current.scrollIntoView({
+          block: "end",
+          behavior: "smooth",
+        });
       })
       .catch((error) => {
         setErr(error);
@@ -94,6 +99,7 @@ const PurchaseCoupon = () => {
           <CouponCard err={err} data={couponState} />
         </>
       )}
+      <div ref={scrollDownRef}></div>
     </div>
   );
 };

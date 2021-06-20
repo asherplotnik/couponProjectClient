@@ -11,6 +11,7 @@ const AddCoupon = () => {
   let [fetchedData, setFetchedData] = useState<CouponModel>(null);
   let [err, setErr] = useState<ErrorModel>(null);
   let formRef = useRef(null);
+  let scrollDownRef = useRef(null);
   const addCouponHandler = (e: SyntheticEvent) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
@@ -24,6 +25,10 @@ const AddCoupon = () => {
       .post(globals.urls.localUrl + "api/company/addCoupon", formData)
       .then((response) => {
         setFetchedData(response.data);
+        scrollDownRef.current.scrollIntoView({
+          block: "end",
+          behavior: "smooth",
+        });
       })
       .catch((error) => {
         setErr(error);
@@ -92,6 +97,7 @@ const AddCoupon = () => {
         {fetchedData && <h4>COUPON ADDED SUCCESSFULLY</h4>}
         {fetchedData && <CouponCard err={err} data={fetchedData} />}
       </div>
+      <div ref={scrollDownRef}></div>
     </div>
   );
 };

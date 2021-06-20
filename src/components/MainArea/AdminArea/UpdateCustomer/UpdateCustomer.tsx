@@ -11,6 +11,7 @@ import { errorAlert } from "../../../../Services/commonFunctionService";
 const UpdateCustomer = () => {
   let [fetchedUpdate, setFetchedUpdate] = useState<CustomerModel>(null);
   let [fetchedCustomer, setFetchedCustomer] = useState<CustomerModel>(null);
+  let scrollDownRef = useRef(null);
   const [fetchedData, setFetchedData] = useState<CustomerModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);
   let formRef = useRef(null);
@@ -33,6 +34,10 @@ const UpdateCustomer = () => {
       .then((response) => {
         fetchCustomers();
         setFetchedCustomer(response.data);
+        scrollDownRef.current.scrollIntoView({
+          block: "end",
+          behavior: "smooth",
+        });
       })
       .catch((error) => {
         setErr(error);
@@ -155,6 +160,7 @@ const UpdateCustomer = () => {
         data={fetchedCustomer}
         title="CUSTOMER UPDATED SUCCESSFULLY"
       />
+      <div ref={scrollDownRef}></div>
     </div>
   );
 };

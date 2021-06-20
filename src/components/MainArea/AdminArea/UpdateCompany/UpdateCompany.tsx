@@ -14,6 +14,7 @@ const UpdateCompany = () => {
   const [fetchedData, setFetchedData] = useState<CompanyModel[]>(null);
   const [err, setErr] = useState<ErrorModel>(null);
   let formRef = useRef(null);
+  let scrollDownRef = useRef(null);
   const updateCompanyHandler = (e: SyntheticEvent) => {
     e.preventDefault();
     if (fetchedUpdate === null) {
@@ -35,6 +36,10 @@ const UpdateCompany = () => {
       .then((response) => {
         fetchCompanies();
         setFetchedCompany(response.data);
+        scrollDownRef.current.scrollIntoView({
+          block: "end",
+          behavior: "smooth",
+        });
       })
       .catch((error) => {
         setErr(error);
@@ -150,6 +155,7 @@ const UpdateCompany = () => {
         data={fetchedCompany}
         title="COMPANY UPDATED SUCCESSFULLY"
       />
+      <div ref={scrollDownRef}></div>
     </div>
   );
 };
